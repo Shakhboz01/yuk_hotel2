@@ -5,6 +5,13 @@ ruby "2.7.7"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.0.4", ">= 7.0.4.3"
+gem 'kaminari', '~> 1.2'
+gem "ransack"
+gem "byebug"
+gem 'jquery-rails'
+gem 'bootstrap-sass'
+gem 'devise'
+gem 'pundit'
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
