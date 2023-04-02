@@ -11,4 +11,8 @@ module ApplicationHelper
             title: title,
             method: :delete, data: { confirm: strip_tags( confirm_text) }
   end
+
+  def num_to_usd(price)
+    number_to_currency(price, unit: '')
+  end
 end
