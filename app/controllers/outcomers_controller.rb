@@ -61,8 +61,8 @@ class OutcomersController < ApplicationController
   end
 
   def set_role
-    @role = params[:role] || 'покупатель' # Default to the first role
-    @role = 'покупатель' unless Outcomer.roles.key?(@role.to_sym) # Make sure role is valid
+    @role = params[:role] || 'покупатель'
+    @role = 'покупатель' unless Outcomer.roles.key?(@role.to_sym)
   end
 
   def outcomer_params

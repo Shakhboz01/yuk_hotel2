@@ -1,4 +1,4 @@
-class ProductPolicy < ApplicationPolicy
+class OutcomerPolicy < ApplicationPolicy
   def manage?
     user_is_manager?
   end
