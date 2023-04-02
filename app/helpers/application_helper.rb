@@ -9,6 +9,6 @@ module ApplicationHelper
     link_to icon.blank? ? t(title) : content_tag(:i, '', class: %i[fa fa-fw].push(icon)),
             link,
             title: title,
-            method: :delete, data: { confirm: strip_tags(confirm_text) }
+            method: :delete, data: { confirm: strip_tags( confirm_text) }
   end
 end

@@ -1,0 +1,31 @@
+<div class="container">
+  <h1>Список пользователей</h1>
+
+  <%= link_to 'Создать пользователя', new_user_path, class: "btn btn-primary mb-3" %>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Имя</th>
+        <th>Email адрес</th>
+        <th>Роль</th>
+        <th>Активность</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @users.each do |user| %>
+        <tr>
+          <td><%= user.name %></td>
+          <td><%= user.email %></td>
+          <td><%= user.role.capitalize %></td>
+          <td><%= user.active? ? 'Да' : 'Нет' %></td>
+          <td>
+            <%= clink_to 'Редактировать', edit_user_path(user), 'fa-edit' %>
+            <%= cdlink_to 'Удалить', user %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,16 @@
+<div class="container">
+  <h1><%= @user.name %></h1>
+
+  <dl class="row">
+    <dt class="col-sm-2">Email адрес</dt>
+    <dd class="col-sm-10"><%= @user.email %></dd>
+
+    <dt class="col-sm-2">Роль</dt>
+    <dd class="col-sm-10"><%= @user.role.capitalize %></dd>
+
+    <dt class="col-sm-2">Активность</dt>
+    <dd class="col-sm-10"><%= @user.active? ? 'Да' : 'Нет' %></dd>
+  </dl>
+
+  <%= link_to 'Назад', users_path, class: "btn btn-secondary" %>
+</div>
