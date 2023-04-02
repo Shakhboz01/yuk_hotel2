@@ -1,0 +1,37 @@
+<div class="container">
+  <h1>Books</h1>
+
+  <%% if @<%= plural_table_name %>.exists? %>
+    <%%= link_to 'Добавить новый', new_<%= singular_route_name %>_path, class: "btn btn-primary" %>
+  <%% end %>
+
+  <%= render 'filter_form', url: request.path, q: @q %>
+
+  <table class="table table-striped table-hover shadow">
+    <thead>
+      <tr>
+        <th><%= sort_link(@q, :id, 'Blocked email') %></th>
+        <% attributes.reject(&:password_digest?).each do |attribute| -%>
+          <th class="p-3 uppercase text-left text-xs text-gray-700"><%= sort_link(@q, :attribute.human_name, 'attribute.human_name') %></th>
+        <% end %>
+        <th><%= sort_link(@q, :created_at, 'Создан в:') %></th>
+      </tr>
+    </thead>
+    <tbody>
+      <%% @<%= plural_table_name %>.each do |<%= singular_table_name %>| %>
+        <tr>
+          <td><%%= <%= singular_table_name %>.id %></td>
+          <% attributes.reject(&:password_digest?).each do |attribute| -%>
+            <td class="p-3"><%%= <%= singular_table_name %>.<%= attribute.column_name %> %></td>
+          <% end %>
+          <td><%%= <%= singular_table_name %>.created_at %></td>
+          <td><%= clink_to 'Посмотреть', singular_table_name, 'fa-search' %></td>
+          <td><%= clink_to 'редактировать', edit_<%= singular_table_name %>_path(<%= singular_table_name %>), 'fa-edit' %></td>
+          <td><%= cdlink_to 'Удалить', singular_table_name %></td>
+        </tr>
+      <%% end %>
+    </tbody>
+  </table>
+
+  <%= link_to "Добавить новое", new_<%= singular_table_name %>_path, class: "btn btn-primary" %>
+</div>

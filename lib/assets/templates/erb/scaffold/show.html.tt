@@ -1,0 +1,45 @@
+<div class="container my-5">
+  <div class="card shadow">
+    <div class="card-header">
+      <h3 class="card-title font-weight-bold">Детали</h3>
+    </div>
+    <div class="card-body">
+      <% attributes.reject(&:password_digest?).each do |attribute| -%>
+        <div class="row">
+          <div class="col-md-4">
+            <p class="font-weight-bold"><%= attribute.human_name %>:</p>
+          </div>
+          <div class="col-md-8">
+            <p><%%= @<%= singular_table_name %>.<%= attribute.name %> %></p>
+          </div>
+        </div>
+      <% end -%>
+
+      <div class="row">
+        <div class="col-md-4">
+          <p class="font-weight-bold">Создан в:</p>
+        </div>
+        <div class="col-md-8">
+          <p><%%= @<%= singular_table_name %>.created_at %></p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-4">
+          <p class="font-weight-bold">Обновлено в:</p>
+        </div>
+        <div class="col-md-8">
+          <p><%%= @<%= singular_table_name %>.updated_at %></p>
+        </div>
+      </div>
+
+      <div class="row mt-4">
+        <div class="d-flex justify-content-start col-md-12">
+          <%= clink_to 'редактировать', edit_<%= singular_table_name %>_path(@<%= singular_table_name %>), 'fa-edit' %>
+          <%= cdlink_to 'удалить', @<%= singular_table_name %> %>
+          <%= clink_to 'Назад', <%= index_helper %>_path, 'fa-circle-arrow-left' %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
