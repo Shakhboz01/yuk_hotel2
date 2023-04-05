@@ -26,7 +26,9 @@
                 <td>
                   <%= clink_to 'показать', product, 'fa-eye' %>
                   <%= clink_to 'редактировать', edit_product_path(product), 'fa-edit' %>
-                  <%= cdlink_to 'удалить', product %>
+                </td>
+                <td>
+                  <%= clink_to 'Добить приход товара', new_expenditure_path(product_id: product.id, expenditure_type: Expenditure.expenditure_types.keys.first ), 'fa-truck-ramp-box' %>
                 </td>
               </tr>
             <% end -%>

@@ -1,0 +1,38 @@
+<%= simple_form_for(@expenditure, html: { class: 'form-horizontal' }) do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <div class="form-inputs">
+    <% if @action == 'for_product' %>
+      <% if policy(:view).access? %>
+        <%= f.input :total_paid %>
+      <% end %>
+
+      <%= f.association :outcomer, collection: Outcomer.where.not(role: :покупатель).pluck(:name, :id), class: 'form form-control', include_blank: false %>
+
+      <%= f.collection_select :product_id, Product.all, :id, :name, { selected: @product.id }, { include_blank: false, class: 'form form-control' } %>
+      <%= f.input :quantity %>
+      <%= f.input :product_price, collection: @product.product_prices.pluck(:price, :price), include_blank: false %>
+      <%= f.input :expenditure_type, input_html: {value: @expenditure_type}, as: :hidden %>
+    <% end %>
+
+    <% if @action == 'payment' %>
+      <%= f.association :user %>
+      <%= f.input :expenditure_type, input_html: {value: @expenditure_type}, as: :hidden %>
+    <% end %>
+
+    <% if @action == 'other' %>
+      <%= f.input :expenditure_type, collection: Expenditure.expenditure_types.keys.slice(4..-1).to_a.map { |key| [Expenditure.human_attribute_name("expenditure_type.#{key}"), key] }, include_blank: false %>
+    <% end %>
+
+    <% unless @action == 'for_product' %>
+      <%= f.input :price %>
+    <% end %>
+
+    <%= f.input :comment %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

@@ -12,6 +12,11 @@
           <%# <li class="nav-item active">
             <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
           </li> %>
+          <% if policy(:view).admin? %>
+            <li class="nav-item active">
+              <%= link_to 'workers', users_path, class: 'nav-link' %>
+            </li>
+          <% end %>
           <% if policy(:view).access? %>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -31,6 +36,27 @@
                 <%= link_to "поставщики", outcomers_path(role: :поставщик), class: "dropdown-item" %>
               </div>
             </li>
+           <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="outcomerDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Add expenditure
+              </a>
+              <div class="dropdown-menu" aria-labelledby="outcomerDropdown">
+                <%= link_to "for payment", new_expenditure_path(expenditure_type: 'зарплата'), class: "dropdown-item" %>
+                <%= link_to "аванс", new_expenditure_path(expenditure_type: 'аванс'), class: "dropdown-item" %>
+                <%= link_to "for the rest", new_expenditure_path, class: "dropdown-item" %>
+              </div>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="outcomerDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                expenditures
+              </a>
+              <div class="dropdown-menu" aria-labelledby="outcomerDropdown">
+                <%= link_to "for product", product_expenditure_expenditures_path, class: "dropdown-item" %>
+                <%= link_to "payment", payment_expenditure_expenditures_path, class: "dropdown-item" %>
+                <%= link_to "for the rest", expenditures_path, class: "dropdown-item" %>
+              </div>
+            </li>
+
           <% end %>
         <% end %>
       </ul>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_02_114756) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_02_125433) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -20,6 +20,23 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_02_114756) do
     t.boolean "active"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "expenditures", force: :cascade do |t|
+    t.bigint "executor_id"
+    t.string "comment"
+    t.bigint "user_id"
+    t.bigint "product_id"
+    t.bigint "outcomer_id"
+    t.integer "expenditure_type"
+    t.integer "price"
+    t.integer "quantity"
+    t.integer "total_paid"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["outcomer_id"], name: "index_expenditures_on_outcomer_id"
+    t.index ["product_id"], name: "index_expenditures_on_product_id"
+    t.index ["user_id"], name: "index_expenditures_on_user_id"
   end
 
   create_table "outcomers", force: :cascade do |t|
@@ -60,5 +77,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_02_114756) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "expenditures", "outcomers"
+  add_foreign_key "expenditures", "products"
+  add_foreign_key "expenditures", "users"
   add_foreign_key "product_prices", "products"
 end

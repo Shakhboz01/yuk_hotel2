@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  resources :expenditures do
+    collection do
+      get :payment_expenditure
+      get :product_expenditure
+    end
+  end
   resources :product_prices
   devise_for :users
   resources :products

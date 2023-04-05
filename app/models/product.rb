@@ -1,4 +1,4 @@
 class Product < ApplicationRecord
-  has_many :prices
+  has_many :product_prices
   validates :name, uniqueness: true
 end
