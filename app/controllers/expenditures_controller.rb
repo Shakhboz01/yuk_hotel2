@@ -28,7 +28,6 @@ class ExpendituresController < ApplicationController
     @product_expenditures = @q.result.order(id: :desc).page(params[:page]).per(40)
     @sum = @product_expenditures.sum(&:price)
     @total_paid_sum = @product_expenditures.sum(&:total_paid)
-
   end
 
   # GET /expenditures/1 or /expenditures/1.json

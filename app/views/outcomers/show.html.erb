@@ -1,4 +1,12 @@
 <div class="container my-5">
+  <div class='container'>
+    <h2><%= @outcomer.name %></h2>
+    <br><hr>
+    <%= render 'pages/filter_date_range_form', url: request.path %>
+    <%= render 'pages/outcome_info' %>
+    <%= render 'pages/action_chart' %>
+    <br>
+  </div>
   <div class="card shadow">
     <div class="card-header">
       <h3 class="card-title font-weight-bold">Клиент</h3>

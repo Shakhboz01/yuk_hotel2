@@ -14,6 +14,9 @@
           </li> %>
           <% if policy(:view).admin? %>
             <li class="nav-item active">
+              <%= link_to 'Панель администратора', dashboard_path, class: 'nav-link' %>
+            </li>
+            <li class="nav-item active">
               <%= link_to 'Работники', users_path, class: 'nav-link' %>
             </li>
           <% end %>
@@ -46,6 +49,7 @@
               <div class="dropdown-menu" aria-labelledby="outcomerDropdown">
                 <%= link_to "Для выплаты", new_expenditure_path(expenditure_type: 'зарплата'), class: "dropdown-item" %>
                 <%= link_to "Аванс", new_expenditure_path(expenditure_type: 'аванс'), class: "dropdown-item" %>
+                <%= link_to "Трансакция", new_expenditure_path(expenditure_type: 'трансакция'), class: "dropdown-item" %>
                 <%= link_to "Для прочих целей", new_expenditure_path, class: "dropdown-item" %>
               </div>
             </li>

@@ -11,6 +11,7 @@ Rails.application.routes.draw do
 
   # pages
   get 'main_page', to: 'pages#main_page'
+  get 'dashboard', to: 'pages#dashboard'
   root 'pages#welcoming_page'
 
   resources :books

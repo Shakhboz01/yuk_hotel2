@@ -12,6 +12,8 @@ class ApplicationController < ActionController::Base
       main_page_path
     elsif user.разгрузчик?
       products_path
+    elsif user.админ?
+      dashboard_path
     end
   end
 

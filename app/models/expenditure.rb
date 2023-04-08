@@ -11,16 +11,32 @@ class Expenditure < ApplicationRecord
   validates :price, presence: true, unless: -> { на_товар? }
   validate :if_worfer_payment_expenditure
   validate :if_product_expenditure
+  validate :set_total_paid
 
   scope :from_index_3, -> { where("expenditure_type >= ?", Expenditure.expenditure_types[:еда]) }
   scope :from_enum_to_enum, -> (x, y) { where(expenditure_type: x..y) }
 
+  scope :totals_by_time_duration, lambda { |day = 'day'|
+    select("date_trunc('#{day}', created_at) AS duration, sum(price) as amount")
+      .group('duration')
+      .order('duration, amount')
+      .map do |row|
+        [
+          row['duration'].strftime(day == 'hour' ? '%d-%b|%R' : '%D'),
+          row.amount.to_f
+        ]
+    end
+  }
   private
 
   def if_worfer_payment_expenditure
     if ['аванс', 'зарплата'].include?(expenditure_type) && user.nil?
       errors.add(:user, "error, please fill forms")
     end
+  end
+
+  def set_total_paid
+    self.total_paid = price unless expenditure_type == 'на_товар'
   end
 
   def if_product_expenditure

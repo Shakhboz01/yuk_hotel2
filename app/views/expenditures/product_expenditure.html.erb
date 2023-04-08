@@ -31,10 +31,10 @@
             <tr>
               <%= expenditure_color(expenditure) %>
               <td><%= expenditure.expenditure_type %></td>
-              <td><%= expenditure.product.name %></td>
-              <td><%= expenditure.quantity %></td>
+              <td><%= expenditure&.product&.name %></td>
+              <td><%= expenditure&.quantity %></td>
               <td><%= num_to_usd(expenditure.price) %></td>
-              <td><%= num_to_usd(expenditure.total_paid) %></td>
+              <td><%= expenditure.expenditure_type == 'на_товар' ? num_to_usd(expenditure.total_paid) : '' %></td>
               <td><%= expenditure.outcomer.name %></td>
               <td><%= User.find(expenditure.executor_id)&.name %></td>
               <td><%= expenditure.comment %></td>

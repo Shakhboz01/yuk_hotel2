@@ -8,6 +8,23 @@ class OutcomersController < ApplicationController
 
   def show
     authorize Outcomer, :manage?
+
+    if @outcomer.role == 'поставщик'
+      trans_action = @outcomer.expenditures
+
+      if params[:filter].present?
+        from = "#{params[:filter]['from(1i)']}-#{params[:filter]['from(2i)']}-#{params[:filter]['from(3i)']}".to_date.beginning_of_day
+        till = "#{params[:filter]['till(1i)']}-#{params[:filter]['till(2i)']}-#{params[:filter]['till(3i)']}".to_date.beginning_of_day
+
+        trans_action = trans_action.where(created_at: from..till)
+      end
+      # income
+      @total_outcome_with_debt = trans_action.sum(:price)
+      @total_debt = trans_action.sum(:price) - trans_action.sum(:total_paid)
+      @total_outcome_without_debt = @total_outcome_with_debt - @total_debt
+
+      @daily_outcome = trans_action.totals_by_time_duration
+    end
   end
 
   def edit
