@@ -46,7 +46,7 @@
           <th>ID</th>
           <th>Тип</th>
           <th>Стоимость</th>
-          <th>Итого дано</th>
+          <th>Оплачен</th>
           <th>Поставщик</th>
           <th>Количество</th>
           <th>Работник</th>
@@ -58,7 +58,7 @@
             <%= expenditure_color(expenditure) %>
             <td><%= expenditure.expenditure_type %></td>
             <td><%= num_to_usd(expenditure.price) %></td>
-            <td><%= num_to_usd(expenditure&.total_paid) %></td>
+            <td><%= expenditure.expenditure_type == 'на_товар' ? num_to_usd(expenditure&.total_paid) : '' %></td>
             <td><%= expenditure&.outcomer&.name %></td>
             <td><%= expenditure&.quantity %></td>
             <td><%= expenditure&.user&.name %></td>

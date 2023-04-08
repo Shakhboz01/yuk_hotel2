@@ -11,7 +11,7 @@
       <%= f.input :quantity, label: 'Количество' %>
       <%= f.input :product_price, collection: @product.product_prices.pluck(:price, :price), label: 'Цена продукта', include_blank: false %>
       <% if policy(:view).access? %>
-        <%= f.input :total_paid, label: 'Итого дано' %>
+        <%= f.input :total_paid, label: 'Оплачен' %>
       <% end %>
     <% end %>
 
