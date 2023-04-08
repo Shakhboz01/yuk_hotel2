@@ -8,7 +8,10 @@ Rails.application.routes.draw do
   resources :product_prices
   devise_for :users
   resources :products
-  root 'pages#main_page'
+
+  # pages
+  get 'main_page', to: 'pages#main_page'
+  root 'pages#welcoming_page'
 
   resources :books
   resources :users do

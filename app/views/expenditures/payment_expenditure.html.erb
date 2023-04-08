@@ -30,6 +30,7 @@
                 <td><%= expenditure.created_at.strftime('%Y-%m-%d %H:%M') %></td>
                 <td>
                   <%= clink_to 'редактировать', edit_expenditure_path(expenditure), 'fa-edit' %>
+                  <%= cdlink_to 'delete', expenditure %>
                 </td>
               </tr>
             <% end -%>

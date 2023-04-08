@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container">
 
-    <%= link_to 'Menu', root_path, class: 'navbar-brand' %>
+    <%= link_to 'Menu', main_page_path, class: 'navbar-brand' %>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -17,7 +17,7 @@
               <%= link_to 'workers', users_path, class: 'nav-link' %>
             </li>
           <% end %>
-          <% if policy(:view).access? %>
+          <% if policy(:view).product_access? %>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Products
@@ -27,6 +27,9 @@
                 <%= link_to 'product prices', product_prices_path, class: 'dropdown-item' %>
               </div>
             </li>
+          <% end %>
+
+          <% if policy(:view).access? %>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="outcomerDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Clients

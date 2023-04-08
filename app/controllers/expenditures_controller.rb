@@ -1,8 +1,12 @@
 class ExpendituresController < ApplicationController
   before_action :set_expenditure, only: %i[ show edit update destroy ]
 
+  include Pundit
+
   # GET /expenditures or /expenditures.json
   def index
+    authorize Expenditure, :manage?
+
     @expenditure_types = Expenditure.expenditure_types.sort
     @q = Expenditure.from_index_3.ransack(params[:q])
     @expenditures = @q.result.order(id: :desc).page(params[:page]).per(40)
@@ -56,6 +60,8 @@ class ExpendituresController < ApplicationController
 
   # GET /expenditures/1/edit
   def edit
+    authorize Expenditure, :manage?
+
     @action = 'other'
 
     unless @expenditure.product_id.nil?
@@ -79,7 +85,18 @@ class ExpendituresController < ApplicationController
     @expenditure.executor_id = current_user.id
     respond_to do |format|
       if @expenditure.save
-        format.html { redirect_to root_path, notice: "Expenditure was successfully created." }
+        format.html { redirect_to case @expenditure.expenditure_type
+        when 'на_товар', 'ликвидация'
+          if current_user.role == 'разгрузчик'
+            products_path
+          else
+            product_expenditure_expenditures_path
+          end
+        when 'аванс', 'зарплата'
+          payment_expenditure_expenditures_path
+        else
+          expenditures_path
+        end, notice: "Расход успешно создан." }
         format.json { render :show, status: :created, location: @expenditure }
       else
         format.html { redirect_to request.referrer }
@@ -90,9 +107,11 @@ class ExpendituresController < ApplicationController
 
   # PATCH/PUT /expenditures/1 or /expenditures/1.json
   def update
+    authorize Expenditure, :manage?
+
     respond_to do |format|
       if @expenditure.update(expenditure_params)
-        format.html { redirect_to expenditure_url(@expenditure), notice: "Expenditure was successfully updated." }
+        format.html { redirect_to expenditure_url(@expenditure), notice: "Расходы успешно обновлены." }
         format.json { render :show, status: :ok, location: @expenditure }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -103,6 +122,8 @@ class ExpendituresController < ApplicationController
 
   # DELETE /expenditures/1 or /expenditures/1.json
   def destroy
+    authorize Expenditure, :admin?
+
     @expenditure.destroy
 
     respond_to do |format|

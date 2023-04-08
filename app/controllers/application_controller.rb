@@ -7,12 +7,26 @@ class ApplicationController < ActionController::Base
 
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
+  def after_sign_in_path_for(user)
+    if user.менеджер?
+      main_page_path
+    elsif user.разгрузчик?
+      products_path
+    end
+  end
 
   private
 
   def user_not_authorized
     flash[:alert] = 'Вам не разрешено совершить эту операцию.'
     redirect_to(request.referrer || root_path)
+  end
+
+  def authenticate_user!
+    super
+    if current_user && !current_user.active_user
+      sign_out current_user
+    end
   end
 
   before_action :configure_permitted_parameters, if: :devise_controller?

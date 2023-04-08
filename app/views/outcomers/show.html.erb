@@ -43,7 +43,7 @@
       <div class="row mt-4">
         <div class="d-flex justify-content-start col-md-12">
           <%= clink_to 'редактировать', edit_outcomer_path(@outcomer), 'fa-edit' %>
-          <%= clink_to 'Назад', outcomers_path, 'fa-circle-arrow-left' %>
+          <%= clink_to 'Назад', outcomers_path(role: @outcomer.role), 'fa-circle-arrow-left' %>
         </div>
       </div>
     </div>
