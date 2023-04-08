@@ -42,7 +42,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_02_125433) do
   create_table "outcomers", force: :cascade do |t|
     t.integer "role"
     t.string "name"
-    t.boolean "active", default: true
+    t.boolean "active_outcomer", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -70,7 +70,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_02_125433) do
     t.datetime "remember_created_at"
     t.string "name"
     t.integer "role", default: 0
-    t.boolean "active", default: true
+    t.boolean "active_user", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_users_on_email", unique: true

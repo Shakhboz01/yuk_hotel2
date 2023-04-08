@@ -1,0 +1,36 @@
+<div class='container'>
+  <div class='row'>
+    <div class='col-sm-5'>
+      <h2 class='text-center'>Incomes</h2>
+    </div>
+    <div class='col-sm-7'>
+      <h2 class='text-center'>Expenditures</h2>
+      <table class='table table-hover table-striped'>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>type</th>
+            <th>price</th>
+            <th>поставщик</th>
+            <th>Кол.</th>
+            <th>total_paid</th>
+            <th>worker</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @expenditures.each do |expenditure| %>
+            <tr>
+              <td> <%= expenditure_color(expenditure) %> </td>
+              <td><%= expenditure.expenditure_type %></td>
+              <td><%= expenditure.price %></td>
+              <td><%= expenditure&.outcomer&.name %></td>
+              <td><%= expenditure&.quantity %></td>
+              <td><%= expenditure&.total_paid %></td>
+              <td><%= expenditure&.user&.name %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

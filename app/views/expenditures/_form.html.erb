@@ -4,35 +4,37 @@
 
   <div class="form-inputs">
     <% if @action == 'for_product' %>
+      <h3><%= @product.name %></h3>
+      <hr>
+      <%= f.association :outcomer, collection: Outcomer.where(active_outcomer: true).where(role: :поставщик).order(:name).pluck(:name, :id), class: 'form form-control', include_blank: false, label: 'Поставщик' %>
       <% if policy(:view).access? %>
-        <%= f.input :total_paid %>
+        <%= f.collection_select :product_id, Product.all, :id, :name, { selected: @product.id }, { include_blank: false, class: 'form form-control', label: 'Продукт' } %>
       <% end %>
-
-      <%= f.association :outcomer, collection: Outcomer.where.not(role: :покупатель).pluck(:name, :id), class: 'form form-control', include_blank: false %>
-
-      <%= f.collection_select :product_id, Product.all, :id, :name, { selected: @product.id }, { include_blank: false, class: 'form form-control' } %>
-      <%= f.input :quantity %>
-      <%= f.input :product_price, collection: @product.product_prices.pluck(:price, :price), include_blank: false %>
+      <%= f.input :quantity, label: 'Количество' %>
+      <%= f.input :product_price, collection: @product.product_prices.pluck(:price, :price), label: 'Цена продукта', include_blank: false %>
+      <% if policy(:view).access? %>
+        <%= f.input :total_paid, label: 'Итого дано' %>
+      <% end %>
       <%= f.input :expenditure_type, input_html: {value: @expenditure_type}, as: :hidden %>
     <% end %>
 
     <% if @action == 'payment' %>
-      <%= f.association :user %>
+      <%= f.association :user, User.where(active_user: true).order(:name).pluck(:name, :id) %>
       <%= f.input :expenditure_type, input_html: {value: @expenditure_type}, as: :hidden %>
     <% end %>
 
     <% if @action == 'other' %>
-      <%= f.input :expenditure_type, collection: Expenditure.expenditure_types.keys.slice(4..-1).to_a.map { |key| [Expenditure.human_attribute_name("expenditure_type.#{key}"), key] }, include_blank: false %>
+      <%= f.input :expenditure_type, collection: Expenditure.expenditure_types.keys.slice(4..-1).to_a.map { |key| [Expenditure.human_attribute_name("expenditure_type.#{key}"), key] }, include_blank: false, label: 'Тип рассхода' %>
     <% end %>
 
     <% unless @action == 'for_product' %>
-      <%= f.input :price %>
+      <%= f.input :price, label: 'цена' %>
     <% end %>
 
-    <%= f.input :comment %>
+    <%= f.input :comment, label: 'Комментарий (необязательно)' %>
   </div>
 
   <div class="form-actions">
-    <%= f.button :submit %>
+    <%= f.button :submit, class: 'btn btn-primary' %>
   </div>
 <% end %>

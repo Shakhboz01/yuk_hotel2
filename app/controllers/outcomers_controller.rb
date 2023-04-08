@@ -25,11 +25,11 @@ class OutcomersController < ApplicationController
   end
 
   def show_buyer
-    @outcomer = Outcomer.find_by(role: :покупатель)
+    @outcomer = Outcomer.find_by(role: :покупатель).order(:active_outcomer)
   end
 
   def show_supplier
-    @outcomer = Outcomer.find_by(role: :поставщик)
+    @outcomer = Outcomer.find_by(role: :поставщик).order(:active_outcomer)
   end
 
   def index
@@ -52,6 +52,18 @@ class OutcomersController < ApplicationController
     else
       render :new
     end
+  end
+
+  def toggle_active_outcomer
+    authorize Outcomer, :manage?
+
+    @outcomer = Outcomer.find(params[:id])
+    if @outcomer.update(active_outcomer: !@outcomer.active_outcomer)
+      flash[:success] = 'Статус успешно обновлен'
+    else
+      flash[:error] = 'Не удалось обновить статус'
+    end
+    redirect_to outcomers_path
   end
 
   private

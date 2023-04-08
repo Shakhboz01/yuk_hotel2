@@ -15,4 +15,17 @@ module ApplicationHelper
   def num_to_usd(price)
     number_to_currency(price, unit: '')
   end
+
+  def expenditure_color(expenditure)
+    return expenditure.id unless expenditure.expenditure_type == 'на_товар'
+
+    if expenditure.price == expenditure.total_paid
+      color = 'yellow'
+    elsif expenditure.price > expenditure.total_paid
+      color = 'red'
+    else
+      color = 'green'
+    end
+    "<div style='color: #{color}'>#{expenditure.id}</div>".html_safe
+  end
 end

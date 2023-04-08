@@ -7,20 +7,22 @@
         <th>Имя</th>
         <th>Email адрес</th>
         <th>Роль</th>
-        <th>Активность</th>
         <th></th>
       </tr>
     </thead>
     <tbody>
       <% @users.each do |user| %>
-        <tr>
+        <tr class="<%= !user.active_user && 'table-danger'  %>">
           <td><%= user.name %></td>
           <td><%= user.email %></td>
           <td><%= user.role.capitalize %></td>
-          <td><%= user.active? ? 'Да' : 'Нет' %></td>
           <td>
             <%= clink_to 'Редактировать', edit_user_path(user), 'fa-edit' %>
-            <%= cdlink_to 'Удалить', user %>
+            <% if  user.active_user %>
+              <%= clink_to 'Деактивировать работника! (работник не будет получать оплату и не может использовать это приложение)', toggle_active_user_user_path(user), 'fa-ban' %>
+            <% else %>
+              <%= clink_to 'активировать работника! (работник может быть оплачен и может использовать это приложение)', toggle_active_user_user_path(user), 'fa-arrow-rotate-right' %>
+            <% end %>
           </td>
         </tr>
       <% end %>

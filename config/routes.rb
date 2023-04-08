@@ -8,11 +8,15 @@ Rails.application.routes.draw do
   resources :product_prices
   devise_for :users
   resources :products
-  root 'books#index'
+  root 'pages#main_page'
+
   resources :books
-  resources :users
+  resources :users do
+    get :toggle_active_user, on: :member
+  end
   resources :outcomers do
     member do
+      get :toggle_active_outcomer
       get :show_buyer
       get :show_supplier
     end

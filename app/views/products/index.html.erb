@@ -24,8 +24,10 @@
                 <td><%= product.created_at.strftime('%Y-%m-%d %H:%M:%S') %></td>
                 <td><%= product.updated_at.strftime('%Y-%m-%d %H:%M:%S') %></td>
                 <td>
+                <% if policy(:view).access? %>
                   <%= clink_to 'показать', product, 'fa-eye' %>
                   <%= clink_to 'редактировать', edit_product_path(product), 'fa-edit' %>
+                <% end %>
                 </td>
                 <td>
                   <%= clink_to 'Добить приход товара', new_expenditure_path(product_id: product.id, expenditure_type: Expenditure.expenditure_types.keys.first ), 'fa-truck-ramp-box' %>

@@ -27,8 +27,6 @@ class Expenditure < ApplicationRecord
     if expenditure_type == 'на_товар' && (outcomer.nil? || quantity.nil? || product.nil?)
       errors.add(:base, "error, please fill forms")
     elsif expenditure_type == 'на_товар' && !quantity.nil?
-      return errors.add(:base, "total_paid cannot be grater than price") if total_paid > price
-
       if new_record?
         product.increment!(:amount_left, quantity)
       else
