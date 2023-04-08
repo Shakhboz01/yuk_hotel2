@@ -13,16 +13,22 @@
       <% if policy(:view).access? %>
         <%= f.input :total_paid, label: 'Итого дано' %>
       <% end %>
-      <%= f.input :expenditure_type, input_html: {value: @expenditure_type}, as: :hidden %>
     <% end %>
 
     <% if @action == 'payment' %>
       <%= f.association :user, collection: User.where(active_user: true).order(:name).pluck(:name, :id), label: 'Работник' %>
-      <%= f.input :expenditure_type, input_html: {value: @expenditure_type}, as: :hidden %>
     <% end %>
 
     <% if @action == 'other' %>
       <%= f.input :expenditure_type, collection: Expenditure.expenditure_types.keys.slice(4..-1).to_a.map { |key| [Expenditure.human_attribute_name("expenditure_type.#{key}"), key] }, include_blank: false, label: 'Тип рассхода' %>
+    <% end %>
+
+    <% unless @action == 'other' %>
+      <%= f.input :expenditure_type, input_html: {value: @expenditure_type}, as: :hidden %>
+    <% end %>
+
+    <% if @action == 'transaction' %>
+      <%= f.association :outcomer, collection: Outcomer.where(active_outcomer: true).where(role: :поставщик).order(:name).pluck(:name, :id), class: 'form form-control', include_blank: false, label: 'Поставщик' %>
     <% end %>
 
     <% unless @action == 'for_product' %>

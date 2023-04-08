@@ -22,7 +22,7 @@ class ExpendituresController < ApplicationController
   end
 
   def product_expenditure
-    @expenditure_types = [['на_товар', 0], ['ликвидация', 1]]
+    @expenditure_types = [['на_товар', 0], ['трансакция', 1]]
     @q = Expenditure.from_enum_to_enum(0, 1).ransack(params[:q])
 
     @product_expenditures = @q.result.order(id: :desc).page(params[:page]).per(40)
@@ -56,6 +56,10 @@ class ExpendituresController < ApplicationController
     if defined?(@expenditure_type) && ['аванс', 'зарплата'].include?(@expenditure_type)
       @action = 'payment'
     end
+
+    if @expenditure_type == 'трансакция'
+      @action = 'transaction'
+    end
   end
 
   # GET /expenditures/1/edit
@@ -77,6 +81,10 @@ class ExpendituresController < ApplicationController
     if ['аванс', 'зарплата'].include?(@expenditure_type)
       @action = 'payment'
     end
+
+    if @expenditure_type == 'трансакция'
+      @action = 'transaction'
+    end
   end
 
   # POST /expenditures or /expenditures.json
@@ -86,7 +94,7 @@ class ExpendituresController < ApplicationController
     respond_to do |format|
       if @expenditure.save
         format.html { redirect_to case @expenditure.expenditure_type
-        when 'на_товар', 'ликвидация'
+        when 'на_товар', 'трансакция'
           if current_user.role == 'разгрузчик'
             products_path
           else
