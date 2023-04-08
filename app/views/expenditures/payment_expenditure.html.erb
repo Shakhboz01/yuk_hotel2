@@ -2,6 +2,9 @@
   <div class="card shadow">
     <%= render 'index_filter_form', type: 'payment', url: request.path, q: @q %>
     <div class="card-body">
+      <div class= 'card-header'>
+        <h3>Расход на зарплату</h3>
+      </div>
         <div class="sum-of-prices mb-3 d-flex">
           <strong>Сумма цен: <%= num_to_usd(@sum) %></strong>
         </div>

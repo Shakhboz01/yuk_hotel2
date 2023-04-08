@@ -17,15 +17,42 @@ module ApplicationHelper
   end
 
   def expenditure_color(expenditure)
-    return expenditure.id unless expenditure.expenditure_type == 'на_товар'
+    unless expenditure.expenditure_type == 'на_товар'
+      return "<td>#{expenditure.id}</td>".html_safe
+    end
 
     if expenditure.price == expenditure.total_paid
-      color = 'yellow'
+      color = 'bg-warning'
     elsif expenditure.price > expenditure.total_paid
-      color = 'red'
+      color = 'bg-danger'
     else
-      color = 'green'
+      color = 'bg-success'
     end
-    "<div style='color: #{color}'>#{expenditure.id}</div>".html_safe
+    "<td class='#{color}'>#{expenditure.id}</td>".html_safe
+  end
+
+  def calculate_difference(outcomer)
+    class_name = ''
+    difference=0
+
+    if outcomer.role == 'поставщик'
+      expenditures = outcomer.expenditures
+
+
+      difference = expenditures.sum(:total_paid) - expenditures.sum(:price)
+
+      if difference == 0
+        class_name = 'bg-warning'
+      elsif difference < 0
+        class_name = 'bg-danger'
+      else
+        class_name = 'bg-success'
+      end
+    end
+
+    "<td class='#{class_name}'>#{outcomer.id}</td> \n
+          <td>#{num_to_usd(difference)}</td>
+         ".html_safe
+
   end
 end

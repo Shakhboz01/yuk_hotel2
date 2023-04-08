@@ -1,36 +1,73 @@
-<div class='container'>
-  <div class='row'>
-    <div class='col-sm-5'>
-      <h2 class='text-center'>Incomes</h2>
-    </div>
-    <div class='col-sm-7'>
-      <h2 class='text-center'>Expenditures</h2>
-      <table class='table table-hover table-striped'>
-        <thead>
+<%= render 'filter_form', url: request.path %>
+<div class='row'>
+  <div class='col-sm-2'>
+    <h2 class='text-center'>Клиенты</h2>
+    <table class='table shadow table-hover table-striped'>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Разница</th>
+          <th>Имя</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @outcomers.each do |outcomer| %>
           <tr>
-            <th>ID</th>
-            <th>type</th>
-            <th>price</th>
-            <th>поставщик</th>
-            <th>Кол.</th>
-            <th>total_paid</th>
-            <th>worker</th>
+            <%= calculate_difference(outcomer) %>
+            <td>
+              <% if outcomer.role == 'покупатель' %>
+                <i class="fa-solid fa-dollar-sign"></i>
+              <% end %>
+              <%= outcomer.name.capitalize() %></td>
           </tr>
-        </thead>
-        <tbody>
-          <% @expenditures.each do |expenditure| %>
-            <tr>
-              <td> <%= expenditure_color(expenditure) %> </td>
-              <td><%= expenditure.expenditure_type %></td>
-              <td><%= expenditure.price %></td>
-              <td><%= expenditure&.outcomer&.name %></td>
-              <td><%= expenditure&.quantity %></td>
-              <td><%= expenditure&.total_paid %></td>
-              <td><%= expenditure&.user&.name %></td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-    </div>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <div class='col-sm-4'>
+    <h2 class='text-center'>Доходы</h2>
+    <table class='table shadow table-hover table-striped'>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Покупатель</th>
+          <th>Продукт</th>
+          <th>Сумма</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+  <div class='col-sm-6'>
+    <h2 class='text-center'>Расходы</h2>
+    <table class='table shadow table-hover table-striped'>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Тип</th>
+          <th>Стоимость</th>
+          <th>Итого дано</th>
+          <th>Поставщик</th>
+          <th>Количество</th>
+          <th>Работник</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @expenditures.each do |expenditure| %>
+          <tr>
+            <%= expenditure_color(expenditure) %>
+            <td><%= expenditure.expenditure_type %></td>
+            <td><%= num_to_usd(expenditure.price) %></td>
+            <td><%= num_to_usd(expenditure&.total_paid) %></td>
+            <td><%= expenditure&.outcomer&.name %></td>
+            <td><%= expenditure&.quantity %></td>
+            <td><%= expenditure&.user&.name %></td>
+            <% if expenditure.expenditure_type == 'на_товар' %>
+              <td><%= clink_to 'редактировать', edit_expenditure_path(expenditure), 'fa-edit' %></td>
+            <% end %>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
   </div>
 </div>

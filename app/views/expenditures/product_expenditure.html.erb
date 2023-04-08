@@ -1,6 +1,9 @@
 <div class="container m-auto">
   <div class="card shadow">
     <%= render 'index_filter_form', type: 'for_product', url: request.path, q: @q %>
+    <div class= 'card-header'>
+      <h3>Расход на товар</h3>
+    </div>
     <div class="card-body">
       <div class="sum-of-prices mb-3 d-flex" style='justify-content: space-evenly'>
         <strong>Сумма фактических цен: <%= num_to_usd(@sum) %></strong>
@@ -26,7 +29,7 @@
         <tbody>
           <% @product_expenditures.each do |expenditure| -%>
             <tr>
-              <td><%= expenditure_color(expenditure) %></td>
+              <%= expenditure_color(expenditure) %>
               <td><%= expenditure.expenditure_type %></td>
               <td><%= expenditure.product.name %></td>
               <td><%= expenditure.quantity %></td>
