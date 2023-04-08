@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container">
 
-    <%= link_to 'Menu', main_page_path, class: 'navbar-brand' %>
+    <%= link_to 'Меню', main_page_path, class: 'navbar-brand' %>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -14,17 +14,17 @@
           </li> %>
           <% if policy(:view).admin? %>
             <li class="nav-item active">
-              <%= link_to 'workers', users_path, class: 'nav-link' %>
+              <%= link_to 'Работники', users_path, class: 'nav-link' %>
             </li>
           <% end %>
           <% if policy(:view).product_access? %>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Products
+                Товары
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <%= link_to 'products', products_path, class: 'dropdown-item' %>
-                <%= link_to 'product prices', product_prices_path, class: 'dropdown-item' %>
+                <%= link_to 'Товары', products_path, class: 'dropdown-item' %>
+                <%= link_to 'Цены на товары', product_prices_path, class: 'dropdown-item' %>
               </div>
             </li>
           <% end %>
@@ -32,31 +32,31 @@
           <% if policy(:view).access? %>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="outcomerDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Clients
+                Клиенты
               </a>
               <div class="dropdown-menu" aria-labelledby="outcomerDropdown">
-                <%= link_to "покупатели", outcomers_path(role: :покупатель), class: "dropdown-item" %>
-                <%= link_to "поставщики", outcomers_path(role: :поставщик), class: "dropdown-item" %>
+                <%= link_to "Покупатели", outcomers_path(role: :покупатель), class: "dropdown-item" %>
+                <%= link_to "Поставщики", outcomers_path(role: :поставщик), class: "dropdown-item" %>
               </div>
             </li>
            <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="outcomerDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Add expenditure
+                Добавить расходы
               </a>
               <div class="dropdown-menu" aria-labelledby="outcomerDropdown">
-                <%= link_to "for payment", new_expenditure_path(expenditure_type: 'зарплата'), class: "dropdown-item" %>
-                <%= link_to "аванс", new_expenditure_path(expenditure_type: 'аванс'), class: "dropdown-item" %>
-                <%= link_to "for the rest", new_expenditure_path, class: "dropdown-item" %>
+                <%= link_to "Для выплаты", new_expenditure_path(expenditure_type: 'зарплата'), class: "dropdown-item" %>
+                <%= link_to "Аванс", new_expenditure_path(expenditure_type: 'аванс'), class: "dropdown-item" %>
+                <%= link_to "Для прочих целей", new_expenditure_path, class: "dropdown-item" %>
               </div>
             </li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="outcomerDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                expenditures
+                Расходы
               </a>
               <div class="dropdown-menu" aria-labelledby="outcomerDropdown">
-                <%= link_to "for product", product_expenditure_expenditures_path, class: "dropdown-item" %>
-                <%= link_to "payment", payment_expenditure_expenditures_path, class: "dropdown-item" %>
-                <%= link_to "for the rest", expenditures_path, class: "dropdown-item" %>
+                <%= link_to "для продукта", product_expenditure_expenditures_path, class: "dropdown-item" %>
+                <%= link_to "зарплата", payment_expenditure_expenditures_path, class: "dropdown-item" %>
+                <%= link_to "для остального", expenditures_path, class: "dropdown-item" %>
               </div>
             </li>
 
