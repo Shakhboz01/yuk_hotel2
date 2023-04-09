@@ -13,7 +13,7 @@ module ApplicationHelper
   end
 
   def num_to_usd(price)
-    number_to_currency(price)
+    number_to_currency(price, unit: '')
   end
 
   def expenditure_color(expenditure)
