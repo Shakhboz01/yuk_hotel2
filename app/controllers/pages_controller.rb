@@ -4,7 +4,9 @@ class PagesController < ApplicationController
 
     return redirect_to request.referrer unless is_allowed
 
-    @expenditures = Expenditure.all.order(id: :desc)
+    @expenditures =
+      Expenditure.where(created_at: DateTime.current.beginning_of_day..DateTime.current.end_of_day)
+                 .order(id: :desc)
     @outcomers = Outcomer.where(active_outcomer: true).order(role: :desc)
 
     if params.dig(:q, :date)

@@ -27,6 +27,9 @@ class Expenditure < ApplicationRecord
         ]
     end
   }
+  def self.ransackable_associations(auth_object = nil)
+    ["executor", "outcomer", "product", "user"]
+    end
   private
 
   def if_worfer_payment_expenditure

@@ -6,8 +6,12 @@
     </div>
     <div class="card-body">
       <div class="sum-of-prices mb-3 d-flex" style='justify-content: space-evenly'>
-        <strong>Сумма фактических цен: <%= num_to_usd(@sum) %></strong>
-        <strong>Сумма реальных цен: <%= num_to_usd(@total_paid_sum) %></strong>
+        <strong>ОБЩАЯ ЦЕНА ПОЛУЧЕННЫХ СЫРЬЯ: <%= num_to_usd(@sum) %></strong>
+        <strong>-</strong>
+        <strong>ОПЛАЧЕННАЯ СУММА: <%= num_to_usd(@total_paid_sum) %></strong>
+        <strong>=</strong>
+        <%= calculate_expenditure_diff(@sum - @total_paid_sum) %>
+        <%# color it %>
       </div>
       <table class="table table-bordered table-striped table-hover">
         <thead>

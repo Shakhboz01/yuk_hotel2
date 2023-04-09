@@ -16,7 +16,7 @@ class ExpendituresController < ApplicationController
 
   def payment_expenditure
     @expenditure_types = [['зарплата', 3], ['аванс', 2]]
-    @q = Expenditure.from_enum_to_enum(1, 3).ransack(params[:q])
+    @q = Expenditure.from_enum_to_enum(2, 3).ransack(params[:q])
     @payment_expenditures = @q.result.order(id: :desc).page(params[:page]).per(40)
     @sum = @payment_expenditures.sum(&:price)
   end
@@ -26,7 +26,7 @@ class ExpendituresController < ApplicationController
     @q = Expenditure.from_enum_to_enum(0, 1).ransack(params[:q])
 
     @product_expenditures = @q.result.order(id: :desc).page(params[:page]).per(40)
-    @sum = @product_expenditures.sum(&:price)
+    @sum = @product_expenditures.на_товар.sum(&:price)
     @total_paid_sum = @product_expenditures.sum(&:total_paid)
   end
 

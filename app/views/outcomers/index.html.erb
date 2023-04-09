@@ -26,7 +26,11 @@
                 <%= calculate_difference(outcomer) %>
                 <td><%= outcomer.name %></td>
                 <td>
-                  <%= clink_to '', outcomer_path(outcomer), 'fa-search' %>
+                  <% if outcomer.поставщик? %>
+                    <%= clink_to 'посмотреть детально', product_expenditure_expenditures_path(q: {outcomer_id_eq: outcomer.id}), 'fa-eye' %>
+                  <% else %>
+                    <%= clink_to '', outcomer_path(outcomer), 'fa-search' %>
+                  <% end %>
                   <%= clink_to 'редактировать', edit_outcomer_path(outcomer), 'fa-edit' %>
                 </td>
                 <td>

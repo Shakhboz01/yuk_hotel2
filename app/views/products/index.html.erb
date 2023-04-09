@@ -6,13 +6,14 @@
     </div>
     <div class="card-body">
       <% if @products.any? -%>
-        <table class="table table-bordered table-hover">
+        <table class="table table-bordered table-striped table-hover">
           <thead>
             <tr>
               <th>Название</th>
-              <th>Количество оставшегося товара</th>
-              <th>Создан в</th>
-              <th>Обновлено в</th>
+              <th>остаток</th>
+              <th>сумма на расход</th>
+              <th>средняя</th>
+              <th>Товар cоздан в:</th>
               <th>Действия</th>
             </tr>
           </thead>
@@ -20,12 +21,16 @@
             <% @products.each do |product| -%>
               <tr>
                 <td><%= product.name %></td>
+                <% if policy(:view).access? %>
                 <td><%= product.amount_left %></td>
+                <td><%= num_to_usd(product.expenditures.sum(:price)) %></td>
+                <td><%= num_to_usd(product.expenditures.sum(:price).to_f / product.amount_left) %></td>
                 <td><%= product.created_at.strftime('%Y-%m-%d %H:%M:%S') %></td>
-                <td><%= product.updated_at.strftime('%Y-%m-%d %H:%M:%S') %></td>
+                <% end %>
                 <td>
                 <% if policy(:view).access? %>
-                  <%= clink_to 'показать', product, 'fa-eye' %>
+                  <%# create a link here that navigates to expenditure index with params of product_id_eq equal to product.id  %>
+                  <%= clink_to 'посмотреть детально', product_expenditure_expenditures_path(q: {product_id_eq: product.id}), 'fa-eye' %>
                   <%= clink_to 'редактировать', edit_product_path(product), 'fa-edit' %>
                 <% end %>
                 </td>

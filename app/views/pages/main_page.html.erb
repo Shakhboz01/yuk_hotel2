@@ -12,6 +12,8 @@
       </thead>
       <tbody>
         <% @outcomers.each do |outcomer| %>
+          <% if (outcomer.expenditures.sum(:total_paid) - outcomer.expenditures.на_товар.sum(:price)) != 0 %>
+
           <tr>
             <%= calculate_difference(outcomer) %>
             <td>
@@ -20,6 +22,7 @@
               <% end %>
               <%= outcomer.name.capitalize() %></td>
           </tr>
+          <% end %>
         <% end %>
       </tbody>
     </table>

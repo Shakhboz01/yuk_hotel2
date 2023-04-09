@@ -27,7 +27,7 @@
                 <td><%= expenditure.id %></td>
                 <td><%= expenditure.expenditure_type %></td>
                 <td><%= num_to_usd(expenditure.price) %></td>
-                <td><%= expenditure.user.name %></td>
+                <td><%= expenditure&.user&.name %></td>
                 <td><%= User.find(expenditure.executor_id)&.name %></td>
                 <td><%= expenditure.comment %></td>
                 <td><%= expenditure.created_at.strftime('%Y-%m-%d %H:%M') %></td>

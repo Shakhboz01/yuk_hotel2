@@ -8,7 +8,7 @@
 
     <div class="card-body">
         <div class="sum-of-prices mb-3">
-          <strong>Сумма цен: <%= num_to_usd(@sum) %></strong>
+          <strong>Общая сумма: <%= num_to_usd(@sum) %></strong>
         </div>
         <table class="table table-bordered table-striped table-hover">
           <thead>
@@ -33,7 +33,7 @@
                 <td><%= expenditure.created_at.strftime('%Y-%m-%d %H:%M') %></td>
                 <td>
                   <%= clink_to 'редактировать', edit_expenditure_path(expenditure), 'fa-edit' %>
-                  <%= cdlink_to expenditure %>
+                  <%= cdlink_to 'удалить', expenditure %>
                 </td>
               </tr>
             <% end -%>
