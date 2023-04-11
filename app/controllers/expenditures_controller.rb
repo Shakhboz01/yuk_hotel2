@@ -90,24 +90,36 @@ class ExpendituresController < ApplicationController
   def create
     @expenditure = Expenditure.new(expenditure_params)
     @expenditure.executor_id = current_user.id
-    respond_to do |format|
-      if @expenditure.save
-        format.html { redirect_to case @expenditure.expenditure_type
-        when 'на_товар', 'трансакция'
-          if current_user.role == 'разгрузчик'
-            products_path
+    if @expenditure.save
+      unless ['админ', 'менеджер'].include?(current_user.role)
+        redirect_to roles_path
+        sign_out current_user
+        return
+      end
+
+      respond_to do |format|
+        format.html do
+          redirect_to case @expenditure.expenditure_type
+          when 'на_товар', 'трансакция'
+            if current_user.role == 'приёмщик'
+              products_path
+            else
+              product_expenditure_expenditures_path
+            end
+          when 'аванс', 'зарплата'
+            payment_expenditure_expenditures_path
           else
-            product_expenditure_expenditures_path
-          end
-        when 'аванс', 'зарплата'
-          payment_expenditure_expenditures_path
-        else
-          expenditures_path
-        end, notice: "Расход успешно создан." }
+            expenditures_path
+          end, notice: "Расход успешно создан."
+        end
         format.json { render :show, status: :created, location: @expenditure }
-      else
-        format.html { redirect_to request.referrer }
+        format.js   # handle JS format
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to request.referrer, notice: @expenditure.errors.messages.values.join() }
         format.json { render json: @expenditure.errors, status: :unprocessable_entity }
+        format.js   # handle JS format
       end
     end
   end
@@ -120,7 +132,7 @@ class ExpendituresController < ApplicationController
       if @expenditure.update(expenditure_params)
         format.html { redirect_to case @expenditure.expenditure_type
         when 'на_товар', 'трансакция'
-          if current_user.role == 'разгрузчик'
+          if current_user.role == 'приёмщик'
             products_path
           else
             product_expenditure_expenditures_path

@@ -4,7 +4,7 @@ class ViewPolicy < ApplicationPolicy
   end
 
   def product_access?
-    user_is_manager? || user.разгрузчик?
+    user_is_manager? || user.приёмщик?
   end
 
   def admin?

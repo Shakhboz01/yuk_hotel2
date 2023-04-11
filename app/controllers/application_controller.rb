@@ -10,11 +10,15 @@ class ApplicationController < ActionController::Base
   def after_sign_in_path_for(user)
     if user.менеджер?
       main_page_path
-    elsif user.разгрузчик?
+    elsif user.приёмщик?
       products_path
     elsif user.админ?
       dashboard_path
     end
+  end
+
+  def after_sign_out_path_for(resource_or_scope)
+    roles_path
   end
 
   private

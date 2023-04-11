@@ -6,12 +6,15 @@ Rails.application.routes.draw do
     end
   end
   resources :product_prices
-  devise_for :users
+  devise_for :users, controllers: { sessions: 'sessions' }
+
   resources :products
 
   # pages
   get 'main_page', to: 'pages#main_page'
   get 'dashboard', to: 'pages#dashboard'
+  get 'roles', to: 'pages#roles'
+
   root 'pages#welcoming_page'
 
   resources :books

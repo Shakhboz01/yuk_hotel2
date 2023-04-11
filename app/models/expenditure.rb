@@ -43,8 +43,8 @@ class Expenditure < ApplicationRecord
   end
 
   def if_product_expenditure
-    if expenditure_type == 'на_товар' && (outcomer.nil? || quantity.nil? || product.nil?)
-      errors.add(:base, "error, please fill forms")
+    if expenditure_type == 'на_товар' && [outcomer, quantity, product, product_price].any?(&:blank?)
+      errors.add(:base, "ошибка, пожалуйста, заполните формы")
     elsif expenditure_type == 'на_товар' && !quantity.nil?
       if new_record?
         product.increment!(:amount_left, quantity)

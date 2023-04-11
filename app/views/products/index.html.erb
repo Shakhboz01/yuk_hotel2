@@ -1,48 +1,66 @@
 <div class="container my-5">
-  <div class="card shadow">
-    <div class="card-header d-flex justify-content-between align-items-center">
-      <h3 class="card-title font-weight-bold">Товары</h3>
-    </div>
-    <div class="card-body">
-      <% if @products.any? -%>
-        <table class="table table-bordered table-striped table-hover">
-          <thead>
-            <tr>
-              <th>Название</th>
-              <th>остаток</th>
-              <th>сумма на расход</th>
-              <th>средняя</th>
-              <th>Товар cоздан в:</th>
-              <th>Действия</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% @products.each do |product| -%>
+  <div style='background:#c6c5c5;' class="card shadow">
+
+    <% if current_user.приёмщик? %>
+    <div style='background:#c6c5c5;' class="card-header text-center"><h3>ПРИЕМ МАКУЛАТУРУ:</h3></div>
+      <div style='display: flex; flex-direction:column; align-items:center; justify-content:center;'>
+        <% @products.where(weight: 0).each do |product| %>
+          <%= link_to new_expenditure_path(product_id: product.id, expenditure_type: Expenditure.expenditure_types.keys.first ) do %>
+            <div class='shadow' style='width: 520px; text-align:center; margin: 10px; height: 90px; background-color:<%= case product.id
+              when 1
+                '#c2b280'
+              when 2
+                'grey'
+              else
+                'white'
+              end %>'
+            >
+              <h2 style=' color: black'><%= product.name %></h2>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+
+    <% else %>
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <h3 class="card-title font-weight-bold">Товары</h3>
+      </div>
+      <div class="card-body">
+        <% if @products.any? -%>
+          <table class="table table-bordered table-striped table-hover">
+            <thead>
               <tr>
-                <td><%= product.name %></td>
-                <% if policy(:view).access? %>
-                <td><%= product.amount_left %></td>
-                <td><%= num_to_usd(product.expenditures.sum(:price)) %></td>
-                <td><%= num_to_usd(product.expenditures.sum(:price).to_f / product.amount_left) %></td>
-                <td><%= product.created_at.strftime('%Y-%m-%d %H:%M:%S') %></td>
-                <% end %>
-                <td>
-                <% if policy(:view).access? %>
-                  <%# create a link here that navigates to expenditure index with params of product_id_eq equal to product.id  %>
-                  <%= clink_to 'посмотреть детально', product_expenditure_expenditures_path(q: {product_id_eq: product.id}), 'fa-eye' %>
-                  <%= clink_to 'редактировать', edit_product_path(product), 'fa-edit' %>
-                <% end %>
-                </td>
-                <td>
-                  <%= clink_to 'Добить приход товара', new_expenditure_path(product_id: product.id, expenditure_type: Expenditure.expenditure_types.keys.first ), 'fa-truck-ramp-box' %>
-                </td>
+                <th>Название</th>
+                <th>остаток</th>
+                <th>сумма на расход</th>
+                <th>средняя</th>
+                <th>Товар cоздан в:</th>
+                <th>Действия</th>
               </tr>
-            <% end -%>
-          </tbody>
-        </table>
-      <% else -%>
-        <p class="text-center">Товаров нет.</p>
-      <% end -%>
-    </div>
+            </thead>
+            <tbody>
+              <% @products.each do |product| -%>
+                <tr>
+                  <td><%= product.name %></td>
+                  <td><%= product.amount_left %></td>
+                  <td><%= num_to_usd(product.expenditures.sum(:price)) %></td>
+                  <td><%= num_to_usd(product.expenditures.sum(:price).to_f / product.amount_left) %></td>
+                  <td><%= product.created_at.strftime('%Y-%m-%d %H:%M:%S') %></td>
+                  <td>
+                    <%= clink_to 'посмотреть детально', product_expenditure_expenditures_path(q: {product_id_eq: product.id}), 'fa-eye' %>
+                    <%= clink_to 'редактировать', edit_product_path(product), 'fa-edit' %>
+                  </td>
+                  <td>
+                    <%= clink_to 'Добить приход товара', new_expenditure_path(product_id: product.id, expenditure_type: Expenditure.expenditure_types.keys.first ), 'fa-truck-ramp-box' %>
+                  </td>
+                </tr>
+              <% end -%>
+            </tbody>
+          </table>
+        <% else -%>
+          <p class="text-center">Товаров нет.</p>
+        <% end -%>
+      </div>
+    <% end %>
   </div>
 </div>

@@ -1,5 +1,8 @@
 class PagesController < ApplicationController
+  skip_before_action :authenticate_user!, only: %i[roles]
+
   def main_page
+
     is_allowed = %w[админ менеджер].include?(current_user.role)
 
     return redirect_to request.referrer unless is_allowed
@@ -52,5 +55,9 @@ class PagesController < ApplicationController
       @most_active_customer = Outcomer.find(customers.last[0]).name
       @most_inactive_customer = Outcomer.find(customers.first[0]).name
     end
+  end
+
+  def roles
+     @roles = [:приёмщик, :заготовщик, :продавец, :упаковщик, :оператор, :другой, :админ, :менеджер]
   end
 end
