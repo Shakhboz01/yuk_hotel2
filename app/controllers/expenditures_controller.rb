@@ -45,6 +45,9 @@ class ExpendituresController < ApplicationController
       @product = Product.find(params[:product_id])
       @action = @action = 'for_product'
 
+      # define weight to sort outcomers
+      @outcomers = Outcomer.with_weight_and_role(@product.weight.zero?)
+
       return request.referrer unless @product
     end
 
@@ -70,6 +73,7 @@ class ExpendituresController < ApplicationController
     unless @expenditure.product_id.nil?
       @product = @expenditure.product
       @action = @action = 'for_product'
+      @outcomers = Outcomer.with_weight_and_role(@product.weight.zero?)
 
       return request.referrer unless @product
     end

@@ -6,7 +6,7 @@
     <% if @action == 'for_product' %>
       <h3><%= @product.name %></h3>
       <%= f.label :outcomer_id, 'Выберите Поставщика:' %>
-      <%= f.select :outcomer_id, options_for_select(Outcomer.where(active_outcomer: true).where(role: :поставщик).order(:name).pluck(:name, :id)), { include_blank: false, label: 'Выберите Поставщика', required: true, autofocus: true, multiple: true }, { class: 'form-control custom-select-lg', size: 5 } %>
+      <%= f.select :outcomer_id, options_for_select(@outcomers.where(active_outcomer: true).order(:name).pluck(:name, :id)), { include_blank: false, label: 'Выберите Поставщика', required: true, autofocus: true, multiple: true }, { class: 'form-control custom-select-lg', size: 5 } %>
 
       <br>
       <%= f.collection_select :product_id, Product.all, :id, :name, { selected: @product.id }, { include_blank: false, class: 'form form-control', label: 'Продукт' } %>
