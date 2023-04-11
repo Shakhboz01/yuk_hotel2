@@ -9,3 +9,4 @@ product_names = [['Картон', 0], ['Серый',0], ['Белый', 0], ['Ц�
 product_names.each do |product|
   Product.create(name: product[0], amount_left: 0, weight: product[1])
 end
+# Product.find_by(weight: 1).product_prices.create(price: ) # find price here

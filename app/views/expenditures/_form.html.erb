@@ -13,7 +13,7 @@
       <%= f.input :quantity, label: 'Количество' %>
 
       <%= f.label :product_price, 'Выберите цену:' %>
-      <%= f.select :product_price, options_for_select(@product.product_prices.pluck(:price, :id)), { include_blank: false, required: true, autofocus: true, multiple: true }, { class: 'form-control', size: 3 } %>
+      <%= f.select :product_price, options_for_select(@product.product_prices.pluck(:price)), { include_blank: false, required: true, autofocus: true, multiple: true }, { class: 'form-control', size: 3 } %>
       <br>
       <% if policy(:view).access? %>
         <%= f.input :total_paid, label: 'Оплачен' %>
