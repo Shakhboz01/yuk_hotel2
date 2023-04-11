@@ -43,9 +43,12 @@ class Expenditure < ApplicationRecord
   end
 
   def if_product_expenditure
-    if expenditure_type == 'на_товар' && [outcomer, quantity, product, product_price].any?(&:blank?)
+    if expenditure_type == 'на_товар' &&
+     [outcomer, quantity, product, product_price].any?(&:blank?)
       errors.add(:base, "ошибка, пожалуйста, заполните формы")
     elsif expenditure_type == 'на_товар' && !quantity.nil?
+      self.quantity = quantity * 80 if product.weight == 1
+
       if new_record?
         product.increment!(:amount_left, quantity)
       else
@@ -53,6 +56,7 @@ class Expenditure < ApplicationRecord
         old_record.product.update(amount_left: old_record.product.amount_left - old_record.quantity)
         product.update(amount_left: product.amount_left + quantity)
       end
+
       self.price = (product_price.to_i * quantity)
       self.total_paid = 0 if total_paid.nil?
     end
