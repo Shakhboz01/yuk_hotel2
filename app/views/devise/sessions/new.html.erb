@@ -1,13 +1,12 @@
 <div class='container'>
-  <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: 'form-signin' }) do |f| %>
-    <%= f.label :email, 'Выберите имя:' %>
-    <%= f.select :email, options_for_select(@collection), { include_blank: false, label: 'Выберите имя', required: false, autofocus: true, multiple: true }, { class: 'form-control', size: @collection.count } %>
-
-    <br>
-    <%= f.input :password, label: 'Введите пароль:', required: false, input_html: { autocomplete: "current-password", class: 'form-control' } %>
-
-    <div class="form-group">
-      <%= f.button :submit, "Войти", class: 'btn btn-md btn-primary ' %>
-    </div>
+  <% @users.each do |user| %>
+    <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+      <%= f.input :email,  input_html: {value: user.email}, as: :hidden %>
+      <div style='max-width: 465px; margin: 10px auto' class='shadow flexs'>
+        <h3><%= user.name.upcase %></h3>
+        <%= f.input :password, required: true,label: false, input_html: {placeholder:'Введите пароль', autocomplete: "current-password", class: 'form-control' }, wrapper_html: { class: 'form-group' } %>
+        <%= f.submit "Войти", class: 'btn btn-sm btn-primary ' %>
+      </div>
+    <% end %>
   <% end %>
 </div>

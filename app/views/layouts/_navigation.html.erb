@@ -15,7 +15,7 @@
           </li> %>
           <% if policy(:view).admin? %>
             <li class="nav-item active">
-              <%= link_to 'Панель администратора', dashboard_path, class: 'nav-link' %>
+              <%= link_to 'Админ', dashboard_path, class: 'nav-link' %>
             </li>
             <li class="nav-item active">
               <%= link_to 'Работники', users_path, class: 'nav-link' %>

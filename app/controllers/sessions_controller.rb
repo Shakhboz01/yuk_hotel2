@@ -5,6 +5,7 @@ class SessionsController < Devise::SessionsController
     else
       @collection = User.where(active_user: true).where(role: params[:role].to_i).pluck(:name, :email)
       @role = params[:role]
+      @users = User.where(role: @role)
       super
     end
   end
