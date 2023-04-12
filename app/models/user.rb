@@ -4,7 +4,7 @@ class User < ApplicationRecord
   enum role: %i[другой админ менеджер продавец упаковщик оператор дробильщик приёмщик заготовщик механик резчик]
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
-
+  has_many :billets
   validates :name, uniqueness: true
 
   def self.devise_parameter_sanitizer

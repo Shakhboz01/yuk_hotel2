@@ -1,9 +1,19 @@
-<h1>New billet</h1>
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <% WastePaperProportion.all.each do |proportion| %>
+        <%= simple_form_for(@billet) do |f| %>
+          <%= f.error_notification %>
+          <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+          <%= f.hidden_field :waste_paper_proportion_id, value: proportion.id %>
 
-<%= render "form", billet: @billet %>
-
-<br>
-
-<div>
-  <%= link_to "Back to billets", billets_path %>
+          <div style='max-width: 535px; margin: 19px auto' class='shadow flexs'>
+            <h4><%= proportion.name.upcase %></h4>
+            <%= f.input :quantity, input_html: { class: 'form-control', placeholder: 'Количество' }, label: false %>
+            <%= f.submit "Создать", class: 'btn btn-sm btn-primary ' %>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
 </div>

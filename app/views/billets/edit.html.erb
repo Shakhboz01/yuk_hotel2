@@ -1,10 +1,8 @@
-<h1>Editing billet</h1>
-
-<%= render "form", billet: @billet %>
-
-<br>
-
-<div>
-  <%= link_to "Show this billet", @billet %> |
-  <%= link_to "Back to billets", billets_path %>
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <h1 class="text-center mb-4">редактировать</h1>
+      <%= render 'form', billet: @billet %>
+    </div>
+  </div>
 </div>

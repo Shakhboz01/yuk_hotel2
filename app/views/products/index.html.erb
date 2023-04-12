@@ -44,7 +44,7 @@
                   <td><%= product.name %></td>
                   <td><%= product.amount_left %></td>
                   <td><%= num_to_usd(product.expenditures.sum(:price)) %></td>
-                  <td><%= num_to_usd(product.expenditures.sum(:price).to_f / product.amount_left) %></td>
+                  <td><%= num_to_usd(product.expenditures.sum(:price).to_f / product.expenditures.sum(:quantity)) %></td>
                   <td><%= product.created_at.strftime('%Y-%m-%d %H:%M:%S') %></td>
                   <td>
                     <%= clink_to 'посмотреть детально', product_expenditure_expenditures_path(q: {product_id_eq: product.id}), 'fa-eye' %>

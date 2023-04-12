@@ -10,8 +10,8 @@
         <%= f.date_field :created_at_lteq, class: 'form-control' %>
       </div>
       <div class="form-group col-xs-12 col-sm-5 col-md-3">
-        <%= f.label :waste_paper_proprotion_id_eq, 'Тип расходов:', class: 'mr-2' %>
-        <%= f.select :waste_paper_proprotion_id, class: 'form-control mr-2' %>
+        <%= f.label :waste_paper_proportion_id_eq, 'Пропорция:' %>
+        <%= f.select :waste_paper_proportion_id, WastePaperProportion.all.collect {|u| [u.name, u.id]}, class: 'form-control ' %>
       </div>
       <div class="form-group col-xs-12 col-sm-5 col-md-3">
         <%= f.label :user_id_eq, 'Исполнитель:', class: 'mr-2' %>
