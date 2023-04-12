@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :billets
   resources :expenditures do
     collection do
       get :payment_expenditure

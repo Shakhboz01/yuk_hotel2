@@ -1,12 +1,22 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
-#   Character.create(name: "Luke", movie: movies.first)
 product_names = [['Картон', 0], ['Серый',0], ['Белый', 0], ['Целлофан', 1], ['Этикетка', 2]]
+
 product_names.each do |product|
   Product.create(name: product[0], amount_left: 0, weight: product[1])
 end
+
 # Product.find_by(weight: 1).product_prices.create(price: ) # find price here
+
+3.times do
+  WastePaperProportion.create
+end
+
+paper_details = [[50, 'Картон', 1], [50, 'Белый', 1], [30, 'Картон', 2], [70, 'Серый', 2], [60, 'Серый', 3], [40, 'Картон', 3]]
+
+
+paper_details.each do |paper|
+  ProportionDetail.create(
+    percentage: paper[0],
+    product: Product.find_by_name(paper[1]),
+    waste_paper_proportion_id: paper[2]
+  )
+end
