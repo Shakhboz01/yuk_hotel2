@@ -15,7 +15,6 @@
               <th><%= sort_link @q, :waste_paper_proprotion_id, 'Пропорция' %></th>
               <th><%= sort_link @q, :quantity, 'Количество' %></th>
               <th><%= sort_link @q, :created_at, 'Создано в' %></th>
-              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -26,10 +25,6 @@
                 <td><%= billet.waste_paper_proportion.name %></td>
                 <td><%= billet.quantity %></td>
                 <td><%= billet.created_at.strftime('%Y-%m-%d %H:%M') %></td>
-                <td>
-                  <%= clink_to 'редактировать', edit_billet_path(billet), 'fa-edit' %>
-                  <%= cdlink_to 'удалить', billet %>
-                </td>
               </tr>
             <% end -%>
           </tbody>
