@@ -24,7 +24,6 @@ class BilletsController < ApplicationController
   end
 
   def create
-
     @billet = Billet.new(billet_params)
     @billet.user = current_user
 
@@ -35,7 +34,7 @@ class BilletsController < ApplicationController
       )
 
       respond_to do |format|
-        format.html { redirect_to current_user.заготовщик? ? new_billet_path : billets_path, notice: "Заготовка успешно создана." }
+        format.html { redirect_to current_user.заготовщик? ? new_billet_path(sign_out: true) : billets_path, notice: "Заготовка успешно создана." }
         format.json { render :show, status: :created, location: @billet }
       end
     else

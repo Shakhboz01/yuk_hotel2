@@ -1,6 +1,5 @@
 <div class="container my-5">
-  <div style='background:#c6c5c5;' class="card shadow">
-
+  <div style="background:<%= current_user.приёмщик? ? '#c6c5c5;': 'white;' %>" class="card shadow">
     <% if current_user.приёмщик? %>
     <div style='background:#c6c5c5;' class="card-header text-center"><h3>ПРИЕМ МАКУЛАТУРУ:</h3></div>
       <div style='display: flex; flex-direction:column; align-items:center; justify-content:center;'>

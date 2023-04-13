@@ -9,4 +9,14 @@ class SessionsController < Devise::SessionsController
       super
     end
   end
+
+  def destroy
+    super
+  end
+
+  def sign_out
+    super # Remove the argument
+    redirect_to roles_path
+  end
+
 end

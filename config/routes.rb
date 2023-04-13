@@ -8,7 +8,9 @@ Rails.application.routes.draw do
   end
   resources :product_prices
   devise_for :users, controllers: { sessions: 'sessions' }
-
+  devise_scope :user do
+    get '/signout', to: 'sessions#sign_out', as: :signout
+  end
   resources :products
 
   # pages
