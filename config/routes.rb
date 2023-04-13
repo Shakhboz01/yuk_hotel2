@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+  resources :participations do
+    collection do
+      post 'accept_new_participation', action: :accept_new_participation, as: :accept_new_participation
+    end
+  end
   resources :billets
   resources :expenditures do
     collection do

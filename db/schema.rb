@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_12_101811) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_13_052900) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -55,6 +55,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_12_101811) do
     t.boolean "active_outcomer", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "participations", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.integer "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_participations_on_user_id"
   end
 
   create_table "product_prices", force: :cascade do |t|
@@ -109,6 +117,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_12_101811) do
   add_foreign_key "expenditures", "outcomers"
   add_foreign_key "expenditures", "products"
   add_foreign_key "expenditures", "users"
+  add_foreign_key "participations", "users"
   add_foreign_key "product_prices", "products"
   add_foreign_key "proportion_details", "products"
   add_foreign_key "proportion_details", "waste_paper_proportions"

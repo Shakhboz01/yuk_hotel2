@@ -1,0 +1,33 @@
+<% if !@participations.count.zero? %>
+  <%= simple_form_for :filter, url: request.path, method: 'get' do |f| %>
+    <%= f.label :month_number %>
+    <%= f.month_field(:month_number, html_options = { class: 'select-date'}) %>
+    <%= f.button :submit %>
+  <% end %>
+
+  <h3><%= @month_name %></h3>
+  <table class='table table-dark table-hover table-striped'>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <% @days.each do |day| %>
+          <th><%= day.strftime("%d") %></th>
+        <% end %>
+        <th>Itogo</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @participations.uniq.each do |participation| %>
+        <tr>
+          <th><%= Student.find(participation.student_id).name %></th>
+          <% @days.each do |day| %>
+            <th>
+              <%= find_student_part_day(day, participation.student_id, @course.id) %>
+            </th>
+          <% end %>
+          <th><%= student_monthly_payment_total(participation.student_id, @month_number, @year_number, participation.course_id) %></th>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
