@@ -3,13 +3,14 @@
     <div class="col-md-8">
       <%= simple_form_for :new_billet, url: new_billet_billets_path do |f| %>
         <% WastePaperProportion.all.each do |proportion| %>
-          <%= f.hidden_field proportion.id.to_s.to_sym, value: proportion.id %>
           <div style='max-width: 535px; margin: 19px auto' class='shadow flexs'>
             <h4><%= proportion.name.upcase %></h4>
             <%= f.input ('quantity_' + proportion.id.to_s).to_sym, input_html: { class: 'form-control', placeholder: 'Количество' }, label: false %>
           </div>
         <% end %>
-        <%= f.submit "Создать", class: 'btn btn-sm btn-primary ' %>
+        <div style='max-width: 535px; margin: 19px auto' class='flexs'>
+          <%= f.submit "Создать", class: 'btn btn-lg btn-primary ' %>
+        </div>
       <% end %>
     </div>
   </div>

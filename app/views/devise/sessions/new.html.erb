@@ -1,8 +1,16 @@
-<div class='container'>
+<style>
+  body {
+    background-image:linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.6)), url('https://rolli.uz/assets/rasm/img2.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+</style>
+
+<div class='container' style='height: 100vh'>
   <% @users.each do |user| %>
     <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
       <%= f.input :email,  input_html: {value: user.email}, as: :hidden %>
-      <div style='max-width: 465px; margin: 10px auto' class='shadow flexs'>
+      <div style='max-width: 465px; background: white; margin: 10px auto' class='shadow flexs'>
         <h3><%= user.name.upcase %></h3>
         <%= f.input :password, required: true,label: false, input_html: {placeholder:'Введите пароль', autocomplete: "current-password", class: 'form-control' }, wrapper_html: { class: 'form-group' } %>
         <%= f.submit "Войти", class: 'btn btn-sm btn-primary ' %>

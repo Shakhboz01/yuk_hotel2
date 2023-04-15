@@ -7,7 +7,8 @@ class BilletsController < ApplicationController
     authorize Billet, :manage?
 
     @q = Billet.ransack(params[:q])
-    @billets = @q.result.includes(:user, :waste_paper_proportion).page(params[:page]).per(40)
+    @billets = @q.result.includes(:user, :waste_paper_proportion)
+                 .order(id: :desc).page(params[:page]).per(40)
   end
 
   def show
@@ -19,7 +20,15 @@ class BilletsController < ApplicationController
   end
 
   def new_billet
-    byebug
+    BilletCrudOperation.run(
+      data: params[:new_billet].permit!.to_h.to_a, user_id: current_user.id
+    )
+    if current_user.заготовщик?
+      redirect_to roles_path
+      sign_out current_user
+    else
+      redirect_to billets_path, notice: 'Заготовка успешно создана'
+    end
   end
 
   def edit
@@ -27,31 +36,6 @@ class BilletsController < ApplicationController
   end
 
   def create
-    @billet = Billet.new(billet_params)
-    @billet.user = current_user
-
-    if @billet.save
-      BilletCrudOperation.run(
-        quantity: @billet.quantity,
-        waste_paper_proportion: @billet.waste_paper_proportion
-      )
-
-      if current_user.заготовщик?
-        redirect_to roles_path
-        sign_out current_user
-        return
-      end
-
-      respond_to do |format|
-        format.html { redirect_to billets_path, notice: "Заготовка успешно создана." }
-        format.json { render :show, status: :created, location: @billet }
-      end
-    else
-      respond_to do |format|
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @billet.errors, status: :unprocessable_entity }
-      end
-    end
   end
 
   def update
