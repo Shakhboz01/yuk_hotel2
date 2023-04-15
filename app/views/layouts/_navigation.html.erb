@@ -71,13 +71,21 @@
                 <%= link_to 'Добавить новую заготовку', new_billet_path, class: 'dropdown-item' %>
               </div>
             </li>
-            <li class="nav-item dropdown">
+            <%# <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Participation
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <%= link_to 'Participations', participations_path, class: 'dropdown-item' %>
-                <%= link_to 'Add new participation', new_participation_path, class: 'dropdown-item' %>
+                <%# <%= link_to 'Add new participation', new_participation_path, class: 'dropdown-item' %>
+              <%# </div> %>
+            <%# </li> %>
+              <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="outcomerDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Sausages
+              </a>
+              <div class="dropdown-menu" aria-labelledby="outcomerDropdown">
+                <%= link_to "Stanki", machine_sizes_path, class: "dropdown-item" %>
               </div>
             </li>
           <% end %>

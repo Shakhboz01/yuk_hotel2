@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :sausages
+  resources :machine_sizes
   resources :participations do
     collection do
       post 'accept_new_participation', action: :accept_new_participation, as: :accept_new_participation

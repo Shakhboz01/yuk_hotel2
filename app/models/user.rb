@@ -5,6 +5,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
   has_many :billets
+  has_one :machine_size
   validates :name, uniqueness: true
 
   def self.devise_parameter_sanitizer

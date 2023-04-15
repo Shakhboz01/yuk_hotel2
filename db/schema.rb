@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_13_052900) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_15_105602) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -47,6 +47,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_13_052900) do
     t.index ["outcomer_id"], name: "index_expenditures_on_outcomer_id"
     t.index ["product_id"], name: "index_expenditures_on_product_id"
     t.index ["user_id"], name: "index_expenditures_on_user_id"
+  end
+
+  create_table "machine_sizes", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.integer "devision"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_machine_sizes_on_user_id"
   end
 
   create_table "outcomers", force: :cascade do |t|
@@ -91,6 +99,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_13_052900) do
     t.index ["waste_paper_proportion_id"], name: "index_proportion_details_on_waste_paper_proportion_id"
   end
 
+  create_table "sausages", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.integer "quantity"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_sausages_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -117,8 +133,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_13_052900) do
   add_foreign_key "expenditures", "outcomers"
   add_foreign_key "expenditures", "products"
   add_foreign_key "expenditures", "users"
+  add_foreign_key "machine_sizes", "users"
   add_foreign_key "participations", "users"
   add_foreign_key "product_prices", "products"
   add_foreign_key "proportion_details", "products"
   add_foreign_key "proportion_details", "waste_paper_proportions"
+  add_foreign_key "sausages", "users"
 end
