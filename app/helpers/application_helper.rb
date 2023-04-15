@@ -76,4 +76,15 @@ module ApplicationHelper
       'white'
     end
   end
+
+  def calculate_sausage_expected_result(sausage)
+    quantity = sausage.quantity * sausage.machine_size.devision
+    ((quantity - (quantity * 0.02)).to_f / 6).to_i
+  end
+
+  def calculate_operators_monthly_payment(operator)
+    sausage_price = 2000
+    actual_quantity = operator.machine_size.devision * operator.sausages.created_this_month.sum(:quantity)
+    actual_quantity * sausage_price
+  end
 end

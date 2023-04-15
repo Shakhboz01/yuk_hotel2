@@ -1,14 +1,15 @@
-
-<%= simple_form_for(@sausage) do |f| %>
+<%= simple_form_for(@sausage, html: { class: 'form-horizontal' }) do |f| %>
   <%= f.error_notification %>
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
-
-  <div class="form-inputs">
-    <%= f.association :user %>
-    <%= f.input :quantity %>
+  <div class="form-group">
+    <%= f.label :quantity, 'Количество' %>
+    <%= f.number_field :quantity, class: 'form-control', focus: true %>
   </div>
 
-  <div class="form-actions">
-    <%= f.button :submit %>
+  <div class="form-group">
+    <%= f.button :submit,'совершить', class: 'btn btn-primary' %>
+    <% if policy(:view).access? %>
+      <%= link_to "Отмена", sausages_path, class: 'btn btn-secondary' %>
+    <% end %>
   </div>
 <% end %>

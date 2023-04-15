@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
-  resources :sausages
+  resources :sausages do
+    collection do
+      get :operators_payment
+    end
+  end
   resources :machine_sizes
   resources :participations do
     collection do

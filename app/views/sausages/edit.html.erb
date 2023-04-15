@@ -1,10 +1,8 @@
-<h1>Editing sausage</h1>
-
-<%= render "form", sausage: @sausage %>
-
-<br>
-
-<div>
-  <%= link_to "Show this sausage", @sausage %> |
-  <%= link_to "Back to sausages", sausages_path %>
+<div style='background-color: #80d3ff87;' class="container shadow">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <h1 class="text-center mb-4">редактировать</h1>
+      <%= render 'form', sausage: @sausage %>
+    </div>
+  </div>
 </div>

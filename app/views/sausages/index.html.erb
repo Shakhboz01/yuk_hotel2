@@ -1,14 +1,53 @@
-<p style="color: green"><%= notice %></p>
-
-<h1>Sausages</h1>
-
-<div id="sausages">
-  <% @sausages.each do |sausage| %>
-    <%= render sausage %>
-    <p>
-      <%= link_to "Show this sausage", sausage %>
-    </p>
-  <% end %>
+<div class="container my-5">
+  <div class="card shadow">
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <h3 class="card-title font-weight-bold">Колбасы</h3>
+    </div>
+    <%= render 'filter_form', url: request.path, q: @q, type: 'other' %>
+    <div class="card-body">
+      <% if @sausages.any? -%>
+        <div class='row'>
+          <div class='shadow col-sm-6 col-xs-12'>
+            <p><strong>Итого количества упаковки: </strong><%= (@total_value / 6). to_i %></p>
+            <p><strong>Итого ожидаемая упаковка: </strong><%= ((@total_value - (@total_value * 0.02).to_i) / 6).to_i %></p>
+          </div>
+          <div class='shadow col-sm-6 col-xs-12'>
+            <p><strong>Итого фактическая упаковка: </strong><%= @total_value %></p>
+            <p><strong>разница: </strong>2.5%</p>
+          </div>
+        </div>
+        <br>
+        <table class="table table-bordered table-hover">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>оператор</th>
+              <th>Кол. упаковка</th>
+              <th>Ожидаемый упаковка</th>
+              <th><%= sort_link @q, :created_at, 'Создано в' %></th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @sausages.each do |sausage| -%>
+              <tr>
+                <td><%= sausage.id %></td>
+                <td><%= sausage.user.name %></td>
+                <td><%= ((sausage.machine_size.devision * sausage.quantity).to_f / 6).to_i %></td>
+                <td><%= calculate_sausage_expected_result(sausage) %></td>
+                <td><%= sausage.created_at.strftime('%Y-%m-%d %H:%M:%S') %></td>
+                <td>
+                  <%= clink_to 'редактировать', edit_sausage_path(sausage), 'fa-edit' %>
+                  <%= cdlink_to 'удалить', sausage %>
+                </td>
+              </tr>
+            <% end -%>
+          </tbody>
+        </table>
+        <%= paginate @sausages %>
+      <% else -%>
+        <p class="text-center">Цен нет.</p>
+      <% end -%>
+    </div>
+  </div>
 </div>
-
-<%= link_to "New sausage", new_sausage_path %>

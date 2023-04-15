@@ -1,8 +1,10 @@
 class MachineSizesController < ApplicationController
   before_action :set_machine_size, only: %i[ show edit update destroy ]
-
+  include Pundit
   # GET /machine_sizes or /machine_sizes.json
   def index
+    authorize MachineSize, :access?
+
     @machine_sizes = MachineSize.all
   end
 
@@ -12,6 +14,8 @@ class MachineSizesController < ApplicationController
 
   # GET /machine_sizes/new
   def new
+    authorize MachineSize, :access?
+
     @machine_size = MachineSize.new
   end
 
@@ -21,11 +25,13 @@ class MachineSizesController < ApplicationController
 
   # POST /machine_sizes or /machine_sizes.json
   def create
+    authorize MachineSize, :manage?
+
     @machine_size = MachineSize.new(machine_size_params)
 
     respond_to do |format|
       if @machine_size.save
-        format.html { redirect_to machine_sizes_url, notice: "Machine size was successfully created." }
+        format.html { redirect_to machine_sizes_url, notice: "successfully created." }
         format.json { render :show, status: :created, location: @machine_size }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -36,9 +42,11 @@ class MachineSizesController < ApplicationController
 
   # PATCH/PUT /machine_sizes/1 or /machine_sizes/1.json
   def update
+    authorize MachineSize, :manage?
+
     respond_to do |format|
       if @machine_size.update(machine_size_params)
-        format.html { redirect_to machine_sizes_url, notice: "Machine size was successfully updated." }
+        format.html { redirect_to machine_sizes_url, notice: "successfully updated." }
         format.json { render :show, status: :ok, location: @machine_size }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -49,10 +57,12 @@ class MachineSizesController < ApplicationController
 
   # DELETE /machine_sizes/1 or /machine_sizes/1.json
   def destroy
+    authorize MachineSize, :manage?
+
     @machine_size.destroy
 
     respond_to do |format|
-      format.html { redirect_to machine_sizes_url, notice: "Machine size was successfully destroyed." }
+      format.html { redirect_to machine_sizes_url, notice: "successfully destroyed." }
       format.json { head :no_content }
     end
   end

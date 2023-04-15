@@ -5,6 +5,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
   has_many :billets
+  has_many :sausages
   has_one :machine_size
   validates :name, uniqueness: true
 

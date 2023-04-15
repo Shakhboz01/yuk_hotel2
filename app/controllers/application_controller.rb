@@ -16,6 +16,8 @@ class ApplicationController < ActionController::Base
       dashboard_path
     elsif user.заготовщик?
       new_billet_path
+    elsif user.оператор?
+      new_sausage_path
     end
   end
 
