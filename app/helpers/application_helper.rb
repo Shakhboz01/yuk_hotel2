@@ -65,4 +65,15 @@ module ApplicationHelper
     end
     "<strong class='#{style}'>#{num_to_usd(amount)}</strong>".html_safe
   end
+
+  def handle_product_bg_color(product_id)
+    case product_id
+    when 1
+      '#c2b280'
+    when 2
+      'grey'
+    else
+      'white'
+    end
+  end
 end

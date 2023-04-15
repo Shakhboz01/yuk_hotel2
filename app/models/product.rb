@@ -1,4 +1,3 @@
-# weight # 0 for makalature # 1 for salafan # 2 for etiketka
 class Product < ApplicationRecord
   has_many :product_prices
   has_many :expenditures

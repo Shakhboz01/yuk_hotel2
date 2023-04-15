@@ -15,8 +15,11 @@ class BilletsController < ApplicationController
 
   def new
     authorize Billet, :access?
-
     @billet = Billet.new
+  end
+
+  def new_billet
+    byebug
   end
 
   def edit
@@ -33,8 +36,14 @@ class BilletsController < ApplicationController
         waste_paper_proportion: @billet.waste_paper_proportion
       )
 
+      if current_user.заготовщик?
+        redirect_to roles_path
+        sign_out current_user
+        return
+      end
+
       respond_to do |format|
-        format.html { redirect_to current_user.заготовщик? ? new_billet_path(sign_out: true) : billets_path, notice: "Заготовка успешно создана." }
+        format.html { redirect_to billets_path, notice: "Заготовка успешно создана." }
         format.json { render :show, status: :created, location: @billet }
       end
     else
