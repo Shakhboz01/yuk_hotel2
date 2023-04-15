@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :end_products
   resources :sausages do
     collection do
       get :operators_payment

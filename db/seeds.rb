@@ -20,3 +20,8 @@ paper_details.each do |paper|
     waste_paper_proportion_id: paper[2]
   )
 end
+
+end_product_names = ['Rolli', 'Ишонч', 'Без этикетка Rolli']
+end_product_names.each do |name|
+  EndProduct.create(amount_left: 0, name: name)
+end
