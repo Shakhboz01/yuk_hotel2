@@ -1,3 +1,4 @@
+<div style='margin: auto 10px'>
 <%= render 'filter_form', url: request.path %>
 <div class='row'>
   <div class='col-sm-2'>
@@ -13,7 +14,6 @@
       <tbody>
         <% @outcomers.each do |outcomer| %>
           <% if (outcomer.expenditures.sum(:total_paid) - outcomer.expenditures.на_товар.sum(:price)) != 0 %>
-
           <tr>
             <%= calculate_difference(outcomer) %>
             <td>
@@ -29,6 +29,7 @@
   </div>
   <div class='col-sm-4'>
     <h2 class='text-center'>Доходы</h2>
+    <%# add total income here %>
     <table class='table shadow table-hover table-striped'>
       <thead>
         <tr>
@@ -42,7 +43,7 @@
     </table>
   </div>
   <div class='col-sm-6'>
-    <h2 class='text-center'>Расходы</h2>
+    <h2 class='text-center'>Расходы (<%= num_to_usd(@expenditures.sum(:price)) %>)</h2>
     <table class='table shadow table-hover table-striped'>
       <thead>
         <tr>
@@ -73,4 +74,5 @@
       </tbody>
     </table>
   </div>
+</div>
 </div>

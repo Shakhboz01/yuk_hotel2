@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
-  resources :billets
+  resources :billets do
+    collection do
+      post :new_billet, as: :new_billet
+    end
+  end
   resources :expenditures do
     collection do
       get :payment_expenditure
@@ -8,9 +12,6 @@ Rails.application.routes.draw do
   end
   resources :product_prices
   devise_for :users, controllers: { sessions: 'sessions' }
-  devise_scope :user do
-    get '/signout', to: 'sessions#sign_out', as: :signout
-  end
   resources :products
 
   # pages
