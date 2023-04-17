@@ -87,4 +87,14 @@ module ApplicationHelper
     actual_quantity = operator.machine_size.devision * operator.sausages.created_this_month.sum(:quantity)
     actual_quantity * sausage_price
   end
+
+  def difference_in_percentage(first_value, second_value)
+    difference = second_value.to_f / first_value.to_f - 1
+    difference_percent = difference * 100
+    color_class = difference_percent < -2 ? 'text-danger' : ''
+
+    content_tag(:span, class: color_class) do
+      "#{difference_percent.round(1)}%"
+    end
+  end
 end

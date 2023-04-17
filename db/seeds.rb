@@ -1,4 +1,13 @@
-product_names = [['Картон', 0], ['Серый',0], ['Белый', 0], ['Целлофан', 1], ['Этикетка', 2]]
+product_names = [
+  ['Картон', 0],
+  ['Серый',0],
+  ['Белый', 0],
+  ['Целлофан', 1],
+  ['Этикетка', 2],
+  ['Rolli', 3],
+  ['Ишонч', 3],
+  ['Без этикетка Rolli', 3],
+]
 
 product_names.each do |product|
   Product.create(name: product[0], amount_left: 0, weight: product[1])
@@ -19,9 +28,4 @@ paper_details.each do |paper|
     product: Product.find_by_name(paper[1]),
     waste_paper_proportion_id: paper[2]
   )
-end
-
-end_product_names = ['Rolli', 'Ишонч', 'Без этикетка Rolli']
-end_product_names.each do |name|
-  EndProduct.create(amount_left: 0, name: name)
 end

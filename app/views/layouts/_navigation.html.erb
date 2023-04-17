@@ -25,8 +25,9 @@
                 Товары
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <%= link_to 'Товары', products_path, class: 'dropdown-item' %>
-                <%= link_to 'Цены на товары', product_prices_path, class: 'dropdown-item' %>
+                <%= link_to 'Товары', products_path(end_product: true), class: 'dropdown-item' %>
+                <%= link_to 'Сырья', products_path, class: 'dropdown-item' %>
+                <%= link_to 'Цены', product_prices_path, class: 'dropdown-item' %>
               </div>
             </li>
           <% end %>
@@ -69,6 +70,15 @@
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <%= link_to 'Заготовки', billets_path, class: 'dropdown-item' %>
                 <%= link_to 'Добавить новую заготовку', new_billet_path, class: 'dropdown-item' %>
+              </div>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Package
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <%= link_to 'Packages', packages_path, class: 'dropdown-item' %>
+                <%= link_to 'Добавить новую package', new_package_path, class: 'dropdown-item' %>
               </div>
             </li>
             <%# <li class="nav-item dropdown">

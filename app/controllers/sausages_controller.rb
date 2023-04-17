@@ -8,11 +8,12 @@ class SausagesController < ApplicationController
     @q = Sausage.ransack(params[:q])
     @sausages = @q.result.includes(:user, :machine_size)
                   .order(id: :desc)
-
-    if params.dig(:q, :created_at_gteq).blank? || params.dig(:q, :created_at_lteq).blank?
-      today = Time.zone.today
+    @total_package = @q.result.sum(:quantity)
+    today = Time.zone.today
+    if params.dig(:q, :created_at_gteq).blank? && params.dig(:q, :created_at_lteq).blank?
       @sausages = Sausage.where(created_at: today.beginning_of_day..today.end_of_day)
                          .includes(:user, :machine_size).order(id: :desc)
+      @total_package = Package.where(created_at: today.beginning_of_day..today.end_of_day).sum(:quantity)
     end
 
     @total_value = @sausages.sum { |sausage| sausage.machine_size.devision * sausage.quantity }

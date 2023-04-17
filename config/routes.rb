@@ -1,5 +1,10 @@
 Rails.application.routes.draw do
-  resources :end_products
+  resources :packages do
+    collection do
+      post :new_package
+    end
+  end
+
   resources :sausages do
     collection do
       get :operators_payment
@@ -33,7 +38,6 @@ Rails.application.routes.draw do
 
   root 'pages#welcoming_page'
 
-  resources :books
   resources :users do
     get :toggle_active_user, on: :member
   end

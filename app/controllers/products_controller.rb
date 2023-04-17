@@ -5,7 +5,12 @@ class ProductsController < ApplicationController
 
   # GET /products or /products.json
   def index
-    @products = Product.all.order(:id)
+    @products =
+      if params[:end_product].present?
+        Product.where(weight: 3)
+      else
+        Product.where.not(weight: 3)
+      end.order(:id)
   end
 
   # GET /products/1 or /products/1.json

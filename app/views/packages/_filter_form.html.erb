@@ -10,12 +10,12 @@
         <%= f.date_field :created_at_lteq, class: 'form-control' %>
       </div>
       <div class="form-group col-xs-12 col-sm-5 col-md-3">
-        <%= f.label :waste_paper_proportion_id_eq, 'Пропорция:', class: 'mr-2' %>
-        <%= f.select :waste_paper_proportion_id_eq, WastePaperProportion.all.collect {|u| [u.name, u.id]}, { include_blank: true }, class: 'form-control mr-2' %>
+        <%= f.label :product_id_eq, 'Товар:', class: 'mr-2' %>
+        <%= f.select :product_id_eq, Product.where(weight: 3).collect {|u| [u.name, u.id]}, { include_blank: true }, class: 'form-control mr-2' %>
       </div>
       <div class="form-group col-xs-12 col-sm-5 col-md-3">
         <%= f.label :user_id_eq, 'Исполнитель:', class: 'mr-2' %>
-        <%= f.select :user_id_eq, User.includes(:billets).where.not(billets: { id: nil }).collect {|u| [u.name, u.id]}, { include_blank: true }, class: 'form-control mr-2' %>
+        <%= f.select :user_id_eq, User.includes(:packages).where.not(packages: { id: nil }).collect {|u| [u.name, u.id]}, { include_blank: true }, class: 'form-control mr-2' %>
       </div>
     </div>
 

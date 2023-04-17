@@ -5,15 +5,14 @@
     </div>
     <%= render 'filter_form', url: request.path, q: @q, type: 'other' %>
     <div class="card-body">
-      <% if @sausages.any? -%>
         <div class='row'>
           <div class='shadow col-sm-6 col-xs-12'>
-            <p><strong>Итого количества упаковки: </strong><%= (@total_value / 6). to_i %></p>
+            <p><strong>Итого количества упаковки: </strong><%= (@total_value / 6).to_i %></p>
             <p><strong>Итого ожидаемая упаковка: </strong><%= ((@total_value - (@total_value * 0.02).to_i) / 6).to_i %></p>
           </div>
           <div class='shadow col-sm-6 col-xs-12'>
-            <p><strong>Итого фактическая упаковка: </strong><%= @total_value %></p>
-            <p><strong>разница: </strong>2.5%</p>
+            <p><strong>Итого фактическая упаковка: </strong><%= @total_package %></p>
+            <p><strong>разница: </strong><%= difference_in_percentage(((@total_value - (@total_value * 0.02).to_i) / 6).to_i, @total_package) %></p>
           </div>
         </div>
         <br>
@@ -45,9 +44,6 @@
           </tbody>
         </table>
         <%= paginate @sausages %>
-      <% else -%>
-        <p class="text-center">Цен нет.</p>
-      <% end -%>
     </div>
   </div>
 </div>
