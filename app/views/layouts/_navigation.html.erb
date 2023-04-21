@@ -47,9 +47,10 @@
                 Добавить расходы
               </a>
               <div class="dropdown-menu" aria-labelledby="outcomerDropdown">
+                <%= link_to "На товар", products_path, class: "dropdown-item" %>
+                <%= link_to "Трансакция", new_expenditure_path(expenditure_type: 'трансакция'), class: "dropdown-item" %>
                 <%= link_to "Для выплаты", new_expenditure_path(expenditure_type: 'зарплата'), class: "dropdown-item" %>
                 <%= link_to "Аванс", new_expenditure_path(expenditure_type: 'аванс'), class: "dropdown-item" %>
-                <%= link_to "Трансакция", new_expenditure_path(expenditure_type: 'трансакция'), class: "dropdown-item" %>
                 <%= link_to "Для прочих целей", new_expenditure_path, class: "dropdown-item" %>
               </div>
             </li>
@@ -74,11 +75,21 @@
             </li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Package
+                продажа
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <%= link_to 'Packages', packages_path, class: 'dropdown-item' %>
-                <%= link_to 'Добавить новую package', new_package_path, class: 'dropdown-item' %>
+                <%= link_to 'Добавить новую продажу', products_path(end_product: true), class: 'dropdown-item' %>
+                <%= link_to 'Добавить новую транзакцию', new_income_path(for_transaction: true), class: 'dropdown-item' %>
+                <%= link_to 'продажи', incomes_path, class: 'dropdown-item' %>
+              </div>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Упаковка
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <%= link_to 'Упаковки', packages_path, class: 'dropdown-item' %>
+                <%= link_to 'Добавить новую упаковку', new_package_path, class: 'dropdown-item' %>
               </div>
             </li>
             <%# <li class="nav-item dropdown">

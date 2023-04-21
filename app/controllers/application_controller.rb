@@ -20,6 +20,8 @@ class ApplicationController < ActionController::Base
       new_sausage_path
     elsif user.упаковщик?
       new_package_path
+    elsif user.продавец?
+      new_income_path
     end
   end
 

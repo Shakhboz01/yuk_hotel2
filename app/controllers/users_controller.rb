@@ -18,7 +18,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      redirect_to users_path, notice: 'User was successfully created.'
+      redirect_to users_path, notice: 'User was Успешно создано.'
     else
       render :new
     end
@@ -33,7 +33,7 @@ class UsersController < ApplicationController
     authorize User, :manage?
     @user = User.find(params[:id])
     if @user.update(user_params)
-      redirect_to users_path, notice: 'User was successfully updated.'
+      redirect_to users_path, notice: 'User was Успешно обновлено.'
     else
       render :edit
     end
@@ -44,7 +44,7 @@ class UsersController < ApplicationController
 
     @user = User.find(params[:id])
     @user.destroy
-    redirect_to users_path, notice: 'User was successfully destroyed.'
+    redirect_to users_path, notice: 'User was успешно удален.'
   end
 
   def toggle_active_user

@@ -46,7 +46,7 @@ class PackagesController < ApplicationController
 
     if @package.save
       respond_to do |format|
-        format.html { redirect_to packages_url, notice: "successfully created." }
+        format.html { redirect_to packages_url, notice: "Успешно создано." }
         format.json { render :show, status: :created, location: @package }
       end
     else
@@ -63,7 +63,7 @@ class PackagesController < ApplicationController
 
     respond_to do |format|
       if @package.update(package_params)
-        format.html { redirect_to packages_url, notice: "successfully updated." }
+        format.html { redirect_to packages_url, notice: "Успешно обновлено." }
         format.json { render :show, status: :ok, location: @package }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -79,7 +79,7 @@ class PackagesController < ApplicationController
     @package.destroy
 
     respond_to do |format|
-      format.html { redirect_to packages_url, notice: "Package was successfully destroyed." }
+      format.html { redirect_to packages_url, notice: "Package was успешно удален." }
       format.json { head :no_content }
     end
   end

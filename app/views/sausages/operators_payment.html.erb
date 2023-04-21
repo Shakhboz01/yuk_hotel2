@@ -12,7 +12,7 @@
       <% @operators.each do |user| %>
         <tr>
           <td><%= user.name %></td>
-          <td><%= calculate_operators_monthly_payment(user) %></td>
+          <td><%= num_to_usd(calculate_operators_monthly_payment(user)) %></td>
         </tr>
       <% end %>
     </tbody>

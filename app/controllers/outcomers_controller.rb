@@ -35,7 +35,7 @@ class OutcomersController < ApplicationController
     authorize Outcomer, :manage?
 
     if @outcomer.update(outcomer_params)
-      redirect_to @outcomer, notice: 'Outcomer was successfully updated.'
+      redirect_to @outcomer, notice: 'Outcomer was Успешно обновлено.'
     else
       render :edit
     end

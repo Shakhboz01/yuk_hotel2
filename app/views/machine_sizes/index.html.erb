@@ -9,7 +9,6 @@
         <table class="table table-bordered table-hover">
           <thead>
             <tr>
-              <th>ID</th>
               <th>оператор</th>
               <th>подразделение</th>
               <th></th>
@@ -18,7 +17,6 @@
           <tbody>
             <% @machine_sizes.each do |machine_size| -%>
               <tr>
-                <td><%= machine_size.id %></td>
                 <td><%= machine_size.user.name %></td>
                 <td><%= machine_size.devision %></td>
                 <td>

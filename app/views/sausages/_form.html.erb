@@ -3,7 +3,7 @@
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
   <div class="form-group">
     <%= f.label :quantity, 'Количество' %>
-    <%= f.number_field :quantity, class: 'form-control', focus: true %>
+    <%= f.number_field :quantity, class: 'form-control', input_html:{placeholder: '16'}, focus: true %>
   </div>
 
   <div class="form-group">

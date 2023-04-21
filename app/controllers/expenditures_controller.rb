@@ -138,13 +138,9 @@ class ExpendituresController < ApplicationController
         when 'на_товар', 'трансакция'
           if current_user.role == 'приёмщик'
             products_path
-          else
-            product_expenditure_expenditures_path
           end
-        when 'аванс', 'зарплата'
-          payment_expenditure_expenditures_path
         else
-          expenditures_path
+          main_page_path
         end, notice: "Расходы успешно обновлены." }
         format.json { render :show, status: :ok, location: @expenditure }
       else
@@ -154,25 +150,22 @@ class ExpendituresController < ApplicationController
     end
   end
 
-  # DELETE /expenditures/1 or /expenditures/1.json
   def destroy
     authorize Expenditure, :admin?
 
     @expenditure.destroy
 
     respond_to do |format|
-      format.html { redirect_to expenditures_url, notice: "Expenditure was successfully destroyed." }
+      format.html { redirect_to expenditures_url, notice: "Expenditure was успешно удален." }
       format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_expenditure
       @expenditure = Expenditure.find(params[:id])
     end
 
-    # Only allow a list of trusted parameters through.
     def expenditure_params
       params.require(:expenditure).permit(:executor_id, :comment, :outcomer_id, :quantity, :user_id, :product_id, :expenditure_type, :price, :product_price, :total_paid)
     end

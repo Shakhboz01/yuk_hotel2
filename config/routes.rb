@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  resources :incomes do
+    collection do
+      post :new_income
+      get :define_outcomer
+    end
+  end
   resources :packages do
     collection do
       post :new_package

@@ -33,11 +33,10 @@ module ApplicationHelper
 
   def calculate_difference(outcomer)
     class_name = ''
-    difference=0
+    difference = 0
 
     if outcomer.role == 'поставщик'
       expenditures = outcomer.expenditures
-
 
       difference = expenditures.sum(:total_paid) - expenditures.на_товар.sum(:price)
 
@@ -48,11 +47,22 @@ module ApplicationHelper
       else
         class_name = 'bg-success'
       end
-    end
+    else
+      incomes = outcomer.incomes
 
-      "<td class='#{class_name}'>#{outcomer.id}</td> \n
+      difference = incomes.sum(:total_paid) - incomes.на_товар.sum(:price)
+
+      if difference == 0
+        class_name = 'bg-warning'
+      elsif difference < 0
+        class_name = 'bg-success'
+      else
+        class_name = 'bg-danger'
+      end
+    end
+    "<td class='#{class_name}'>#{outcomer.id}</td> \n
       <td>#{num_to_usd(difference)}</td>
-      ".html_safe
+    ".html_safe
   end
 
   def calculate_expenditure_diff(amount)

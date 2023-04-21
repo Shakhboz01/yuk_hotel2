@@ -7,8 +7,8 @@
     <div class="card-body">
         <div class='row'>
           <div class='shadow col-sm-6 col-xs-12'>
-            <p><strong>Итого количества упаковки: </strong><%= (@total_value / 6).to_i %></p>
-            <p><strong>Итого ожидаемая упаковка: </strong><%= ((@total_value - (@total_value * 0.02).to_i) / 6).to_i %></p>
+            <p><strong>количества колбасы: </strong><%= (@total_value / 6).to_i %></p>
+            <p><strong>ожидаемая упаковка: </strong><%= ((@total_value - (@total_value * 0.02).to_i) / 6).to_i %></p>
           </div>
           <div class='shadow col-sm-6 col-xs-12'>
             <p><strong>Итого фактическая упаковка: </strong><%= @total_package %></p>

@@ -8,13 +8,13 @@ class SausagesController < ApplicationController
     @q = Sausage.ransack(params[:q])
     @sausages = @q.result.includes(:user, :machine_size)
                   .order(id: :desc)
-    @total_package = @q.result.sum(:quantity)
+    @total_package = Package.ransack(params[:q]).result.sum(:quantity)
     today = Time.zone.today
-    if params.dig(:q, :created_at_gteq).blank? && params.dig(:q, :created_at_lteq).blank?
-      @sausages = Sausage.where(created_at: today.beginning_of_day..today.end_of_day)
-                         .includes(:user, :machine_size).order(id: :desc)
-      @total_package = Package.where(created_at: today.beginning_of_day..today.end_of_day).sum(:quantity)
-    end
+    # if params.dig(:q, :created_at_gteq).blank? && params.dig(:q, :created_at_lteq).blank?
+    #   @sausages = Sausage.where(created_at: today.beginning_of_day..today.end_of_day)
+    #                      .includes(:user, :machine_size).order(id: :desc)
+    #   @total_package = Package.where(created_at: today.beginning_of_day..today.end_of_day).sum(:quantity)
+    # end
 
     @total_value = @sausages.sum { |sausage| sausage.machine_size.devision * sausage.quantity }
     @sausages = @sausages.page(params[:page]).per(40)
@@ -34,11 +34,9 @@ class SausagesController < ApplicationController
     @sausage = Sausage.new
   end
 
-  # GET /sausages/1/edit
   def edit
   end
 
-  # POST /sausages or /sausages.json
   def create
     authorize Sausage, :special_access?
 
@@ -47,13 +45,13 @@ class SausagesController < ApplicationController
 
     if @sausage.save
       if current_user.оператор?
-        redirect_to roles_path, notice: 'successfully created'
+        redirect_to roles_path, notice: 'Успешно создано'
         sign_out current_user
         return
       end
 
       respond_to do |format|
-          format.html { redirect_to sausages_url, notice: "successfully created." }
+          format.html { redirect_to sausages_url, notice: "Успешно создано." }
           format.json { render :show, status: :created, location: @sausage }
       end
     else
@@ -70,7 +68,7 @@ class SausagesController < ApplicationController
 
     respond_to do |format|
       if @sausage.update(sausage_params)
-        format.html { redirect_to sausages_url, notice: "successfully updated." }
+        format.html { redirect_to sausages_url, notice: "Успешно обновлено." }
         format.json { render :show, status: :ok, location: @sausage }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -86,7 +84,7 @@ class SausagesController < ApplicationController
     @sausage.destroy
 
     respond_to do |format|
-      format.html { redirect_to sausages_url, notice: "successfully destroyed." }
+      format.html { redirect_to sausages_url, notice: "успешно удален." }
       format.json { head :no_content }
     end
   end

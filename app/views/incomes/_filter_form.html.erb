@@ -10,12 +10,12 @@
         <%= f.date_field :created_at_lteq, class: 'form-control' %>
       </div>
       <div class="form-group col-xs-12 col-sm-5 col-md-3">
-        <%= f.label :expenditure_type_eq, 'Тип расходов:', class: 'mr-2' %>
-        <%= f.select :expenditure_type_eq, @expenditure_types, { include_blank: true }, class: 'form-control mr-2' %>
+        <%= f.label :income_type_eq, 'Тип расходов:', class: 'mr-2' %>
+        <%= f.select :income_type_eq, Income.income_types.sort, { include_blank: true }, class: 'form-control mr-2' %>
       </div>
       <div class="form-group col-xs-12 col-sm-5 col-md-3">
-        <%= f.label :executor_id_eq, 'Исполнитель:', class: 'mr-2' %>
-        <%= f.select :executor_id_eq, User.where(role: ['админ', 'менеджер', 'другой']).collect {|u| [u.name, u.id]}, { include_blank: true }, class: 'form-control mr-2' %>
+        <%= f.label :user_id_eq, 'Исполнитель:', class: 'mr-2' %>
+        <%= f.select :user_id_eq, User.includes(:incomes).where.not(incomes: { id: nil }).collect {|u| [u.name, u.id]}, { include_blank: true }, class: 'form-control mr-2' %>
       </div>
     </div>
 
@@ -28,23 +28,14 @@
         <%= f.label :price_lteq, 'Цена до:', class: 'mr-2' %>
         <%= f.number_field :price_lteq, class: 'form-control mr-2' %>
       </div>
-      <% if type=='payment' %>
-        <div class="form-group col-xs-12 col-sm-5 col-md-3">
-          <%= f.label :user_id_eq, 'Кому:', class: 'mr-2' %>
-          <%= f.select :user_id_eq, User.all.collect {|u| [u.name, u.id]}, { include_blank: true }, class: 'form-control mr-2' %>
-        </div>
-      <% end %>
-
-      <% if type=='for_product' %>
-        <div class="form-group col-xs-12 col-sm-5 col-md-3">
-          <%= f.label :outcomer_id_eq, 'поставщик:', class: 'mr-2' %>
-          <%= f.select :outcomer_id_eq, Outcomer.поставщик.all.collect {|u| [u.name, u.id]}, { include_blank: true }, class: 'form-control mr-2' %>
-        </div>
-        <div class="form-group col-xs-12 col-sm-5 col-md-3">
-          <%= f.label :product_id_eq, 'товар:', class: 'mr-2' %>
-          <%= f.select :product_id_eq, Product.where.not(weight: 3).collect {|u| [u.name, u.id]}, { include_blank: true }, class: 'form-control mr-2' %>
-        </div>
-      <% end %>
+      <div class="form-group col-xs-12 col-sm-5 col-md-3">
+        <%= f.label :outcomer_id_eq, 'Клиент:', class: 'mr-2' %>
+        <%= f.select :outcomer_id_eq, Outcomer.where(active_outcomer: true).покупатель.collect {|u| [u.name, u.id]}, { include_blank: true }, class: 'form-control mr-2' %>
+      </div>
+      <div class="form-group col-xs-12 col-sm-5 col-md-3">
+        <%= f.label :product_id_eq, 'товар:', class: 'mr-2' %>
+        <%= f.select :product_id_eq, Product.where.not(weight: 3).collect {|u| [u.name, u.id]}, { include_blank: true }, class: 'form-control mr-2' %>
+      </div>
     </div>
 
     <br>

@@ -9,7 +9,7 @@ class Expenditure < ApplicationRecord
   # don't change this enum
   enum expenditure_type: %i[на_товар трансакция аванс зарплата еда грузовик запчасть газ налог свет прочие]
   validates :price, presence: true, unless: -> { на_товар? }
-  validate :if_worfer_payment_expenditure
+  validate :if_worker_payment_expenditure
   validate :if_product_expenditure
   validate :set_total_paid
 
@@ -32,7 +32,7 @@ class Expenditure < ApplicationRecord
     end
   private
 
-  def if_worfer_payment_expenditure
+  def if_worker_payment_expenditure
     if ['аванс', 'зарплата'].include?(expenditure_type) && user.nil?
       errors.add(:user, "error, please fill forms")
     end

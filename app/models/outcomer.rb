@@ -1,6 +1,7 @@
 class Outcomer < ApplicationRecord
   validates :name, uniqueness: true
   has_many :expenditures
+  has_many :incomes
   enum role: %i[покупатель поставщик]
 
   scope :with_weight_and_role, ->(has_zero_weight = true) {

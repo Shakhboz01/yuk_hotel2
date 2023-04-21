@@ -1,0 +1,14 @@
+<div class="container my-3">
+  <div class="<%= current_user.приёмщик? && 'product-index' %> card shadow">
+    <div class="card-header text-center"><h3>SELECT CLIENT:</h3></div>
+    <div style='display: flex; flex-direction:column; align-items:center; justify-content:center;'>
+      <% @outcomers.each do |outcomer| %>
+        <%= link_to new_income_path(outcomer_id: outcomer.id, for_transaction: params[:transaction].present?) do %>
+          <div class='shadow' style='width: 520px; text-align:center; margin: 10px; height: 82px;  display: flex; justify-content: center; align-items: center;'>
+            <h2 style='color: black'><%= outcomer.name %></h2>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,43 @@
+<div class="container my-5">
+  <div class="card shadow">
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <h3 class="card-title font-weight-bold">Incomes</h3>
+    </div>
+    <div class="card-body">
+      <%= render 'filter_form', url: request.path %>
+      <table class="table table-bordered table-hover">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>executor</th>
+            <th>income type</th>
+            <th>buyer</th>
+            <th>quantity</th>
+            <th>price</th>
+            <th>total paid</th>
+            <th>created at</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @incomes.each do |income| -%>
+            <tr>
+              <td><%= income.id %></td>
+              <td><%= income.user.name %></td>
+              <td><%= income.income_type %></td>
+              <td><%= income.outcomer.name %></td>
+              <td><%= income&.quantity %></td>
+              <td><%= income&.price %></td>
+              <td><%= income&.total_paid %></td>
+              <td><%= income&.created_at %></td>
+              <td>
+                <%= clink_to 'редактировать', edit_income_path(income), 'fa-edit' %>
+              </td>
+            </tr>
+          <% end -%>
+        </tbody>
+      </table>
+      <%= paginate @incomes %>
+    </div>
+  </div>
+</div>

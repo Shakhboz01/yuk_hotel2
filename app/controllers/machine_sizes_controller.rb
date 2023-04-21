@@ -31,7 +31,7 @@ class MachineSizesController < ApplicationController
 
     respond_to do |format|
       if @machine_size.save
-        format.html { redirect_to machine_sizes_url, notice: "successfully created." }
+        format.html { redirect_to machine_sizes_url, notice: "Успешно создано." }
         format.json { render :show, status: :created, location: @machine_size }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -46,7 +46,7 @@ class MachineSizesController < ApplicationController
 
     respond_to do |format|
       if @machine_size.update(machine_size_params)
-        format.html { redirect_to machine_sizes_url, notice: "successfully updated." }
+        format.html { redirect_to machine_sizes_url, notice: "Успешно обновлено." }
         format.json { render :show, status: :ok, location: @machine_size }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -62,7 +62,7 @@ class MachineSizesController < ApplicationController
     @machine_size.destroy
 
     respond_to do |format|
-      format.html { redirect_to machine_sizes_url, notice: "successfully destroyed." }
+      format.html { redirect_to machine_sizes_url, notice: "успешно удален." }
       format.json { head :no_content }
     end
   end

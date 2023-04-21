@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_15_133905) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_17_123952) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -54,6 +54,21 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_15_133905) do
     t.index ["outcomer_id"], name: "index_expenditures_on_outcomer_id"
     t.index ["product_id"], name: "index_expenditures_on_product_id"
     t.index ["user_id"], name: "index_expenditures_on_user_id"
+  end
+
+  create_table "incomes", force: :cascade do |t|
+    t.integer "income_type", default: 0
+    t.bigint "product_id"
+    t.integer "quantity", default: 0
+    t.bigint "outcomer_id", null: false
+    t.integer "price", default: 0
+    t.integer "total_paid", default: 0
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["outcomer_id"], name: "index_incomes_on_outcomer_id"
+    t.index ["product_id"], name: "index_incomes_on_product_id"
+    t.index ["user_id"], name: "index_incomes_on_user_id"
   end
 
   create_table "machine_sizes", force: :cascade do |t|
@@ -150,6 +165,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_15_133905) do
   add_foreign_key "expenditures", "outcomers"
   add_foreign_key "expenditures", "products"
   add_foreign_key "expenditures", "users"
+  add_foreign_key "incomes", "outcomers"
+  add_foreign_key "incomes", "products"
+  add_foreign_key "incomes", "users"
   add_foreign_key "machine_sizes", "users"
   add_foreign_key "packages", "products"
   add_foreign_key "packages", "users"
