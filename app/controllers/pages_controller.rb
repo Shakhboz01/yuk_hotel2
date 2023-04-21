@@ -11,8 +11,10 @@ class PagesController < ApplicationController
       Income.includes(:outcomers, :products).where(created_at: DateTime.current.beginning_of_day..DateTime.current.end_of_day)
             .order(id: :desc)
     @expenditures =
-      Expenditure.includes(:outcomers, :products).where(created_at: DateTime.current.beginning_of_day..DateTime.current.end_of_day)
+      Expenditure.includes(:outcomers, :products)
+                 .where(created_at: DateTime.current.beginning_of_day..DateTime.current.end_of_day)
                  .order(id: :desc)
+
     @outcomers = Outcomer.where(active_outcomer: true).order(role: :desc)
 
     if params.dig(:q, :date)
@@ -21,7 +23,8 @@ class PagesController < ApplicationController
         Expenditure.includes(:outcomers, :products).where(created_at: @date.beginning_of_day..@date.end_of_day)
                    .order(id: :desc)
       @incomes =
-        Income.includes(:outcomers, :products).where(created_at: @date.beginning_of_day..@date.end_of_day)
+        Income.includes(:outcomers, :products)
+              .where(created_at: @date.beginning_of_day..@date.end_of_day)
               .order(id: :desc)
     end
   end

@@ -7,13 +7,13 @@ class Expenditure < ApplicationRecord
                         foreign_key: 'executor_id', optional: true
 
   # don't change this enum
-  enum expenditure_type: %i[на_товар трансакция аванс зарплата еда грузовик запчасть газ налог свет прочие]
+  enum expenditure_type: %i[на_товар аванс зарплата еда грузовик запчасть газ налог свет прочие]
   validates :price, presence: true, unless: -> { на_товар? }
   validate :if_worker_payment_expenditure
   validate :if_product_expenditure
   validate :set_total_paid
 
-  scope :from_index_3, -> { where("expenditure_type >= ?", Expenditure.expenditure_types[:еда]) }
+  scope :from_index_2, -> { where("expenditure_type >= ?", Expenditure.expenditure_types[:еда]) }
   scope :from_enum_to_enum, -> (x, y) { where(expenditure_type: x..y) }
 
   scope :totals_by_time_duration, lambda { |day = 'day'|
@@ -29,7 +29,8 @@ class Expenditure < ApplicationRecord
   }
   def self.ransackable_associations(auth_object = nil)
     ["executor", "outcomer", "product", "user"]
-    end
+  end
+
   private
 
   def if_worker_payment_expenditure

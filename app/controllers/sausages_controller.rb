@@ -1,7 +1,7 @@
 class SausagesController < ApplicationController
   before_action :set_sausage, only: %i[ show edit update destroy ]
   include Pundit
-  # GET /sausages or /sausages.json
+
   def index
     authorize Sausage, :access?
 
@@ -10,24 +10,18 @@ class SausagesController < ApplicationController
                   .order(id: :desc)
     @total_package = Package.ransack(params[:q]).result.sum(:quantity)
     today = Time.zone.today
-    # if params.dig(:q, :created_at_gteq).blank? && params.dig(:q, :created_at_lteq).blank?
-    #   @sausages = Sausage.where(created_at: today.beginning_of_day..today.end_of_day)
-    #                      .includes(:user, :machine_size).order(id: :desc)
-    #   @total_package = Package.where(created_at: today.beginning_of_day..today.end_of_day).sum(:quantity)
-    # end
 
     @total_value = @sausages.sum { |sausage| sausage.machine_size.devision * sausage.quantity }
     @sausages = @sausages.page(params[:page]).per(40)
   end
 
-  # GET /sausages/1 or /sausages/1.json
   def show
   end
 
   def operators_payment
     @operators = User.оператор.all
   end
-  # GET /sausages/new
+
   def new
     authorize Sausage, :special_access?
 

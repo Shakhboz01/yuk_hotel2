@@ -38,7 +38,7 @@ module ApplicationHelper
     if outcomer.role == 'поставщик'
       expenditures = outcomer.expenditures
 
-      difference = expenditures.sum(:total_paid) - expenditures.на_товар.sum(:price)
+      difference = expenditures.sum(:total_paid) - expenditures.sum(:price)
 
       if difference == 0
         class_name = 'bg-warning'
@@ -50,7 +50,7 @@ module ApplicationHelper
     else
       incomes = outcomer.incomes
 
-      difference = incomes.sum(:total_paid) - incomes.на_товар.sum(:price)
+      difference = incomes.sum(:total_paid) - incomes.sum(:price)
 
       if difference == 0
         class_name = 'bg-warning'

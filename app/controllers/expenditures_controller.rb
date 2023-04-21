@@ -8,26 +8,31 @@ class ExpendituresController < ApplicationController
     authorize Expenditure, :manage?
 
     @expenditure_types = Expenditure.expenditure_types.sort
-    @q = Expenditure.from_index_3.ransack(params[:q])
-    @expenditures = @q.result.order(id: :desc).page(params[:page]).per(40)
+    @q = Expenditure.from_index_2.ransack(params[:q])
+    @expenditures = @q.result.order(id: :desc)
     @sum = @expenditures.sum(&:price)
+
+    @expenditures = @expenditures.page(params[:page]).per(40)
   end
 
 
   def payment_expenditure
     @expenditure_types = [['зарплата', 3], ['аванс', 2]]
-    @q = Expenditure.from_enum_to_enum(2, 3).ransack(params[:q])
-    @payment_expenditures = @q.result.order(id: :desc).page(params[:page]).per(40)
+    @q = Expenditure.from_enum_to_enum(1, 2).ransack(params[:q])
+    @payment_expenditures = @q.result.order(id: :desc)
     @sum = @payment_expenditures.sum(&:price)
+
+    @payment_expenditures = @payment_expenditures.page(params[:page]).per(40)
   end
 
   def product_expenditure
-    @expenditure_types = [['на_товар', 0], ['трансакция', 1]]
-    @q = Expenditure.from_enum_to_enum(0, 1).ransack(params[:q])
+    @q = Expenditure.на_товар.ransack(params[:q])
 
-    @product_expenditures = @q.result.order(id: :desc).page(params[:page]).per(40)
-    @sum = @product_expenditures.на_товар.sum(&:price)
+    @product_expenditures = @q.result.order(id: :desc)
+    @sum = @product_expenditures.sum(&:price)
     @total_paid_sum = @product_expenditures.sum(&:total_paid)
+
+    @product_expenditures = @product_expenditures.page(params[:page]).per(40)
   end
 
   # GET /expenditures/1 or /expenditures/1.json
@@ -58,10 +63,6 @@ class ExpendituresController < ApplicationController
     if defined?(@expenditure_type) && ['аванс', 'зарплата'].include?(@expenditure_type)
       @action = 'payment'
     end
-
-    if @expenditure_type == 'трансакция'
-      @action = 'transaction'
-    end
   end
 
   # GET /expenditures/1/edit
@@ -83,10 +84,6 @@ class ExpendituresController < ApplicationController
 
     if ['аванс', 'зарплата'].include?(@expenditure_type)
       @action = 'payment'
-    end
-
-    if @expenditure_type == 'трансакция'
-      @action = 'transaction'
     end
   end
 
@@ -135,7 +132,7 @@ class ExpendituresController < ApplicationController
     respond_to do |format|
       if @expenditure.update(expenditure_params)
         format.html { redirect_to case @expenditure.expenditure_type
-        when 'на_товар', 'трансакция'
+        when 'на_товар'
           if current_user.role == 'приёмщик'
             products_path
           end

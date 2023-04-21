@@ -13,8 +13,8 @@
         </thead>
         <tbody>
           <% @outcomers.each do |outcomer| %>
-            <% if (outcomer.expenditures.sum(:total_paid) - outcomer.expenditures.на_товар.sum(:price)) != 0 ||
-             (outcomer.incomes.sum(:total_paid) - outcomer.incomes.на_товар.sum(:price)) != 0
+            <% if (outcomer.expenditures.sum(:total_paid) - outcomer.expenditures.sum(:price)) != 0 ||
+             (outcomer.incomes.sum(:total_paid) - outcomer.incomes.sum(:price)) != 0
             %>
               <tr>
                 <%= calculate_difference(outcomer) %>
@@ -31,7 +31,7 @@
       </table>
     </div>
     <div class='col-sm-4'>
-      <h2 class='text-center'>Доходы </h2>
+      <h2 class='text-center'>Доходы (<%= num_to_usd(@incomes.sum(:price)) %>) </h2>
       <table class='table shadow table-hover table-striped'>
         <thead>
           <tr>
@@ -43,11 +43,20 @@
           </tr>
         </thead>
         <tbody>
-
+          <% @incomes.each do |income| %>
+            <tr>
+              <td><%= income.id %></td>
+              <td><%= income.outcomer.name %></td>
+              <td><%= income.product.name %></td>
+              <td><%= num_to_usd(income.product.price) %></td>
+              <td><%= num_to_usd(income.product.total_paid) %></td>
+            </tr>
+          <% end %>
         </tbody>
       </table>
     </div>
     <div class='col-sm-6'>
+      <h2 class='text-center'>Расходы (<%= num_to_usd(@expenditures.sum(:price)) %>)</h2>
       <table class='table shadow table-hover table-striped'>
         <thead>
           <tr>

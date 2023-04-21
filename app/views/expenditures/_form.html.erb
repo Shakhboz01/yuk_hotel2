@@ -37,16 +37,9 @@
       <%= f.input :expenditure_type, input_html: {value: @expenditure_type}, as: :hidden %>
     <% end %>
 
-    <% if @action == 'transaction' %>
-      <%= f.association :outcomer, collection: Outcomer.where(active_outcomer: true).where(role: :поставщик).order(:name).pluck(:name, :id), class: 'form form-control', include_blank: false, label: 'Поставщик' %>
-    <% end %>
-
     <% unless @action == 'for_product' %>
       <%= f.input :price, label: 'цена' %>
     <% end %>
-
-    <%# # if postavhcchik %>
-    <%# <%= f.input :comment, label: 'Комментарий (необязательно)' %>
   </div>
 
   <div class="form-actions">

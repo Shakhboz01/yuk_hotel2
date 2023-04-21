@@ -9,10 +9,12 @@
         <%= f.label :created_at_lteq, 'Создано до:', class: 'control-label' %>
         <%= f.date_field :created_at_lteq, class: 'form-control' %>
       </div>
-      <div class="form-group col-xs-12 col-sm-5 col-md-3">
-        <%= f.label :expenditure_type_eq, 'Тип расходов:', class: 'mr-2' %>
-        <%= f.select :expenditure_type_eq, @expenditure_types, { include_blank: true }, class: 'form-control mr-2' %>
-      </div>
+      <% if @expenditure_types.present? %>
+        <div class="form-group col-xs-12 col-sm-5 col-md-3">
+          <%= f.label :expenditure_type_eq, 'Тип расходов:', class: 'mr-2' %>
+          <%= f.select :expenditure_type_eq, @expenditure_types, { include_blank: true }, class: 'form-control mr-2' %>
+        </div>
+      <% end %>
       <div class="form-group col-xs-12 col-sm-5 col-md-3">
         <%= f.label :executor_id_eq, 'Исполнитель:', class: 'mr-2' %>
         <%= f.select :executor_id_eq, User.where(role: ['админ', 'менеджер', 'другой']).collect {|u| [u.name, u.id]}, { include_blank: true }, class: 'form-control mr-2' %>

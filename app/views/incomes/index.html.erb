@@ -10,7 +10,6 @@
           <tr>
             <th>ID</th>
             <th>executor</th>
-            <th>income type</th>
             <th>buyer</th>
             <th>quantity</th>
             <th>price</th>
@@ -24,11 +23,10 @@
             <tr>
               <td><%= income.id %></td>
               <td><%= income.user.name %></td>
-              <td><%= income.income_type %></td>
               <td><%= income.outcomer.name %></td>
               <td><%= income&.quantity %></td>
-              <td><%= income&.price %></td>
-              <td><%= income&.total_paid %></td>
+              <td><%= num_to_usd(income&.price) %></td>
+              <td><%= num_to_usd(income&.total_paid) %></td>
               <td><%= income&.created_at %></td>
               <td>
                 <%= clink_to 'редактировать', edit_income_path(income), 'fa-edit' %>
