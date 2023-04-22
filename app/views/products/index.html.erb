@@ -42,7 +42,7 @@
                   </td>
                   <td>
                     <% if params[:end_product] %>
-                      <%= clink_to 'Оформить продажу', new_income_path(product_id: product.id, income_type: Income.income_types.keys.first ), 'fa-truck-ramp-box' %>
+                      <%= clink_to 'Оформить продажу', define_outcomer_incomes_path, 'fa-truck-ramp-box' %>
                     <% else %>
                       <%= clink_to 'Добить приход товара', new_expenditure_path(product_id: product.id, expenditure_type: Expenditure.expenditure_types.keys.first ), 'fa-truck-ramp-box' %>
                     <% end %>

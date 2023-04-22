@@ -3,9 +3,11 @@ class SessionsController < Devise::SessionsController
     if params[:role].blank?
       redirect_to roles_path, alert: 'Выберите роль, чтобы продолжить.'
     else
-      @collection = User.where(active_user: true).where(role: params[:role].to_i).pluck(:name, :email)
+      @collection = User.where(active_user: true)
+                        .where(role: params[:role].to_i)
+                        .pluck(:name, :email)
       @role = params[:role]
-      @users = User.where(role: @role)
+      @users = User.where(role: @role).where(allowed_to_use: true)
       super
     end
   end

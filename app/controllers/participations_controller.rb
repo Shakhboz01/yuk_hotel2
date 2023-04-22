@@ -19,7 +19,7 @@ class ParticipationsController < ApplicationController
       .order(:created_at)
 
     @allowed_for_new_participation = Participation.allowed.empty?
-    @month_name = first_day_of_selected_month.strftime("%B")
+    @month_name = first_day_of_selected_month.strftime('%Y-%m-%d')
     @days = @participations.pluck('DATE(created_at)').uniq
   end
 
@@ -31,7 +31,7 @@ class ParticipationsController < ApplicationController
   end
 
   def accept_new_participation
-    AcceptTadaysParticipation.run!(
+    AcceptTodaysParticipation.run!(
       users_particioation_status: params[:filter].permit!.to_h.to_a,
     )
 

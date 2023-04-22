@@ -9,14 +9,6 @@
         <%= f.label :created_at_lteq, 'Создано до:', class: 'control-label' %>
         <%= f.date_field :created_at_lteq, class: 'form-control' %>
       </div>
-      <div class="form-group col-xs-12 col-sm-5 col-md-3">
-        <%= f.label :income_type_eq, 'Тип расходов:', class: 'mr-2' %>
-        <%= f.select :income_type_eq, Income.income_types.sort, { include_blank: true }, class: 'form-control mr-2' %>
-      </div>
-      <div class="form-group col-xs-12 col-sm-5 col-md-3">
-        <%= f.label :user_id_eq, 'Исполнитель:', class: 'mr-2' %>
-        <%= f.select :user_id_eq, User.includes(:incomes).where.not(incomes: { id: nil }).collect {|u| [u.name, u.id]}, { include_blank: true }, class: 'form-control mr-2' %>
-      </div>
     </div>
 
     <div class="row">

@@ -10,7 +10,6 @@ class IncomesController < ApplicationController
     @total_paid = @incomes.sum(:total_paid)
     @total_price = @incomes.sum(:price)
     @incomes = @incomes.page(params[:page]).per(40)
-
   end
 
   def show; end
@@ -19,15 +18,8 @@ class IncomesController < ApplicationController
   def new
     authorize Income, :special_access?
 
-    @for_transaction = params[:for_transaction]
-    @product = Product.find(params[:product_id]) unless @for_transaction
     @income = Income.new
-
-    if @for_transaction
-      @income.income_type = 'трансакция'
-    else
-      @income.income_type = 'на_товар'
-    end
+    @product_prices = ProductPrice.joins(:product).where(products: { weight: 3 }).order(price: :asc).pluck(:price).uniq
   end
 
   # GET /incomes/1/edit
@@ -35,7 +27,6 @@ class IncomesController < ApplicationController
     authorize Income, :access?
 
     @product = @income.product
-    @for_transaction = @income.income_type == 'трансакция'
   end
 
   def create
@@ -82,7 +73,9 @@ class IncomesController < ApplicationController
   end
 
   def define_outcomer
-    @outcomers = Outcomer.where(active_outcomer: true).where(role: :покупатель)
+    @outcomers = Outcomer.where(active_outcomer: true)
+                         .where(role: :покупатель)
+                         .order(:name)
   end
 
   def new_income

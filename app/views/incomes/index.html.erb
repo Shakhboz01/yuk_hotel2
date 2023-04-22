@@ -5,29 +5,40 @@
     </div>
     <div class="card-body">
       <%= render 'filter_form', url: request.path %>
+      <div class="sum-of-prices mb-3 d-flex" style='justify-content: space-evenly'>
+        <strong>ОБЩАЯ ЦЕНА ПРОДАЖ: <%= num_to_usd(@total_price) %></strong>
+        <strong>-</strong>
+        <strong>ОПЛАЧЕННАЯ СУММА: <%= num_to_usd(@total_paid) %></strong>
+        <strong>=</strong>
+        <strong><%= num_to_usd(@total_price - @total_paid) %></strong>
+      </div>
       <table class="table table-bordered table-hover">
         <thead>
           <tr>
-            <th>ID</th>
-            <th>executor</th>
-            <th>buyer</th>
-            <th>quantity</th>
-            <th>price</th>
-            <th>total paid</th>
-            <th>created at</th>
+            <th><%= sort_link @q, :id, 'ID' %></th>
+            <th><%= sort_link @q, :product_id, 'Товар' %></th>
+            <th>Покупатель</th>
+            <th><%= sort_link @q, :quantity, 'Кол.' %></th>
+            <th><%= sort_link @q, :price, 'Цена' %></th>
+            <th><%= sort_link @q, :total_paid, 'Всего выплачено' %></th>
+            <th>Исполнитель</th>
+            <th><%= sort_link @q, :created_at, 'Создано в' %></th>
+            <th><%= sort_link @q, :uodated_at, 'Редактировано в' %></th>
             <th></th>
           </tr>
         </thead>
         <tbody>
           <% @incomes.each do |income| -%>
             <tr>
-              <td><%= income.id %></td>
-              <td><%= income.user.name %></td>
+              <%= expenditure_income_color(income, true) %>
+              <td><%= income.product.name %></td>
               <td><%= income.outcomer.name %></td>
               <td><%= income&.quantity %></td>
               <td><%= num_to_usd(income&.price) %></td>
               <td><%= num_to_usd(income&.total_paid) %></td>
+              <td><%= income.user.name %></td>
               <td><%= income&.created_at %></td>
+              <td><%= income&.updated_at %></td>
               <td>
                 <%= clink_to 'редактировать', edit_income_path(income), 'fa-edit' %>
               </td>

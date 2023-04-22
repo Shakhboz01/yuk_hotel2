@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_17_123952) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_21_134227) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -57,7 +57,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_17_123952) do
   end
 
   create_table "incomes", force: :cascade do |t|
-    t.integer "income_type", default: 0
     t.bigint "product_id"
     t.integer "quantity", default: 0
     t.bigint "outcomer_id", null: false
@@ -150,6 +149,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_17_123952) do
     t.boolean "active_user", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "allowed_to_use", default: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

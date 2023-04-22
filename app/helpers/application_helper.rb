@@ -16,8 +16,8 @@ module ApplicationHelper
     number_to_currency(price, unit: '')
   end
 
-  def expenditure_color(expenditure)
-    unless expenditure.expenditure_type == 'на_товар'
+  def expenditure_income_color(expenditure, for_income = false)
+    if !for_income && expenditure&.expenditure_type != 'на_товар'
       return "<td>#{expenditure.id}</td>".html_safe
     end
 
@@ -93,7 +93,7 @@ module ApplicationHelper
   end
 
   def calculate_operators_monthly_payment(operator)
-    sausage_price = 2000
+    sausage_price = 250
     actual_quantity = operator.machine_size.devision * operator.sausages.created_this_month.sum(:quantity)
     actual_quantity * sausage_price
   end
@@ -106,5 +106,25 @@ module ApplicationHelper
     content_tag(:span, class: color_class) do
       "#{difference_percent.round(1)}%"
     end
+  end
+
+  def find_user_part_day(day, user)
+    return 'error' if user.nil?
+
+    status =
+      user.participations
+             .where('DATE(created_at) = ?', day)
+    result = ''
+    if status.exists?
+      case status.last.status
+        when 'пришёл'
+          result = "<i style='color: green; font-size: large' class='fa-solid fa-check'></i>".html_safe
+        when 'не_пришёл'
+          result = "<i style='margin: 0; color:red; font-size: large' class='fa-solid fa-xmark'></i>".html_safe
+        when 'выходной'
+          result = "<i style='color:yellow; font-size: large' class='fa-regular fa-circle'></i>".html_safe
+      end
+    end
+    result
   end
 end

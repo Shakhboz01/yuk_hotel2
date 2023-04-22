@@ -25,10 +25,12 @@ class SausagesController < ApplicationController
   def new
     authorize Sausage, :special_access?
 
+    @machine_size = current_user&.machine_size&.devision || 0
     @sausage = Sausage.new
   end
 
   def edit
+    @machine_size = current_user&.machine_size&.devision || 0
   end
 
   def create

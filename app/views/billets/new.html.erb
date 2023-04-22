@@ -8,7 +8,7 @@
             <%= f.input ('quantity_' + proportion.id.to_s).to_sym, input_html: { class: 'form-control', placeholder: 'Количество' }, label: false %>
           </div>
         <% end %>
-        <div style='max-width: 535px; margin: 19px auto' class='flexs'>
+        <div style='max-width: 535px; margin: 19px auto;' class='justify-content-center d-flex'>
           <%= f.submit "Создать", class: 'btn btn-lg btn-primary ' %>
         </div>
       <% end %>

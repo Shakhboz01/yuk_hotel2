@@ -30,7 +30,7 @@
         <tbody>
           <% @product_expenditures.each do |expenditure| -%>
             <tr>
-              <%= expenditure_color(expenditure) %>
+              <%= expenditure_income_color(expenditure) %>
               <td><%= expenditure&.product&.name %></td>
               <td><%= expenditure&.quantity %></td>
               <td><%= num_to_usd(expenditure.price) %></td>

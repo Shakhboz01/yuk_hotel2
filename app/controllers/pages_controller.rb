@@ -8,10 +8,10 @@ class PagesController < ApplicationController
     return redirect_to request.referrer unless is_allowed
 
     @incomes =
-      Income.includes(:outcomers, :products).where(created_at: DateTime.current.beginning_of_day..DateTime.current.end_of_day)
+      Income.includes(:outcomer, :product).where(created_at: DateTime.current.beginning_of_day..DateTime.current.end_of_day)
             .order(id: :desc)
     @expenditures =
-      Expenditure.includes(:outcomers, :products)
+      Expenditure.includes(:outcomer, :product)
                  .where(created_at: DateTime.current.beginning_of_day..DateTime.current.end_of_day)
                  .order(id: :desc)
 
@@ -20,10 +20,10 @@ class PagesController < ApplicationController
     if params.dig(:q, :date)
       @date = params.dig(:q, :date).to_date
       @expenditures =
-        Expenditure.includes(:outcomers, :products).where(created_at: @date.beginning_of_day..@date.end_of_day)
+        Expenditure.includes(:outcomer, :product).where(created_at: @date.beginning_of_day..@date.end_of_day)
                    .order(id: :desc)
       @incomes =
-        Income.includes(:outcomers, :products)
+        Income.includes(:outcomer, :products)
               .where(created_at: @date.beginning_of_day..@date.end_of_day)
               .order(id: :desc)
     end
@@ -39,24 +39,26 @@ class PagesController < ApplicationController
     return redirect_to request.referrer unless is_allowed
 
     trans_action = Expenditure.all
+    income = Income.all
 
     if params[:filter].present?
       from = "#{params[:filter]['from(1i)']}-#{params[:filter]['from(2i)']}-#{params[:filter]['from(3i)']}".to_date.beginning_of_day
       till = "#{params[:filter]['till(1i)']}-#{params[:filter]['till(2i)']}-#{params[:filter]['till(3i)']}".to_date.beginning_of_day
 
       trans_action = trans_action.where(created_at: from..till)
+      income = income.where(created_at: from..till)
     end
     # income
+    @total_income_with_debt = income.sum(:price)
+    @total_income_without_debt = @total_income_with_debt - income.sum(:total_paid)
 
-    # @total_income_with_debt = trans_action.sum(:price)
-    # @total_income_without_debt = @total_income_with_debt - @total_debt
-
-    # income
+    # outcome
     @total_outcome_with_debt = trans_action.sum(:price)
     @total_debt = trans_action.sum(:price) - trans_action.sum(:total_paid)
     @total_outcome_without_debt = @total_outcome_with_debt - @total_debt
 
     @daily_outcome = trans_action.totals_by_time_duration
+    @daily_income = income.totals_by_time_duration
     customers = trans_action.joins(:outcomer).group('expenditures.outcomer_id').count.sort_by(&:last)
     @total_depters = trans_action.where('price > total_paid').pluck(:outcomer_id).uniq.count
 
@@ -67,6 +69,6 @@ class PagesController < ApplicationController
   end
 
   def roles
-     @roles = [:приёмщик, :заготовщик, :оператор, :упаковщик, :продавец, :другой, :админ, :менеджер]
+     @roles = [:приёмщик, :заготовщик, :оператор, :упаковщик, :другой, :админ, :менеджер]
   end
 end

@@ -6,7 +6,9 @@ class PackagesController < ApplicationController
   def index
     authorize Package, :access?
     @q = Package.ransack(params[:q])
-    @packages = @q.result.order(id: :desc).page(params[:page]).per(40)
+    @packages = @q.result.order(id: :desc)
+    @total_package_sum = @packages.sum(:quantity)
+    @packages = @packages.page(params[:page]).per(40)
   end
 
   # GET /packages/1 or /packages/1.json

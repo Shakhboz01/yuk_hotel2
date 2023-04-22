@@ -8,6 +8,7 @@ class User < ApplicationRecord
   has_many :incomes
   has_many :sausages
   has_many :expenditures
+  has_many :participations
   has_many :packages
   has_one :machine_size
   validates :name, uniqueness: true
@@ -16,5 +17,9 @@ class User < ApplicationRecord
     super.tap do |sanitizer|
       sanitizer.permit(:sign_up, keys: [:name])
     end
+  end
+
+  def active_for_authentication?
+    super && allowed_to_use?
   end
 end
