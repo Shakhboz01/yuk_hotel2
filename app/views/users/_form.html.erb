@@ -21,6 +21,11 @@
     </div>
 
     <div class="form-group">
+      <%= form.label :daily_payment, 'ежедневный платеж' %>
+      <%= form.number_field :daily_payment, class: 'form form-control' %>
+    </div>
+
+    <div class="form-group">
       <%= form.label :role, 'Роль' %>
       <%= form.select :role, User.roles.keys, {}, class: 'form-control' %>
     </div>

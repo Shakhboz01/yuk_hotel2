@@ -1,11 +1,10 @@
+<div class='container m-2'>
+<%= simple_form_for :filter, url: request.path, method: 'get' do |f| %>
+  <%= f.label :month_number, 'Месяц' %>
+  <%= f.month_field(:month_number, html_options = { class: 'select-date'}) %>
+  <%= f.button :submit, 'Фильтр', class: 'btn btn-primary' %>
+<% end %>
 <% if !@participations.count.zero? %>
-  <%= simple_form_for :filter, url: request.path, method: 'get' do |f| %>
-    <%= f.label :month_number, 'Месяц' %>
-    <%= f.month_field(:month_number, html_options = { class: 'select-date'}) %>
-    <%= f.button :submit, 'Фильтр', class: 'btn btn-primary' %>
-  <% end %>
-
-  <div class='container m-2'>
     <h3><%= @month_name %></h3>
     <table class='table shadow table-hover table-striped'>
       <thead>
@@ -14,21 +13,24 @@
           <% @days.each do |day| %>
             <th><%= day.strftime("%d") %></th>
           <% end %>
-          <%# <th>Итого</th> %>
+          <th>Итого</th>
         </tr>
       </thead>
       <tbody>
-        <% @participations.uniq.each do |participation| %>
+        <% @unique_users.each do |user_id| %>
           <tr>
-            <th><%= participation.user.name %></th>
+            <th><%= User.find(user_id).name %></th>
             <% @days.each do |day| %>
               <th>
-                <%= find_user_part_day(day, participation.user) %>
+                <%= find_user_part_day(day, User.find(user_id)) %>
               </th>
             <% end %>
+            <th><%= calculate_payment_by_participation(user_id, @participations) %></th>
           </tr>
         <% end %>
       </tbody>
     </table>
-  </div>
-<% end %>
+  <% else %>
+    <span class='text-center m-3'>в этом месяце нет участия</span>
+  <% end %>
+</div>

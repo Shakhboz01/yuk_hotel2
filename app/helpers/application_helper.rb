@@ -127,4 +127,13 @@ module ApplicationHelper
     end
     result
   end
+
+  def calculate_payment_by_participation(user_id, participations)
+    user = User.find(user_id)
+    return if user.daily_payment.nil?
+
+    daily_payment = user.daily_payment
+    number_of_active_days = participations.where(user_id: user_id).пришёл.count
+    num_to_usd(number_of_active_days * daily_payment)
+  end
 end

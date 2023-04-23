@@ -14,13 +14,13 @@ class ParticipationsController < ApplicationController
     end
 
     @participations =
-      Participation
-      .where(created_at: first_day_of_selected_month..last_day_of_selected_month)
-      .order(:created_at)
+      Participation.where(created_at: first_day_of_selected_month..last_day_of_selected_month)
+    @unique_users = @participations.select(:user_id).distinct.map(&:user_id)
+
 
     @allowed_for_new_participation = Participation.allowed.empty?
     @month_name = first_day_of_selected_month.strftime('%Y-%m-%d')
-    @days = @participations.pluck('DATE(created_at)').uniq
+    @days = @participations.order(created_at: :desc).pluck('DATE(created_at)').uniq
   end
 
   def new
