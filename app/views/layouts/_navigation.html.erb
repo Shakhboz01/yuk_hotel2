@@ -105,6 +105,8 @@
                 <%= link_to 'Товары', products_path(end_product: true), class: 'dropdown-item' %>
                 <%= link_to 'Сырья', products_path, class: 'dropdown-item' %>
                 <%= link_to 'Цены', product_prices_path, class: 'dropdown-item' %>
+                <%= link_to 'Возвраты', refunds_path, class: 'dropdown-item' %>
+                <%= link_to 'Добавить возврат', new_refund_path, class: 'dropdown-item' %>
               </div>
             </li>
           <% end %>

@@ -47,6 +47,7 @@ Rails.application.routes.draw do
   resources :users do
     get :toggle_active_user, on: :member
   end
+  resources :refunds
   resources :outcomers do
     member do
       get :toggle_active_outcomer

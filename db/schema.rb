@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_23_072023) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_23_074248) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -130,6 +130,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_23_072023) do
     t.index ["waste_paper_proportion_id"], name: "index_proportion_details_on_waste_paper_proportion_id"
   end
 
+  create_table "refunds", force: :cascade do |t|
+    t.bigint "product_id", null: false
+    t.bigint "user_id", null: false
+    t.integer "quantity"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["product_id"], name: "index_refunds_on_product_id"
+    t.index ["user_id"], name: "index_refunds_on_user_id"
+  end
+
   create_table "sausages", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.integer "quantity"
@@ -176,5 +186,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_23_072023) do
   add_foreign_key "product_prices", "products"
   add_foreign_key "proportion_details", "products"
   add_foreign_key "proportion_details", "waste_paper_proportions"
+  add_foreign_key "refunds", "products"
+  add_foreign_key "refunds", "users"
   add_foreign_key "sausages", "users"
 end

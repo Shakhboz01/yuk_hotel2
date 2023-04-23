@@ -1,5 +1,9 @@
 class ParticipationsController < ApplicationController
+  include Pundit
+
   def index
+    authorize Participation, :manage?
+
     month_year = params.dig(:filter, :month_number)&.first(7)
     if !month_year.nil? && !month_year&.empty?
       first_day_of_selected_month = (month_year + "-01").to_date.beginning_of_month.beginning_of_day
@@ -24,13 +28,18 @@ class ParticipationsController < ApplicationController
   end
 
   def new
+    authorize Participation, :manage?
+
     @users = User.where(active_user: true)
   end
 
   def create
+    authorize Participation, :manage?
   end
 
   def accept_new_participation
+    authorize Participation, :manage?
+
     AcceptTodaysParticipation.run!(
       users_particioation_status: params[:filter].permit!.to_h.to_a,
     )
