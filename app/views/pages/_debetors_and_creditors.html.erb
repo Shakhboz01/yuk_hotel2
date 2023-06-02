@@ -1,0 +1,36 @@
+<div class='col-sm-4'>
+  <h2 class='text-center'>Дебеторы</h2>
+  <table class='table shadow table-hover table-striped'>
+    <thead>
+      <tr>
+        <th>Имя</th>
+        <th>Разница</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @outcomers.each do |outcomer| %>
+        <tr>
+          <%= find_debetors(outcomer) %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+<div class='col-sm-4'>
+  <h2 class='text-center'>Кредеторы</h2>
+  <table class='table table-responsive shadow table-hover table-striped'>
+    <thead>
+      <tr>
+        <th>Имя</th>
+        <th>Разница</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @outcomers.each do |outcomer| %>
+        <tr>
+          <%= find_creditors(outcomer) %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

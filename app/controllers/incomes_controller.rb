@@ -19,7 +19,10 @@ class IncomesController < ApplicationController
     authorize Income, :special_access?
 
     @income = Income.new
-    @product_prices = ProductPrice.joins(:product).where(products: { weight: 3 }).order(price: :asc).pluck(:price).uniq
+    @product_prices = ProductPrice.joins(:product)
+                                  .where(products: { weight: 3 })
+                                  .order(price: :asc)
+                                  .pluck(:price).uniq
   end
 
   # GET /incomes/1/edit

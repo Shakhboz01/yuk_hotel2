@@ -2,31 +2,37 @@ class PagesController < ApplicationController
   skip_before_action :authenticate_user!, only: %i[roles]
 
   def main_page
-
     is_allowed = %w[админ менеджер].include?(current_user.role)
 
     return redirect_to request.referrer unless is_allowed
 
     @incomes =
-      Income.includes(:outcomer, :product).where(created_at: DateTime.current.beginning_of_day..DateTime.current.end_of_day)
-            .order(id: :desc)
+      Income.order(id: :desc)
     @expenditures =
-      Expenditure.includes(:outcomer, :product)
-                 .where(created_at: DateTime.current.beginning_of_day..DateTime.current.end_of_day)
-                 .order(id: :desc)
+      Expenditure.includes(:outcomer, :product).order(id: :desc)
 
     @outcomers = Outcomer.where(active_outcomer: true).order(role: :desc)
+    @overall_income = Income.sum(:price)
+    @today_overall_income = Income.where('created_at > ?', DateTime.now.beginning_of_day)
+    @today_real_income = @today_overall_income.sum(:total_paid)
+    @today_overall_income = @today_overall_income.sum(:price)
+    @real_income = Income.sum(:total_paid)
 
-    if params.dig(:q, :date)
-      @date = params.dig(:q, :date).to_date
-      @expenditures =
-        Expenditure.includes(:outcomer, :product).where(created_at: @date.beginning_of_day..@date.end_of_day)
-                   .order(id: :desc)
-      @incomes =
-        Income.includes(:outcomer, :products)
-              .where(created_at: @date.beginning_of_day..@date.end_of_day)
-              .order(id: :desc)
-    end
+    @overall_expenditure = Expenditure.sum(:price)
+    @today_overall_expenditure = Expenditure.where('created_at > ?', DateTime.now.beginning_of_day)
+    @today_real_expenditure = @today_overall_expenditure.sum(:total_paid)
+    @today_overall_expenditure = @today_overall_expenditure.sum(:price)
+    @real_expenditure = Expenditure.sum(:total_paid)
+
+    total_expenditure_with_prev_data =
+      Expenditure.where('created_at < ?', DateTime.now.beginning_of_day)
+                 .where('total_paid < price').sum(:price)
+    @total_expenditure_with_todays_and_prev_data = @today_overall_expenditure + total_expenditure_with_prev_data
+
+    total_income_with_prev_data =
+      Income.where('total_paid < price')
+            .where('created_at < ?', DateTime.now.beginning_of_day).sum(:price)
+    @total_income_with_todays_and_prev_data = total_income_with_prev_data + @today_overall_income
   end
 
   def welcoming_page

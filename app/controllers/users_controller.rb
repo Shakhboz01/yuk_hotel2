@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   def index
     authorize User, :manage?
 
-    @users = User.all.order(active_user: :desc)
+    @users = User.all.order(active_user: :desc).order(:name)
   end
 
   def show

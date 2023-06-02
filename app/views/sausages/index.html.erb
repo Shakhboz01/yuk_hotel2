@@ -7,8 +7,8 @@
     <div class="card-body">
         <div class='row'>
           <div class='shadow col-sm-6 col-xs-12'>
-            <p><strong>количества колбасы: </strong><%= (@total_value / 6).to_i %></p>
-            <p><strong>ожидаемая упаковка: </strong><%= ((@total_value - (@total_value * 0.02).to_i) / 6).to_i %></p>
+            <p><strong>Ожидаемая упаковка: </strong><%= (@total_value / 6).to_i %></p>
+            <p><strong>Фактическая упаковка: </strong><%= ((@total_value - (@total_value * 0.02).to_i) / 6).to_i %></p>
           </div>
           <div class='shadow col-sm-6 col-xs-12'>
             <p><strong>Итого фактическая упаковка: </strong><%= @total_package %></p>
@@ -21,8 +21,8 @@
             <tr>
               <th>ID</th>
               <th>оператор</th>
-              <th>Кол. упаковка</th>
-              <th>Ожидаемый упаковка</th>
+              <th>Ожидаемая упаковка</th>
+              <th>Фактическая упаковка</th>
               <th><%= sort_link @q, :created_at, 'Создано в' %></th>
               <th></th>
             </tr>

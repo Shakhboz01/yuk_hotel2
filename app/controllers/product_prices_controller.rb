@@ -3,7 +3,7 @@ class ProductPricesController < ApplicationController
 
   # GET /product_prices or /product_prices.json
   def index
-    @product_prices = ProductPrice.all
+    @product_prices = ProductPrice.all.order(:product_id)
   end
 
   # GET /product_prices/1 or /product_prices/1.json

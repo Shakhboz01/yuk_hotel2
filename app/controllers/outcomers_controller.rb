@@ -63,9 +63,8 @@ class OutcomersController < ApplicationController
     authorize Outcomer, :manage?
 
     @outcomer = Outcomer.new(outcomer_params)
-
     if @outcomer.save
-      redirect_to @outcomer
+      redirect_to outcomers_path(role: outcomer_params['role']), notice: 'успешно cоздано'
     else
       render :new
     end

@@ -19,8 +19,10 @@ production:
   # <<: *default
   adapter:  postgresql
   encoding: unicode
-  host:     <%= ENV.fetch('DB_HOST', 'localhost') %>
-  database: <%= ENV['DB_NAME'] %>
-  username: <%= ENV['DB_USERNAME'] %>
-  password: <%= ENV['DB_PASSWORD'] %>
+  database: <%= ENV["PGDATABASE"] %>
+  host: <%= ENV.fetch('PGHOST', 'localhost') %>
+  username: <%= ENV["PGUSER"] %>
+  port: <%= ENV["PGPORT"] %>
+  password: <%= ENV["PGPASSWORD"] %>
+  url: <%= ENV["DATABASE_URL"] %>
   pool: 100
