@@ -33,6 +33,7 @@ class PagesController < ApplicationController
       Income.where('total_paid < price')
             .where('created_at < ?', DateTime.now.beginning_of_day).sum(:price)
     @total_income_with_todays_and_prev_data = total_income_with_prev_data + @today_overall_income
+    @total_amount_left_for_w3_products = Product.where(weight: 3).sum(:amount_left)
   end
 
   def welcoming_page
