@@ -11,14 +11,30 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
   end
 
+  def new_user_form
+    @user = User.new
+  end
+
+  def auto_user_creation
+    user = User.new(user_params)
+    user.email = user.name + '@gmail.com'
+    if user.save
+      redirect_to users_path, notice: 'Успешно создано.'
+    else
+      redirect_to auto_user_creation_users_path, notice: 'error'
+    end
+  end
+
   def new
     @user = User.new
   end
 
   def create
     @user = User.new(user_params)
+    @user.email = user_params.name + '@gmail.com'
+    @user.password = '1111'
     if @user.save
-      redirect_to users_path, notice: 'User was Успешно создано.'
+      redirect_to users_path, notice: 'Успешно создано.'
     else
       render :new
     end

@@ -46,6 +46,8 @@ Rails.application.routes.draw do
 
   resources :users do
     get :toggle_active_user, on: :member
+    get :new_user_form, on: :collection
+    post :auto_user_creation, on: :collection
   end
   resources :refunds
   resources :outcomers do
