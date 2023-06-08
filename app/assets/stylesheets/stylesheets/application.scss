@@ -2,6 +2,9 @@
 // Custom SCSS
 @import "components/buttons";
 @import "components/forms";
+@import "bootstrap-sprockets";
+@import "bootstrap";
+@import 'bulma';
 
 *{
   margin: 0;
