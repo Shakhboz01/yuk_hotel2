@@ -9,6 +9,7 @@ gem 'kaminari', '~> 1.2'
 gem "ransack"
 gem "byebug"
 gem 'jquery-rails'
+gem 'jquery-ui-rails'
 gem 'bootstrap-sass'
 gem 'devise'
 gem 'pundit'
