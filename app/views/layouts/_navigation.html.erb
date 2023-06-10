@@ -14,7 +14,7 @@
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse" id="admin-navbar">
         <ul class="nav navbar-nav">
-          <% if user_signed_in? && %w[админ менеджер].include? current_user.role %>
+          <% if %w[админ менеджер].include? current_user.role %>
             <!-- Top ups dropdown -->
             <%= active_li_block_dropdown [
               { title: 'navigation.admin.Товары', link: products_path(end_product: true) },

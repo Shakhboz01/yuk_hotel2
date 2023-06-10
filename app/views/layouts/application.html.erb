@@ -39,7 +39,11 @@
         <%= flash[:alert] %>
       </div>
     <% end %>
-    <%= render 'layouts/navigation' %>
+
+    <% if user_signed_in? %>
+      <%= render 'layouts/navigation' %>
+    <% end %>
+
     <% if notice.present? %>
       <div id="notice" class="alert alert-warning" role="alert">
         <%= notice %>
