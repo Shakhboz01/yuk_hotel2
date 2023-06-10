@@ -136,4 +136,32 @@ module ApplicationHelper
     number_of_active_days = participations.where(user_id: user_id).пришёл.count
     num_to_usd(number_of_active_days * daily_payment)
   end
+
+  def active_li_block_dropdown(links, nav_link)
+    is_active_link = false
+    links.each do |link|
+      next if link.size.zero?
+
+      if is_active_link?(link[:link])
+        is_active_link = true
+      end
+    end
+    content_tag :li, class: "dropdown #{is_active_link ? 'active' : 'regular'}" do
+      concat (link_to '#', role: 'button', class: 'dropdown-toggle', 'data-toggle' => 'dropdown', 'aria-haspopup' => true, 'aria-expanded' => 'false' do
+        (nav_link + content_tag(:span, '', class: 'caret')).html_safe
+      end)
+
+      concat (content_tag :ul, class: 'dropdown-menu' do
+        links.collect do |link|
+          if link.size.zero?
+            '<li role="separator" class="divider"></li>'
+          elsif link.key?(:show) && !link[:show]
+            ''
+          else
+            active_link_to t(link[:title]), link[:link], wrap_tag: :li
+          end
+        end.join.html_safe
+      end)
+    end
+  end
 end
