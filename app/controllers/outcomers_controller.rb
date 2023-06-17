@@ -1,7 +1,7 @@
 # app/controllers/outcomers_controller.rb
 
 class OutcomersController < ApplicationController
-  include Pundit
+  include Pundit::Authorization
 
   before_action :set_role
   before_action :set_outcomer, only: [:show, :edit, :update, :destroy]

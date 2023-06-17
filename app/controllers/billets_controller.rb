@@ -1,5 +1,5 @@
 class BilletsController < ApplicationController
-  include Pundit
+  include Pundit::Authorization
 
   before_action :set_billet, only: %i[ show edit update destroy ]
 

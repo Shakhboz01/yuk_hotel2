@@ -1,5 +1,5 @@
 class ParticipationsController < ApplicationController
-  include Pundit
+  include Pundit::Authorization
 
   def index
     authorize Participation, :manage?

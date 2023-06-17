@@ -1,6 +1,6 @@
 class MachineSizesController < ApplicationController
   before_action :set_machine_size, only: %i[ show edit update destroy ]
-  include Pundit
+  include Pundit::Authorization
   # GET /machine_sizes or /machine_sizes.json
   def index
     authorize MachineSize, :access?

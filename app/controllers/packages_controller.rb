@@ -1,6 +1,6 @@
 class PackagesController < ApplicationController
   before_action :set_package, only: %i[ show edit update destroy ]
-  include Pundit
+  include Pundit::Authorization
 
   # GET /packages or /packages.json
   def index

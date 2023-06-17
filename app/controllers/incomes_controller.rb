@@ -1,5 +1,5 @@
 class IncomesController < ApplicationController
-  include Pundit
+  include Pundit::Authorization
   before_action :set_income, only: %i[ show edit update destroy ]
 
   def index

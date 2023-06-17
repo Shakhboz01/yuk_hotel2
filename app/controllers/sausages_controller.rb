@@ -1,6 +1,6 @@
 class SausagesController < ApplicationController
   before_action :set_sausage, only: %i[ show edit update destroy ]
-  include Pundit
+  include Pundit::Authorization
 
   def index
     authorize Sausage, :access?

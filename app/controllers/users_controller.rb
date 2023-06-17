@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  include Pundit
+  include Pundit::Authorization
 
   def index
     authorize User, :manage?

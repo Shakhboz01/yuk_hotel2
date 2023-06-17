@@ -13,7 +13,7 @@ product_names.each do |product|
   Product.create(name: product[0], amount_left: 0, weight: product[1])
 end
 
-# Product.find_by(weight: 1).product_prices.create(price: ) # find price here
+Product.find_by(weight: 1).product_prices.create(price: 400)
 
 3.times do
   WastePaperProportion.create
