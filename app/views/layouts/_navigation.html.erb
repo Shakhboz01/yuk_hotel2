@@ -116,7 +116,7 @@
     <ul class="text-center navbar-nav ml-auto">
       <% if user_signed_in? %>
         <li class="nav-item ml-auto">
-          <%= link_to "Выйти", destroy_user_session_path, class: "nav-link", data: { method: :delete } %>
+          <%= link_to "Выйти", destroy_user_session_path, class: "nav-link", method: :delete %>
         </li>
       <% else %>
         <li class="nav-item">
