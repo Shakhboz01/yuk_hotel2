@@ -16,6 +16,13 @@
  @import "bootstrap-sprockets";
  @import "bootstrap";
 
+ .styled-delete-button{
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+ }
+
  #admin-navbar {
   padding-left: 0;
   padding-right: 0;
