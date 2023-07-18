@@ -5,11 +5,11 @@ module ApplicationHelper
     link_to styled_title, link, title: title
   end
 
-  def cdlink_to(title, link, icon = 'fa-remove styled-delete-button', confirm_text = 'Вы действительно хотите удалить?')
+  def cdlink_to(title, link, icon = 'fa-remove', confirm_text = 'Вы действительно хотите удалить?')
     button_to icon.blank? ? t(title) : content_tag(:i, '', class: %i[fa fa-fw].push(icon)),
             link,
             title: title,
-            method: :delete, data: { confirm: strip_tags( confirm_text) }
+            method: :delete, class: 'styled-delete-button', data: { confirm: strip_tags( confirm_text) }
   end
 
   def num_to_usd(price)
