@@ -12,7 +12,11 @@
     <% User.roles.slice(*@roles).each do |k, v| %>
       <%= link_to new_user_session_path(role: v), class: "text-decoration-none text-dark" do %>
       <div class="card shadow text-center role-item p-4" style="font-size: large; font-weight: bold; width: 196px; height: 95px; margin: 10px">
-        <h3><%= k.upcase() %></h3>
+        <% if k.downcase() == 'продавец' %>
+          <h3>ПРОДАЖА</h3>
+        <% else %>
+          <h3><%= k.upcase() %></h3>
+        <% end %>
       </div>
       <% end %>
     <% end %>

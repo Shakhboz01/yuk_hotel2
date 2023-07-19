@@ -82,14 +82,16 @@ class IncomesController < ApplicationController
   end
 
   def new_income
+    authorize Income, :special_access?
+
     PackageCrudOperation.run(
       data: params[:new_income].permit!.to_h.to_a,
       user_id: current_user.id,
       income_operation: true
     )
 
-    if current_user.упаковщик?
-      redirect_to roles_path
+    if current_user.упаковщик? || current_user.продавец?
+      redirect_to roles_path, notice: 'успешно создано'
       sign_out current_user
     else
       redirect_to incomes_path, notice: 'успешно создано'

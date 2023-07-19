@@ -21,7 +21,7 @@ class ApplicationController < ActionController::Base
     elsif user.упаковщик?
       new_package_path
     elsif user.продавец?
-      new_income_path
+      define_outcomer_incomes_path(end_product: true)
     end
   end
 
