@@ -17,7 +17,7 @@ class UsersController < ApplicationController
 
   def auto_user_creation
     user = User.new(user_params)
-    user.email = user.name + '@gmail.com'
+    user.email = user.name.split(' ').join + '@gmail.com'
     if user.save
       redirect_to users_path, notice: 'Успешно создано.'
     else
