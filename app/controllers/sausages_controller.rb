@@ -12,6 +12,7 @@ class SausagesController < ApplicationController
     today = Time.zone.today
 
     @total_value = @sausages.sum { |sausage| sausage.machine_size.devision * sausage.quantity }
+    @total_sausages = @sausages.sum(:quantity)
     @sausages = @sausages.page(params[:page]).per(40)
   end
 

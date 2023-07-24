@@ -131,14 +131,7 @@ class ExpendituresController < ApplicationController
 
     respond_to do |format|
       if @expenditure.update(expenditure_params)
-        format.html { redirect_to case @expenditure.expenditure_type
-        when 'на_товар'
-          if current_user.role == 'приёмщик'
-            products_path
-          end
-        else
-          main_page_path
-        end, notice: "Расходы успешно обновлены." }
+        format.html { redirect_to main_page_path, notice: "Расход успешно обновлен." }
         format.json { render :show, status: :ok, location: @expenditure }
       else
         format.html { render :edit, status: :unprocessable_entity }

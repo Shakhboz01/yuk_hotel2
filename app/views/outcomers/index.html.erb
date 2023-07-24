@@ -29,7 +29,7 @@
                   <% if outcomer.поставщик? %>
                     <%= clink_to 'посмотреть детально', product_expenditure_expenditures_path(q: {outcomer_id_eq: outcomer.id}), 'fa-eye' %>
                   <% else %>
-                    <%= clink_to '', outcomer_path(outcomer), 'fa-search' %>
+                    <%= clink_to 'посмотреть детально', incomes_path(q: {outcomer_id_eq: outcomer.id}), 'fa-eye' %>
                   <% end %>
                   <%= clink_to 'редактировать', edit_outcomer_path(outcomer), 'fa-edit' %>
                 </td>
