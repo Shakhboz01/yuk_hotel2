@@ -3,7 +3,7 @@ class Income < ApplicationRecord
   belongs_to :product, optional: true
   belongs_to :outcomer, optional: true
   belongs_to :user
-
+  has_many :transaction_histories
   validates :price, presence: true
   before_create :decrease_product_amount
   before_update :update_product_amount

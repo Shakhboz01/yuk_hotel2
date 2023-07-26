@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :transaction_histories
   resources :incomes do
     collection do
       post :new_income

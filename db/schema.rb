@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_23_074248) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_26_084806) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -148,6 +148,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_23_074248) do
     t.index ["user_id"], name: "index_sausages_on_user_id"
   end
 
+  create_table "transaction_histories", force: :cascade do |t|
+    t.bigint "income_id", null: false
+    t.bigint "expenditure_id", null: false
+    t.string "amount"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["expenditure_id"], name: "index_transaction_histories_on_expenditure_id"
+    t.index ["income_id"], name: "index_transaction_histories_on_income_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -189,4 +199,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_23_074248) do
   add_foreign_key "refunds", "products"
   add_foreign_key "refunds", "users"
   add_foreign_key "sausages", "users"
+  add_foreign_key "transaction_histories", "expenditures"
+  add_foreign_key "transaction_histories", "incomes"
 end

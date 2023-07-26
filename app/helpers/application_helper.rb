@@ -1,3 +1,14 @@
+# user:references expenditure:references income:references
+# belongs_to user
+# validate expenditure to have на товар
+# in create action set user_id = current_user.id
+# after transaction_history creation increase income or exp's total_paid
+# both has_many: transaction_histories
+# place an icon to add a new history to incomes#index, main_page#incomes side and main_page#expenditures side (if на_товар) <i class="fa-solid fa-money-bill-transfer"></i>
+# also place a n icon to see all its tr_his if one exists and на_товар <i class="fa-regular fa-clock-rotate-left"></i>
+# don't show this icon if total_paid >= price
+# decrement stoimost
+
 module ApplicationHelper
   def clink_to(title, link, css_class = nil)
     styled_title =

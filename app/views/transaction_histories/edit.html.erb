@@ -1,0 +1,10 @@
+<h1>Editing transaction history</h1>
+
+<%= render "form", transaction_history: @transaction_history %>
+
+<br>
+
+<div>
+  <%= link_to "Show this transaction history", @transaction_history %> |
+  <%= link_to "Back to transaction histories", transaction_histories_path %>
+</div>
