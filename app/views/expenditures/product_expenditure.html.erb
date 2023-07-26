@@ -40,6 +40,13 @@
               <td><%= expenditure.created_at.strftime('%Y-%m-%d %H:%M') %></td>
               <td><%= expenditure.updated_at.strftime('%Y-%m-%d %H:%M') %></td>
               <td>
+                <% if expenditure.total_paid < expenditure.price %>
+                  <%= clink_to "Пополнить оставщегося #{expenditure.price - expenditure.total_paid} сум", new_transaction_history_path(expenditure_id: expenditure.id), 'fa-money-bill-transfer' %>
+                <% end %>
+
+                <% if expenditure.transaction_histories.exists? %>
+                  <%= clink_to 'история пополнений', transaction_histories_path(expenditure_id: expenditure.id), 'fa-clock-rotate-left' %>
+                <% end %>
                 <%= clink_to 'редактировать', edit_expenditure_path(expenditure), 'fa-edit' %>
               </td>
             </tr>

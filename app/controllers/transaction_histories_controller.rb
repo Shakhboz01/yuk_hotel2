@@ -3,7 +3,11 @@ class TransactionHistoriesController < ApplicationController
 
   # GET /transaction_histories or /transaction_histories.json
   def index
-    @transaction_histories = TransactionHistory.all
+    if params[:expenditure_id]
+      @transaction_histories = TransactionHistory.where(expenditure_id: params[:expenditure_id])
+    elsif params[:income_id]
+      @transaction_histories = TransactionHistory.where(income_id: params[:income_id])
+    end
   end
 
   # GET /transaction_histories/1 or /transaction_histories/1.json
@@ -13,6 +17,13 @@ class TransactionHistoriesController < ApplicationController
   # GET /transaction_histories/new
   def new
     @transaction_history = TransactionHistory.new
+    @transaction_history = TransactionHistory.new
+
+    if params[:expenditure_id]
+      @transaction_history.expenditure_id = params[:expenditure_id]
+    elsif params[:income_id]
+      @transaction_history.income_id = params[:income_id]
+    end
   end
 
   # GET /transaction_histories/1/edit
@@ -22,10 +33,10 @@ class TransactionHistoriesController < ApplicationController
   # POST /transaction_histories or /transaction_histories.json
   def create
     @transaction_history = TransactionHistory.new(transaction_history_params)
-
+    @transaction_history.user_id = current_user.id
     respond_to do |format|
       if @transaction_history.save
-        format.html { redirect_to transaction_history_url(@transaction_history), notice: "Transaction history was successfully created." }
+        format.html { redirect_to main_page_path, notice: 'Успешно создано' }
         format.json { render :show, status: :created, location: @transaction_history }
       else
         format.html { render :new, status: :unprocessable_entity }

@@ -40,6 +40,13 @@
               <td><%= income&.created_at %></td>
               <td><%= income&.updated_at %></td>
               <td>
+                <% if income.total_paid < income.price %>
+                  <%= clink_to "Пополнить оставщегося #{income.price - income.total_paid} сум", new_transaction_history_path(income_id: income.id), 'fa-money-bill-transfer' %>
+                <% end %>
+
+                <% if income.transaction_histories.exists? %>
+                  <%= clink_to 'история пополнений', transaction_histories_path(income_id: income.id), 'fa-clock-rotate-left' %>
+                <% end %>
                 <%= clink_to 'редактировать', edit_income_path(income), 'fa-edit' %>
               </td>
             </tr>

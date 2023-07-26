@@ -149,13 +149,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_26_084806) do
   end
 
   create_table "transaction_histories", force: :cascade do |t|
-    t.bigint "income_id", null: false
-    t.bigint "expenditure_id", null: false
-    t.string "amount"
+    t.bigint "income_id"
+    t.bigint "user_id", null: false
+    t.bigint "expenditure_id"
+    t.integer "amount"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["expenditure_id"], name: "index_transaction_histories_on_expenditure_id"
     t.index ["income_id"], name: "index_transaction_histories_on_income_id"
+    t.index ["user_id"], name: "index_transaction_histories_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -201,4 +203,5 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_26_084806) do
   add_foreign_key "sausages", "users"
   add_foreign_key "transaction_histories", "expenditures"
   add_foreign_key "transaction_histories", "incomes"
+  add_foreign_key "transaction_histories", "users"
 end

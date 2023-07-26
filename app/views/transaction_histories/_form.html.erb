@@ -4,12 +4,12 @@
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
   <div class="form-inputs">
-    <%= f.association :income %>
-    <%= f.association :expenditure %>
-    <%= f.input :amount %>
+    <%= f.association :income, as: :hidden %>
+    <%= f.association :expenditure, as: :hidden %>
+    <%= f.input :amount, label: 'введите цену' %>
   </div>
 
   <div class="form-actions">
-    <%= f.button :submit %>
+    <%= f.submit 'Пополнить', class: 'btn btn-primary' %>
   </div>
 <% end %>
