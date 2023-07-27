@@ -37,7 +37,7 @@
           <p class="font-weight-bold">Создан в:</p>
         </div>
         <div class="col-md-8">
-          <p><%= @outcomer.created_at %></p>
+          <p><%= @outcomer.created_at.strftime('%Y-%m-%d %H:%M') %></p>
         </div>
       </div>
 
@@ -46,7 +46,7 @@
           <p class="font-weight-bold">Обновлено в:</p>
         </div>
         <div class="col-md-8">
-          <p><%= @outcomer.updated_at %></p>
+          <p><%= @outcomer.updated_at.strftime('%Y-%m-%d %H:%M') %></p>
         </div>
       </div>
 

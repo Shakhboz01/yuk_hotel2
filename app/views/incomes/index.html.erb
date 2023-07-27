@@ -37,8 +37,8 @@
               <td><%= num_to_usd(income&.price) %></td>
               <td><%= num_to_usd(income&.total_paid) %></td>
               <td><%= income.user.name %></td>
-              <td><%= income&.created_at %></td>
-              <td><%= income&.updated_at %></td>
+              <td><%= income&.created_at.strftime('%Y-%m-%d %H:%M') %></td>
+              <td><%= income&.updated_at.strftime('%Y-%m-%d %H:%M') %></td>
               <td>
                 <% if income.total_paid < income.price %>
                   <%= clink_to "Пополнить оставщегося #{income.price - income.total_paid} сум", new_transaction_history_path(income_id: income.id), 'fa-money-bill-transfer' %>
