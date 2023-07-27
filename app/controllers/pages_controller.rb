@@ -13,15 +13,24 @@ class PagesController < ApplicationController
 
     @outcomers = Outcomer.where(active_outcomer: true).order(role: :desc)
     @overall_income = Income.sum(:price)
+    todays_transaction_histories_sum_for_income =
+      TransactionHistory.joins(:income).where("incomes.created_at < ?", DateTime.now.beginning_of_day)
+                        .where('transaction_histories.created_at > ?', DateTime.now.beginning_of_day)
+                        .sum('transaction_histories.amount')
+
     @today_overall_income = Income.where('created_at > ?', DateTime.now.beginning_of_day)
-    @today_real_income = @today_overall_income.sum(:total_paid)
-    @today_overall_income = @today_overall_income.sum(:price)
+    @today_real_income = @today_overall_income.sum(:total_paid) + todays_transaction_histories_sum_for_income
+    @today_overall_income = @today_overall_income.sum(:price) + todays_transaction_histories_sum_for_income
     @real_income = Income.sum(:total_paid)
+
+    todays_transaction_histories_sum_for_expenditure =
+      TransactionHistory.joins(:expenditure).where("expenditures.created_at < ?", DateTime.now.beginning_of_day)
+                        .where('transaction_histories.created_at > ?', DateTime.now.beginning_of_day).sum('transaction_histories.amount')
 
     @overall_expenditure = Expenditure.sum(:price)
     @today_overall_expenditure = Expenditure.where('created_at > ?', DateTime.now.beginning_of_day)
-    @today_real_expenditure = @today_overall_expenditure.sum(:total_paid)
-    @today_overall_expenditure = @today_overall_expenditure.sum(:price)
+    @today_real_expenditure = @today_overall_expenditure.sum(:total_paid) + todays_transaction_histories_sum_for_expenditure
+    @today_overall_expenditure = @today_overall_expenditure.sum(:price) + todays_transaction_histories_sum_for_expenditure
     @real_expenditure = Expenditure.sum(:total_paid)
 
     total_expenditure_with_prev_data =
