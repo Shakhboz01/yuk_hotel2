@@ -5,8 +5,11 @@ class TransactionHistoriesController < ApplicationController
   def index
     if params[:expenditure_id]
       @transaction_histories = TransactionHistory.where(expenditure_id: params[:expenditure_id])
+
+      @debetor = Expenditure.find(params[:expenditure_id]).outcomer.name
     elsif params[:income_id]
       @transaction_histories = TransactionHistory.where(income_id: params[:income_id])
+      @debetor = Income.find(params[:income_id]).outcomer.name
     end
   end
 

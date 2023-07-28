@@ -8,9 +8,10 @@
           <thead>
             <tr>
               <th>ID</th>
-              <th>Исполнитель</th>
+              <th>Дебетор</th>
               <th>сумма</th>
               <th>Создано в</th>
+              <th>Исполнитель</th>
               <th></th>
             </tr>
           </thead>
@@ -18,9 +19,10 @@
             <% @transaction_histories.each do |transaction_history| -%>
               <tr>
                 <td><%= transaction_history.id %></td>
-                <td><%= transaction_history.user.name %></td>
+                <td><%= @debetor %></td>
                 <td><%= num_to_usd(transaction_history.amount) %></td>
                 <td><%= transaction_history.created_at.strftime('%Y-%m-%d %H:%M:%S') %></td>
+                <td><%= transaction_history.user.name %></td>
               </tr>
             <% end -%>
           </tbody>
