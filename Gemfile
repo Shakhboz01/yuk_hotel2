@@ -55,6 +55,7 @@ gem "bootsnap", require: false
 gem 'active_interaction'
 gem 'telegram-bot-ruby'
 gem 'figaro'
+gem 'whenever'
 
 # Use Sass to process CSS
 # gem "sassc-rails"
