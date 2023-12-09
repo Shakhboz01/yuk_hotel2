@@ -11,7 +11,7 @@ class PagesController < ApplicationController
     @expenditures =
       Expenditure.includes(:outcomer, :product).order(id: :desc)
 
-    @outcomers = Outcomer.where(active_outcomer: true).order(role: :desc)
+    @outcomers = Outcomer.order(role: :desc)
     @overall_income = Income.sum(:price)
     todays_transaction_histories_sum_for_income =
       TransactionHistory.joins(:income).where("incomes.created_at < ?", DateTime.now.beginning_of_day)

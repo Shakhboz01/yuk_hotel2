@@ -57,14 +57,14 @@ module MainPageHelper
       return if difference >= 0
 
       "<td>#{outcomer.name}</td>
-       <td>#{num_to_usd(difference.abs)}</td>".html_safe
+       <td class='debet'>#{num_to_usd(difference.abs)}</td>".html_safe
     when 'поставщик'
       difference = outcomer.expenditures.sum(:total_paid) - outcomer.expenditures.sum(:price)
 
       return if difference <= 0
 
       "<td> #{outcomer.name} </td>
-       <td> #{num_to_usd(difference.abs)}</td>".html_safe
+       <td class='debet'> #{num_to_usd(difference.abs)}</td>".html_safe
     end
   end
 
@@ -76,14 +76,14 @@ module MainPageHelper
       return if difference <= 0
 
       "<td>#{outcomer.name}</td>
-       <td>#{num_to_usd(difference.abs)}</td>".html_safe
+       <td class='amount'>#{num_to_usd(difference.abs)}</td>".html_safe
     when 'поставщик'
       difference = outcomer.expenditures.sum(:total_paid) - outcomer.expenditures.sum(:price)
 
       return if difference >= 0
 
       "<td> #{outcomer.name} </td>
-       <td> #{num_to_usd(difference.abs)}</td>".html_safe
+       <td class='amount'> #{num_to_usd(difference.abs)}</td>".html_safe
     end
   end
 end
