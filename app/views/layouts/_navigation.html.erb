@@ -1,5 +1,4 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-  <div class="container">
     <%= link_to 'ROLLI', main_page_path, class: 'navbar-brand', style: 'font-family: cursive'%>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -21,12 +20,14 @@
                 <%= link_to 'продажи', incomes_path, class: 'dropdown-item' %>
               </div>
             </li>
+            <li class="nav-item active">
+              <%= link_to 'Oформить приход товара', products_path, class: 'nav-link' %>
+            </li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="outcomerDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Добавить расходы
               </a>
               <div class="dropdown-menu" aria-labelledby="outcomerDropdown">
-                <%= link_to "На товар", products_path, class: "dropdown-item" %>
                 <%= link_to "Для выплаты", new_expenditure_path(expenditure_type: 'зарплата'), class: "dropdown-item" %>
                 <%= link_to "Аванс", new_expenditure_path(expenditure_type: 'аванс'), class: "dropdown-item" %>
                 <%= link_to "Для прочих целей", new_expenditure_path, class: "dropdown-item" %>
@@ -127,5 +128,4 @@
         </li>
       <% end %>
     </ul>
-  </div>
 </nav>
