@@ -3,9 +3,9 @@ class PagesController < ApplicationController
 
   def main_page
     is_allowed = %w[админ менеджер].include?(current_user.role)
-
     return redirect_to request.referrer unless is_allowed
 
+    @remaining_actual_balance = Income.sum(:total_paid) - Expenditure.sum(:total_paid)
     @incomes =
       Income.order(id: :desc)
     @expenditures =
@@ -13,35 +13,18 @@ class PagesController < ApplicationController
 
     @outcomers = Outcomer.order(role: :desc)
     @overall_income = Income.sum(:price)
-    todays_transaction_histories_sum_for_income =
-      TransactionHistory.joins(:income).where("incomes.created_at < ?", DateTime.now.beginning_of_day)
-                        .where('transaction_histories.created_at > ?', DateTime.now.beginning_of_day)
-                        .sum('transaction_histories.amount')
 
     @today_overall_income = Income.where('created_at > ?', DateTime.now.beginning_of_day)
-    @today_real_income = @today_overall_income.sum(:total_paid) + todays_transaction_histories_sum_for_income
-    @today_overall_income = @today_overall_income.sum(:price) + todays_transaction_histories_sum_for_income
+    @today_real_income = @today_overall_income.sum(:total_paid)
+    @today_overall_income = @today_overall_income.sum(:price)
     @real_income = Income.sum(:total_paid)
-
-    todays_transaction_histories_sum_for_expenditure =
-      TransactionHistory.joins(:expenditure).where("expenditures.created_at < ?", DateTime.now.beginning_of_day)
-                        .where('transaction_histories.created_at > ?', DateTime.now.beginning_of_day).sum('transaction_histories.amount')
 
     @overall_expenditure = Expenditure.sum(:price)
     @today_overall_expenditure = Expenditure.where('created_at > ?', DateTime.now.beginning_of_day)
-    @today_real_expenditure = @today_overall_expenditure.sum(:total_paid) + todays_transaction_histories_sum_for_expenditure
-    @today_overall_expenditure = @today_overall_expenditure.sum(:price) + todays_transaction_histories_sum_for_expenditure
+    @today_real_expenditure = @today_overall_expenditure.sum(:total_paid)
+    @today_overall_expenditure = @today_overall_expenditure.sum(:price)
     @real_expenditure = Expenditure.sum(:total_paid)
 
-    total_expenditure_with_prev_data =
-      Expenditure.where('created_at < ?', DateTime.now.beginning_of_day)
-                 .where('total_paid < price').sum(:price)
-    @total_expenditure_with_todays_and_prev_data = @today_overall_expenditure + total_expenditure_with_prev_data
-
-    total_income_with_prev_data =
-      Income.where('total_paid < price')
-            .where('created_at < ?', DateTime.now.beginning_of_day).sum(:price)
-    @total_income_with_todays_and_prev_data = total_income_with_prev_data + @today_overall_income
     @total_amount_left_for_w3_products = Product.where(weight: 3).sum(:amount_left)
   end
 
@@ -66,12 +49,12 @@ class PagesController < ApplicationController
     end
     # income
     @total_income_with_debt = income.sum(:price)
-    @total_income_without_debt = @total_income_with_debt - income.sum(:total_paid)
+    @total_income_without_debt = income.sum(:total_paid)
 
     # outcome
     @total_outcome_with_debt = trans_action.sum(:price)
     @total_debt = trans_action.sum(:price) - trans_action.sum(:total_paid)
-    @total_outcome_without_debt = @total_outcome_with_debt - @total_debt
+    @total_outcome_without_debt = trans_action.sum(:total_paid)
 
     @daily_outcome = trans_action.totals_by_time_duration
     @daily_income = income.totals_by_time_duration
