@@ -35,7 +35,8 @@
       </tr>
       <tr>
         <th>Остаток на кассе</th>
-        <td colspan="2" class='text-center'><%= num_to_usd(@real_income - @real_expenditure) %></td>
+        <td> <%= num_to_usd(@today_real_income - @today_real_expenditure) %> </td>
+        <td class='text-center'><%= num_to_usd(@real_income - @real_expenditure) %></td>
       </tr>
     </tbody>
   </table>

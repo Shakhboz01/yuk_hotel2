@@ -84,6 +84,8 @@ class IncomesController < ApplicationController
   def new_income
     authorize Income, :special_access?
 
+    return redirect_to request.referrer, notice: 'Укажите цену' if params[:new_income][:price].blank? || params[:new_income][:price].to_i <= 0
+
     PackageCrudOperation.run(
       data: params[:new_income].permit!.to_h.to_a,
       user_id: current_user.id,
