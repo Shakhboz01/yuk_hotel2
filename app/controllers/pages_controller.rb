@@ -39,7 +39,7 @@ class PagesController < ApplicationController
   end
 
   def dashboard
-    is_allowed = current_user.role.админ?
+    is_allowed = current_user.админ?
 
     return redirect_to request.referrer unless is_allowed
 
