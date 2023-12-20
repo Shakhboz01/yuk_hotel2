@@ -22,13 +22,13 @@ class PagesController < ApplicationController
       TransactionHistory.where('created_at > ?', DateTime.now.beginning_of_day)
                         .where.not(expenditure_id: nil).sum(:amount)
     @today_real_income = @today_overall_income.sum(:total_paid) + todays_transaction_income
-    @today_overall_income = @today_overall_income.sum(:price) + todays_transaction_income
+    @today_overall_income = @today_overall_income.sum(:price)
     @real_income = Income.sum(:total_paid)
 
     @overall_expenditure = Expenditure.sum(:price)
     @today_overall_expenditure = Expenditure.where('created_at > ?', DateTime.now.beginning_of_day)
     @today_real_expenditure = @today_overall_expenditure.sum(:total_paid) + todays_transaction_expenditure
-    @today_overall_expenditure = @today_overall_expenditure.sum(:price) + todays_transaction_expenditure
+    @today_overall_expenditure = @today_overall_expenditure.sum(:price)
     @real_expenditure = Expenditure.sum(:total_paid)
 
     @total_amount_left_for_w3_products = Product.where(weight: 3).sum(:amount_left)
@@ -39,7 +39,7 @@ class PagesController < ApplicationController
   end
 
   def dashboard
-    is_allowed = current_user.role == 'админ'
+    is_allowed = current_user.role.админ?
 
     return redirect_to request.referrer unless is_allowed
 
