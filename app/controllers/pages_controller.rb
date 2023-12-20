@@ -15,14 +15,20 @@ class PagesController < ApplicationController
     @overall_income = Income.sum(:price)
 
     @today_overall_income = Income.where('created_at > ?', DateTime.now.beginning_of_day)
-    @today_real_income = @today_overall_income.sum(:total_paid)
-    @today_overall_income = @today_overall_income.sum(:price)
+    todays_transaction_income =
+      TransactionHistory.where('created_at > ?', DateTime.now.beginning_of_day)
+                        .where.not(income_id: nil).sum(:amount)
+    todays_transaction_expenditure =
+      TransactionHistory.where('created_at > ?', DateTime.now.beginning_of_day)
+                        .where.not(expenditure_id: nil).sum(:amount)
+    @today_real_income = @today_overall_income.sum(:total_paid) + todays_transaction_income
+    @today_overall_income = @today_overall_income.sum(:price) + todays_transaction_income
     @real_income = Income.sum(:total_paid)
 
     @overall_expenditure = Expenditure.sum(:price)
     @today_overall_expenditure = Expenditure.where('created_at > ?', DateTime.now.beginning_of_day)
-    @today_real_expenditure = @today_overall_expenditure.sum(:total_paid)
-    @today_overall_expenditure = @today_overall_expenditure.sum(:price)
+    @today_real_expenditure = @today_overall_expenditure.sum(:total_paid) + todays_transaction_expenditure
+    @today_overall_expenditure = @today_overall_expenditure.sum(:price) + todays_transaction_expenditure
     @real_expenditure = Expenditure.sum(:total_paid)
 
     @total_amount_left_for_w3_products = Product.where(weight: 3).sum(:amount_left)
