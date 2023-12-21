@@ -48,8 +48,6 @@ class Expenditure < ApplicationRecord
      [outcomer, quantity, product, product_price].any?(&:blank?)
       errors.add(:base, "ошибка, пожалуйста, заполните формы")
     elsif expenditure_type == 'на_товар' && !quantity.nil?
-      self.quantity = quantity * 80 if product.weight == 1
-
       if new_record?
         product.increment!(:amount_left, quantity)
       else
