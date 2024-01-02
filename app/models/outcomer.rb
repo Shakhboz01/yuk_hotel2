@@ -1,6 +1,7 @@
 class Outcomer < ApplicationRecord
   validates :name, uniqueness: true
   has_many :expenditures
+  has_many :outcomer_prepayments
   has_many :incomes
   enum role: %i[покупатель поставщик]
 

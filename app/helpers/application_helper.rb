@@ -44,6 +44,7 @@ module ApplicationHelper
       expenditures = outcomer.expenditures
 
       difference = expenditures.sum(:total_paid) - expenditures.sum(:price)
+      difference += outcomer.outcomer_prepayments.sum(:price)
 
       if difference == 0
         class_name = 'bg-warning'

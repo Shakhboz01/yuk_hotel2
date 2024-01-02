@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_26_084806) do
+ActiveRecord::Schema[7.0].define(version: 2023_12_21_074119) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -46,9 +46,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_26_084806) do
     t.bigint "product_id"
     t.bigint "outcomer_id"
     t.integer "expenditure_type"
-    t.integer "price"
+    t.decimal "price", precision: 21
     t.integer "quantity"
-    t.integer "total_paid"
+    t.decimal "total_paid", precision: 21
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["outcomer_id"], name: "index_expenditures_on_outcomer_id"
@@ -76,6 +76,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_26_084806) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_machine_sizes_on_user_id"
+  end
+
+  create_table "outcomer_prepayments", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "outcomer_id", null: false
+    t.integer "price"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["outcomer_id"], name: "index_outcomer_prepayments_on_outcomer_id"
+    t.index ["user_id"], name: "index_outcomer_prepayments_on_user_id"
   end
 
   create_table "outcomers", force: :cascade do |t|
@@ -114,7 +124,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_26_084806) do
 
   create_table "products", force: :cascade do |t|
     t.string "name"
-    t.integer "amount_left"
+    t.decimal "amount_left", precision: 21
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "weight", default: 0
@@ -192,6 +202,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_26_084806) do
   add_foreign_key "incomes", "products"
   add_foreign_key "incomes", "users"
   add_foreign_key "machine_sizes", "users"
+  add_foreign_key "outcomer_prepayments", "outcomers"
+  add_foreign_key "outcomer_prepayments", "users"
   add_foreign_key "packages", "products"
   add_foreign_key "packages", "users"
   add_foreign_key "participations", "users"

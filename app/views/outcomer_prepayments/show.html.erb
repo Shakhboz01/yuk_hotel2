@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @outcomer_prepayment %>
+
+<div>
+  <%= link_to "Edit this outcomer prepayment", edit_outcomer_prepayment_path(@outcomer_prepayment) %> |
+  <%= link_to "Back to outcomer prepayments", outcomer_prepayments_path %>
+
+  <%= button_to "Destroy this outcomer prepayment", @outcomer_prepayment, method: :delete %>
+</div>

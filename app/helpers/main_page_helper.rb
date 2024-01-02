@@ -60,7 +60,7 @@ module MainPageHelper
        <td class='debet'>#{num_to_usd(difference.abs)}</td>".html_safe
     when 'поставщик'
       difference = outcomer.expenditures.sum(:total_paid) - outcomer.expenditures.sum(:price)
-
+      difference += outcomer.outcomer_prepayments.sum(:price)
       return if difference <= 0
 
       "<td> #{outcomer.name} </td>
@@ -79,6 +79,7 @@ module MainPageHelper
        <td class='amount'>#{num_to_usd(difference.abs)}</td>".html_safe
     when 'поставщик'
       difference = outcomer.expenditures.sum(:total_paid) - outcomer.expenditures.sum(:price)
+      difference += outcomer.outcomer_prepayments.sum(:price)
 
       return if difference >= 0
 
