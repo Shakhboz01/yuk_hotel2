@@ -4,6 +4,7 @@
       <h3 class="card-title font-weight-bold">Предоплаты</h3>
       <%= link_to 'Добавить новый', new_outcomer_prepayment_path, class: 'btn btn-primary' %>
     </div>
+    <%= render 'filter_form', q: @q, url: request.path %>
     <div class="card-body">
       <% if @outcomer_prepayments.any? -%>
         <table class="table table-bordered table-hover">
