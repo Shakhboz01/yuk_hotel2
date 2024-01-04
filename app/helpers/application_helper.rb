@@ -55,8 +55,7 @@ module ApplicationHelper
       end
     else
       incomes = outcomer.incomes
-
-      difference = incomes.sum(:total_paid) - incomes.sum(:price)
+      difference = incomes.sum(:total_paid) + outcomer.outcomer_prepayments.sum(:price) - incomes.sum(:price)
 
       if difference == 0
         class_name = 'bg-warning'

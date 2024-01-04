@@ -53,7 +53,7 @@ module MainPageHelper
     case outcomer.role
     when 'покупатель'
       difference = outcomer.incomes.sum(:total_paid) - outcomer.incomes.sum(:price)
-
+      difference += outcomer.outcomer_prepayments.sum(:price)
       return if difference >= 0
 
       "<td>#{outcomer.name}</td>
@@ -72,6 +72,7 @@ module MainPageHelper
     case outcomer.role
     when 'покупатель'
       difference = outcomer.incomes.sum(:total_paid) - outcomer.incomes.sum(:price)
+      difference += outcomer.outcomer_prepayments.sum(:price)
 
       return if difference <= 0
 

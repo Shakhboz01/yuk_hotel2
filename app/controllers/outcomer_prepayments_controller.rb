@@ -16,7 +16,7 @@ class OutcomerPrepaymentsController < ApplicationController
 
   # GET /outcomer_prepayments/new
   def new
-    @outcomers = Outcomer.поставщик
+    @outcomers = Outcomer.all
     @outcomer_prepayment = OutcomerPrepayment.new
   end
 
