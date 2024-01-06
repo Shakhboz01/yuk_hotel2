@@ -11,7 +11,7 @@
             </tr>
           </thead>
           <tbody>
-              <% Product.where(weight: 3).each do |product| %>
+              <% Product.where(weight: 3).order(:name).each do |product| %>
                 <div style=' margin: 19px auto; justify-content: space-between;' class='shadow flexs'>
                   <tr>
                     <td><h4><%= product&.name&.upcase %></h4></td>
