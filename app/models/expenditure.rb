@@ -7,7 +7,7 @@ class Expenditure < ApplicationRecord
                         foreign_key: 'executor_id', optional: true
   has_many :transaction_histories
   # don't change this enum
-  enum expenditure_type: %i[на_товар аванс зарплата еда грузовик запчасть газ налог свет прочие]
+  enum expenditure_type: %i[на_товар аванс зарплата еда транспорт продукты инкассация запчасть газ налог свет прочие]
   validates :price, presence: true, unless: -> { на_товар? }
   validate :if_worker_payment_expenditure
   validate :if_product_expenditure
