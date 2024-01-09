@@ -31,7 +31,7 @@
 
     <% if @action == 'other' %>
       <%= f.label :expenditure_type, 'Тип рассхода' %>
-      <%= f.select :expenditure_type,  Expenditure.expenditure_types.keys.slice(4..-1).to_a.map { |key| [Expenditure.human_attribute_name("expenditure_type.#{key}"), key] }, include_blank: false, label: 'Тип рассхода' %>
+      <%= f.select :expenditure_type,  Expenditure.expenditure_types.keys.slice(3..-1).to_a.map { |key| [Expenditure.human_attribute_name("expenditure_type.#{key}"), key] }, include_blank: false, label: 'Тип рассхода' %>
     <% end %>
 
     <% unless @action == 'other' %>

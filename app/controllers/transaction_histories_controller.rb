@@ -4,11 +4,13 @@ class TransactionHistoriesController < ApplicationController
   # GET /transaction_histories or /transaction_histories.json
   def index
     if params[:expenditure_id]
-      @transaction_histories = TransactionHistory.where(expenditure_id: params[:expenditure_id])
+      expenditures = Expenditure.find(params[:expenditure_id]).outcomer.expenditures.pluck(:id)
+      @transaction_histories = TransactionHistory.where(expenditure_id: expenditures).order(id: :desc)
 
       @debetor = Expenditure.find(params[:expenditure_id]).outcomer.name
     elsif params[:income_id]
-      @transaction_histories = TransactionHistory.where(income_id: params[:income_id])
+      incomes = Income.find(params[:income_id]).outcomer.incomes.pluck(:id)
+      @transaction_histories = TransactionHistory.where(income_id: incomes).order(id: :desc)
       @debetor = Income.find(params[:income_id]).outcomer.name
     end
   end

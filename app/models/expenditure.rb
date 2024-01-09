@@ -13,7 +13,7 @@ class Expenditure < ApplicationRecord
   validate :if_product_expenditure
   validate :set_total_paid
 
-  scope :from_index_2, -> { where("expenditure_type >= ?", Expenditure.expenditure_types[:еда]) }
+  scope :from_index_2, -> { where("expenditure_type >= ?", Expenditure.expenditure_types[:транспорт]) }
   scope :from_enum_to_enum, -> (x, y) { where(expenditure_type: x..y) }
 
   scope :totals_by_time_duration, lambda { |day = 'day'|
