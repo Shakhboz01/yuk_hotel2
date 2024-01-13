@@ -7,6 +7,7 @@
 #   Character.create(name: "Luke", movie: movies.first)
 User.create(name: "Jamshed", email: "jamshed@gmail.com", password: "jamshed123")
 User.create(name: "Admin", email: "admin@gmail.com", password: "admin111")
+User.create(name: "Firdavs", email: "firdavs@gmail.com", password: "firdavs111")
 
 Home.create(number: 1, number_of_people: 2, home_type: 0, price: 500000)
 Home.create(number: 2, number_of_people: 2, home_type: 0, price: 500000)
