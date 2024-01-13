@@ -19,7 +19,7 @@
       </li>
       <li class="nav-item">
         <% message = Shift.unclosed.exists? ? 'Закрыть смену' : 'Открыть смену' %>
-        <%= link_to message, toggle_shifts_path, class: 'nav-link', method: :post, data: {confirm: 'Вы уверены?'} %>
+        <%= button_to message, toggle_shifts_path, class: 'nav-link', style: 'color: wheat; cursor: pointer; border: none; background: none', method: :post, data: {confirm: 'Вы уверены?'} %>
       </li>
     </ul>
   </div>
