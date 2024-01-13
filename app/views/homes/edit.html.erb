@@ -1,0 +1,10 @@
+<div style='background-color: #80d3ff87;' class="container shadow">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <h1 class="text-center mb-4">Pедактировать</h1>
+      <%= render 'form', home: @home %>
+      <%= link_to 'Посмотреть', @home, class: "btn btn-light min-width-btn" %> |
+      <%= link_to 'назад', homes_path, class: "btn btn-light min-width-btn" %>
+    </div>
+  </div>
+</div>

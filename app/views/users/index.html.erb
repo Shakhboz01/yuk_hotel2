@@ -17,14 +17,14 @@
     </thead>
     <tbody>
       <% @users.each do |user| %>
-        <tr class="<%= !user.active_user && 'table-dark'  %>">
+        <tr class="<%= !user.active && 'table-dark'  %>">
           <td><%= user.name %></td>
           <td><%= user.role.capitalize %></td>
           <td><%= num_to_usd(user.daily_payment) %></td>
           <td>
             <%= clink_to 'Редактировать', edit_user_path(user), 'fa-edit' %>
             <%= clink_to 'Изменить пароль', edit_user_path(user, password_change: true), 'fa-lock-open' %>
-            <% if  user.active_user %>
+            <% if  user.active %>
               <%= clink_to 'Деактивировать работника! (работник не будет получать оплату и не может использовать это приложение)', toggle_active_user_user_path(user), 'fa-ban' %>
             <% else %>
               <%= clink_to 'активировать работника! (работник может быть оплачен и может использовать это приложение)', toggle_active_user_user_path(user), 'fa-arrow-rotate-right' %>

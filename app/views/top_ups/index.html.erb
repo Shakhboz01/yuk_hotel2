@@ -1,0 +1,9 @@
+<div class="container my-5">
+  <div class="card shadow">
+    <%= render 'filter_form', q: @q, url: request.path %>
+    <div class="card-body">
+      <%= render 'top_ups', top_ups: @top_ups, total_price: @all_top_ups.sum(:price) %>
+      <%= paginate @top_ups %>
+    </div>
+  </div>
+</div>

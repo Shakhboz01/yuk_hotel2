@@ -1,7 +1,20 @@
+<button accesskey='1' style='display: none' type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+  create a expenditure
+</button>
 
-<%= link_to define_outcomer_incomes_path(end_product: true), style: 'display: none', accesskey: '1' do %>
-  create an income
-<% end %>
-<%= link_to products_path, style: 'display: none', accesskey: '2' do %>
-  create an expenditure
-<% end %>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Оформить расход</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <%= render 'expenditures/form', expenditure: Expenditure.new %>
+      </div>
+    </div>
+  </div>
+</div>

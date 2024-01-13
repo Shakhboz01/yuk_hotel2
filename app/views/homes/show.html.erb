@@ -1,0 +1,30 @@
+<% if @unfinished %>
+  <%= render 'guest_infos/guest_infos', guest_infos: @guest_infos %>
+  <div class='container'>
+    <%= render 'top_ups/top_ups', top_ups: @top_ups, total_price: @top_ups.sum(:price) %>
+  </div>
+<% else %>
+  <h3>Информация о комнате</h3>
+  <table class='table shadow'>
+    <thead>
+      <tr>
+        <th>Номер</th>
+        <th>Количество людей</th>
+        <th>цена</th>
+        <th>Комната в</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><%= @home.number %></td>
+        <td><%= @home.number_of_people %></td>
+        <td><%= @home.price %></td>
+        <td><%= @home.home_type %></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div>
+    <%= link_to 'Назад', homes_path %>
+  </div>
+<% end %>

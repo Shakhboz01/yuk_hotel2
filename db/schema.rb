@@ -10,100 +10,50 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_12_21_074119) do
+ActiveRecord::Schema[7.0].define(version: 2024_01_08_090210) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "billets", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.integer "quantity"
-    t.bigint "waste_paper_proportion_id", null: false
+  create_table "bookings", force: :cascade do |t|
+    t.integer "number_of_people"
+    t.datetime "finished_at"
+    t.boolean "breakfast_included", default: true
+    t.bigint "home_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_billets_on_user_id"
-    t.index ["waste_paper_proportion_id"], name: "index_billets_on_waste_paper_proportion_id"
-  end
-
-  create_table "books", force: :cascade do |t|
-    t.integer "sold"
-    t.string "name"
-    t.boolean "active"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "end_products", force: :cascade do |t|
-    t.integer "amount_left"
-    t.string "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.index ["home_id"], name: "index_bookings_on_home_id"
   end
 
   create_table "expenditures", force: :cascade do |t|
-    t.bigint "executor_id"
     t.string "comment"
-    t.bigint "user_id"
-    t.bigint "product_id"
-    t.bigint "outcomer_id"
-    t.integer "expenditure_type"
-    t.decimal "price", precision: 21
-    t.integer "quantity"
-    t.decimal "total_paid", precision: 21
+    t.bigint "user_id", null: false
+    t.integer "price"
+    t.integer "expenditure_type", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["outcomer_id"], name: "index_expenditures_on_outcomer_id"
-    t.index ["product_id"], name: "index_expenditures_on_product_id"
     t.index ["user_id"], name: "index_expenditures_on_user_id"
   end
 
-  create_table "incomes", force: :cascade do |t|
-    t.bigint "product_id"
-    t.integer "quantity", default: 0
-    t.bigint "outcomer_id", null: false
-    t.integer "price", default: 0
-    t.integer "total_paid", default: 0
-    t.bigint "user_id", null: false
+  create_table "guest_infos", force: :cascade do |t|
+    t.bigint "booking_id", null: false
+    t.string "name"
+    t.string "phone_number"
+    t.integer "age"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["outcomer_id"], name: "index_incomes_on_outcomer_id"
-    t.index ["product_id"], name: "index_incomes_on_product_id"
-    t.index ["user_id"], name: "index_incomes_on_user_id"
+    t.string "country", default: ""
+    t.boolean "avtive_guest", default: true
+    t.index ["booking_id"], name: "index_guest_infos_on_booking_id"
   end
 
-  create_table "machine_sizes", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.integer "devision"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_machine_sizes_on_user_id"
-  end
-
-  create_table "outcomer_prepayments", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.bigint "outcomer_id", null: false
+  create_table "homes", force: :cascade do |t|
+    t.integer "number"
+    t.string "comment"
+    t.integer "number_of_people"
+    t.integer "home_type"
     t.integer "price"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["outcomer_id"], name: "index_outcomer_prepayments_on_outcomer_id"
-    t.index ["user_id"], name: "index_outcomer_prepayments_on_user_id"
-  end
-
-  create_table "outcomers", force: :cascade do |t|
-    t.integer "role"
-    t.string "name"
-    t.boolean "active_outcomer", default: true
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "packages", force: :cascade do |t|
-    t.bigint "product_id", null: false
-    t.bigint "user_id", null: false
-    t.integer "quantity"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["product_id"], name: "index_packages_on_product_id"
-    t.index ["user_id"], name: "index_packages_on_user_id"
   end
 
   create_table "participations", force: :cascade do |t|
@@ -114,106 +64,50 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_21_074119) do
     t.index ["user_id"], name: "index_participations_on_user_id"
   end
 
-  create_table "product_prices", force: :cascade do |t|
-    t.bigint "product_id", null: false
-    t.integer "price"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["product_id"], name: "index_product_prices_on_product_id"
-  end
-
-  create_table "products", force: :cascade do |t|
-    t.string "name"
-    t.decimal "amount_left", precision: 21
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "weight", default: 0
-  end
-
-  create_table "proportion_details", force: :cascade do |t|
-    t.bigint "product_id", null: false
-    t.bigint "waste_paper_proportion_id", null: false
-    t.integer "percentage"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["product_id"], name: "index_proportion_details_on_product_id"
-    t.index ["waste_paper_proportion_id"], name: "index_proportion_details_on_waste_paper_proportion_id"
-  end
-
-  create_table "refunds", force: :cascade do |t|
-    t.bigint "product_id", null: false
+  create_table "shifts", force: :cascade do |t|
     t.bigint "user_id", null: false
-    t.integer "quantity"
+    t.datetime "closed_at"
+    t.decimal "total_income"
+    t.decimal "total_expenditure"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["product_id"], name: "index_refunds_on_product_id"
-    t.index ["user_id"], name: "index_refunds_on_user_id"
+    t.index ["user_id"], name: "index_shifts_on_user_id"
   end
 
-  create_table "sausages", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.integer "quantity"
+  create_table "top_ups", force: :cascade do |t|
+    t.bigint "booking_id", null: false
+    t.decimal "price"
+    t.string "comment"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_sausages_on_user_id"
-  end
-
-  create_table "transaction_histories", force: :cascade do |t|
-    t.bigint "income_id"
-    t.bigint "user_id", null: false
-    t.bigint "expenditure_id"
-    t.integer "amount"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["expenditure_id"], name: "index_transaction_histories_on_expenditure_id"
-    t.index ["income_id"], name: "index_transaction_histories_on_income_id"
-    t.index ["user_id"], name: "index_transaction_histories_on_user_id"
+    t.bigint "guest_info_id", null: false
+    t.integer "payment_type", default: 0
+    t.index ["booking_id"], name: "index_top_ups_on_booking_id"
+    t.index ["guest_info_id"], name: "index_top_ups_on_guest_info_id"
   end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
+    t.integer "role", default: 2
+    t.string "name"
+    t.boolean "active", default: true
+    t.boolean "allowed_to_use", default: true
+    t.integer "daily_payment", default: 0
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.string "name"
-    t.integer "role", default: 0
-    t.boolean "active_user", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "allowed_to_use", default: true
-    t.integer "daily_payment", default: 0
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  create_table "waste_paper_proportions", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "name"
-  end
-
-  add_foreign_key "billets", "users"
-  add_foreign_key "billets", "waste_paper_proportions"
-  add_foreign_key "expenditures", "outcomers"
-  add_foreign_key "expenditures", "products"
+  add_foreign_key "bookings", "homes"
   add_foreign_key "expenditures", "users"
-  add_foreign_key "incomes", "outcomers"
-  add_foreign_key "incomes", "products"
-  add_foreign_key "incomes", "users"
-  add_foreign_key "machine_sizes", "users"
-  add_foreign_key "outcomer_prepayments", "outcomers"
-  add_foreign_key "outcomer_prepayments", "users"
-  add_foreign_key "packages", "products"
-  add_foreign_key "packages", "users"
+  add_foreign_key "guest_infos", "bookings"
   add_foreign_key "participations", "users"
-  add_foreign_key "product_prices", "products"
-  add_foreign_key "proportion_details", "products"
-  add_foreign_key "proportion_details", "waste_paper_proportions"
-  add_foreign_key "refunds", "products"
-  add_foreign_key "refunds", "users"
-  add_foreign_key "sausages", "users"
-  add_foreign_key "transaction_histories", "expenditures"
-  add_foreign_key "transaction_histories", "incomes"
-  add_foreign_key "transaction_histories", "users"
+  add_foreign_key "shifts", "users"
+  add_foreign_key "top_ups", "bookings"
+  add_foreign_key "top_ups", "guest_infos"
 end

@@ -1,0 +1,35 @@
+<div class="container my-5">
+  <div class="card shadow">
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <h3 class="card-title font-weight-bold">Смены</h3>
+    </div>
+
+    <div class="card-body">
+      <table class="table table-hover table-striped">
+        <thead>
+          <tr>
+            <th>Пользователь</th>
+            <th>Открыт в</th>
+            <th>Приход <%= num_to_usd @all_shifts.sum(:total_income) %></th>
+            <th>Расход <%= num_to_usd @all_shifts.sum(:total_expenditure) %></th>
+            <th>Закрыт в</th>
+            <th colspan="3"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @shifts.each do |shift| %>
+            <tr>
+              <td><%= shift.user.name %></td>
+              <td><%= strf_datetime shift.created_at %></td>
+              <td><%= num_to_usd shift.total_income %></td>
+              <td><%= num_to_usd shift.total_expenditure %></td>
+              <td><%= strf_datetime shift.closed_at %></td>
+              <td><%= link_to 'посмотреть', shift_path(shift) %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <%= paginate @shifts %>
+    </div>
+  </div>
+</div>

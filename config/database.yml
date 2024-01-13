@@ -1,28 +1,25 @@
 default: &default
-  adapter: postgresql
+  adapter:  postgresql
   encoding: unicode
   host:     <%= ENV.fetch('DB_HOST', 'localhost') %>
-  database: paper_app_development
-  username: postgres
-  password: 998915309764
+  database: <%= ENV['POSTGRES_DB'] %>
+  username: <%= ENV['POSTGRES_USER'] %>
+  password: <%= ENV['POSTGRES_PASSWORD'] %>
   pool:     <%= ENV.fetch('RAILS_MAX_THREADS') { 5 } %>
-  timeout:  5000
 
 development:
   <<: *default
 
 test:
   <<: *default
-  database: paper_app_test
+  database: rrf_tests
 
 production:
   # <<: *default
   adapter:  postgresql
   encoding: unicode
-  database: <%= ENV["PGDATABASE"] %>
-  host: <%= ENV.fetch('PGHOST', 'localhost') %>
-  username: <%= ENV["PGUSER"] %>
-  port: <%= ENV["PGPORT"] %>
-  password: <%= ENV["PGPASSWORD"] %>
-  url: <%= ENV["DATABASE_URL"] %>
+  host:     <%= ENV.fetch('DB_HOST', 'localhost') %>
+  database: <%= ENV['DB_NAME'] %>
+  username: <%= ENV['DB_USERNAME'] %>
+  password: <%= ENV['DB_PASSWORD'] %>
   pool: 100

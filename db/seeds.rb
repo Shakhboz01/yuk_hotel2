@@ -1,31 +1,21 @@
-product_names = [
-  ['Картон', 0],
-  ['Серый',0],
-  ['Белый', 0],
-  ['Целлофан', 1],
-  ['Этикетка', 2],
-  ['Rolli', 3],
-  ['Ишонч', 3],
-  ['Без этикетка Rolli', 3],
-]
+# This file should contain all the record creation needed to seed the database with its default values.
+# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
+#
+# Examples:
+#
+#   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
+#   Character.create(name: "Luke", movie: movies.first)
+User.create(name: "Jamshed", email: "jamshed@gmail.com", password: "jamshed123")
+User.create(name: "Admin", email: "admin@gmail.com", password: "admin111")
 
-product_names.each do |product|
-  Product.create(name: product[0], amount_left: 0, weight: product[1])
-end
+Home.create(number: 1, number_of_people: 2, home_type: 0, price: 500000)
+Home.create(number: 2, number_of_people: 2, home_type: 0, price: 500000)
+Home.create(number: 3, number_of_people: 4, home_type: 0, price: 800000)
+Home.create(number: 4, number_of_people: 3, home_type: 0, price: 600000)
+Home.create(number: 5, number_of_people: 2, home_type: 0, price: 400000)
 
-Product.find_by(weight: 1).product_prices.create(price: 400)
-
-3.times do
-  WastePaperProportion.create
-end
-
-paper_details = [[50, 'Картон', 1], [50, 'Белый', 1], [30, 'Картон', 2], [70, 'Серый', 2], [60, 'Серый', 3], [40, 'Картон', 3]]
-
-
-paper_details.each do |paper|
-  ProportionDetail.create(
-    percentage: paper[0],
-    product: Product.find_by_name(paper[1]),
-    waste_paper_proportion_id: paper[2]
-  )
-end
+Home.create(number: 14, number_of_people: 3, home_type: 1, price: 450000)
+Home.create(number: 15, number_of_people: 3, home_type: 1, price: 450000)
+Home.create(number: 16, number_of_people: 8, home_type: 1, price: 1200000)
+Home.create(number: 17, number_of_people: 2, home_type: 1, price: 300000)
+Home.create(number: 18, number_of_people: 2, home_type: 1, price: 300000)

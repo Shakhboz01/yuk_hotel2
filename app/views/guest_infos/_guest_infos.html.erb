@@ -1,0 +1,31 @@
+<div class="container my-5">
+  <div class="card shadow">
+    <div class="card-body">
+      <h3>Гости</h3>
+      <table class="table table-hover table-striped">
+        <thead>
+          <tr>
+            <th>Имя</th>
+            <th>Номер телефона</th>
+            <th>Страна</th>
+            <th>Оформлено в</th>
+            <th colspan="3"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% guest_infos.each do |guest_info| %>
+            <tr class="<%= !guest_info.avtive_guest ? 'table-danger' : 't' %>">
+              <td><%= guest_info.name %></td>
+              <td><%= guest_info.phone_number %></td>
+              <td><%= guest_info.country %></td>
+              <td><%= strf_datetime guest_info.created_at %></td>
+              <% if guest_info.avtive_guest %>
+                <td><%= clink_to 'удалить', toggle_active_guest_info_path(guest_info), 'fa-remove', :post %></td>
+              <% end %>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,15 @@
+<h3>Гость #<%= Booking.find(params[:booking_id]).guest_infos.count + 1 %></h3>
+<%= simple_form_for(guest_info) do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <div class="form-inputs">
+    <%= f.association :booking, as: :hidden %>
+    <%= f.input :name, label: 'Имя' %>
+    <%= f.input :country, label: 'Страна', as: :string %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit, 'Оформить' %>
+  </div>
+<% end %>
