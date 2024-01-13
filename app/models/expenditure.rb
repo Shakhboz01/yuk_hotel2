@@ -4,7 +4,7 @@ class Expenditure < ApplicationRecord
 
   belongs_to :user
   validates :price, comparison: { greater_than: 0 }
-  enum expenditure_type: %i[зарплата аванс коммунальная_услуга откат магазин другие]
+  enum expenditure_type: %i[магазин откат коммунальная_услуга зарплата аванс другие]
   after_create :send_message
 
   private
