@@ -5,15 +5,9 @@ class Booking < ApplicationRecord
   validates :number_of_people, comparison: { greater_than: 0 }
   has_many :guest_infos
   has_many :top_ups
-  after_create :notify_tg
   before_update :notify_tg_on_finish, if: :saved_change_to_finished_at
 
   private
-
-  def notify_tg
-      message = "<b>Комнатa №#{home.number} теперь oткрыто!</b>"
-      SendMessage.run(message: message)
-  end
 
   def notify_tg_on_finish
     message =

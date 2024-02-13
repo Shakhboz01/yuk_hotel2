@@ -44,7 +44,9 @@ class Shift < ApplicationRecord
   end
 
   def send_creation_message
-    SendMessage.run!(message: "<b>СМЕНА ОТКРЫТ</b>\n")
+    SendMessage.run!(
+      message: "<b>СМЕНА ОТКРЫТ</b>\n#{user.name}"
+    )
   end
 
   def send_closed_message
@@ -54,7 +56,10 @@ class Shift < ApplicationRecord
     SendMessage.run!(message: "<b>Смена закрыт</b>\n" \
                      "Открылся в: #{created_at.strftime("%Y-%m-%d %H:%M")}\n" \
                      "Закрылся в: #{closed_at.strftime("%Y-%m-%d %H:%M")}\n" \
-                     "Итого приход: #{total_income} сум\n" \
-                     "Итого расход: #{calculate_total_expenditure} сум")
+                     "Итого приход: #{total_income.to_i} сум\n" \
+                     "Итого расход: #{calculate_total_expenditure.to_i} сум\n"\
+                     "Остаток: #{calculate_total_expenditure.to_i} сум\n"\
+                     "#{user.name}"
+                    )
   end
 end

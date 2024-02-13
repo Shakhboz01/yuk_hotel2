@@ -11,10 +11,9 @@ class TopUp < ApplicationRecord
 
   def send_notif
     message =
-     "<b>Приём оплаты:</b>\n" \
-     "Номер комнаты: #{booking.home.number}\n" \
+     "<b>оплатa:</b>\n" \
+     "комнатa №: #{booking.home.number}\n" \
      "Цена: #{number_to_currency(price, unit: '')}\n" \
-     "Тип оплаты: #{payment_type}\n" \
      "Гость: #{guest_info.name}\n"
 
     message << "Комментарие: #{comment}" unless comment.empty?
