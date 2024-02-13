@@ -12,7 +12,7 @@ class TopUp < ApplicationRecord
   def send_notif
     message =
      "<b>оплатa:</b>\n" \
-     "комнатa №: #{booking.home.number}\n" \
+     "комнатa № #{booking.home.number}\n" \
      "Цена: #{number_to_currency(price, unit: '')}\n" \
      "Гость: #{guest_info.name}\n"
 
