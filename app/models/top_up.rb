@@ -11,10 +11,10 @@ class TopUp < ApplicationRecord
 
   def send_notif
     message =
-     "<b>оплатa:</b>\n" \
-     "комнатa № #{booking.home.number}\n" \
-     "Цена: #{number_to_currency(price, unit: '')}\n" \
-     "Гость: #{guest_info.name}\n"
+    &#9888
+     "&#127968 № #{booking.home.number}\n" \
+     "&#128181 #{number_to_currency(price, unit: '')}\n" \
+     "&#129333 #{guest_info.name}\n"
 
     message << "Комментарие: #{comment}" unless comment.empty?
     SendMessage.run(message: message)

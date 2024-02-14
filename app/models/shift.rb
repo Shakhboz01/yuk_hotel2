@@ -58,8 +58,8 @@ class Shift < ApplicationRecord
                      "Закрылся в: #{closed_at.strftime("%Y-%m-%d %H:%M")}\n" \
                      "Итого приход: #{total_income.to_i} сум\n" \
                      "Итого расход: #{calculate_total_expenditure.to_i} сум\n"\
-                     "Остаток: #{calculate_total_expenditure.to_i} сум\n"\
-                     "#{user.name}"
+                     "Остаток: #{(total_income - calculate_total_expenditure).to_i} сум\n"\
+                     "#{user.name.upcase}"
                     )
   end
 end
